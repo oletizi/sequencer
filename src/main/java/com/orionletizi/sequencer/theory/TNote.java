@@ -26,4 +26,17 @@ public class TNote {
   public int hashCode() {
     return getValue();
   }
+
+  public TNote nextOctave() {
+    return new TNote((byte) (getValue() + 12));
+  }
+
+  public TNote previousOctave() {
+    return new TNote((byte) (getValue() - 12));
+  }
+
+  @Override
+  public String toString() {
+    return note.toString();
+  }
 }

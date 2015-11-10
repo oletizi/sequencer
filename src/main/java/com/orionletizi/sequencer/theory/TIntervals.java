@@ -8,7 +8,10 @@ import java.util.List;
 
 public class TIntervals {
 
+  private static final String CHROMATIC = "1 b2 2 b3 3 4 b5 5 b6 6 b7 7";
+
   private final Intervals intervals;
+  private final TNote[] notes = new TNote[128];
 
   public TIntervals(final String intervalString) {
     this.intervals = new Intervals(intervalString);
@@ -25,5 +28,9 @@ public class TIntervals {
       rv.add(new TNote(note.getValue()));
     }
     return rv;
+  }
+
+  public static TIntervals chromatic() {
+    return new TIntervals(CHROMATIC);
   }
 }

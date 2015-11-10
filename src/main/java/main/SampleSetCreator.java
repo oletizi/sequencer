@@ -1,14 +1,17 @@
 package main;
 
-import com.orionletizi.sequencer.Theory;
+import com.orionletizi.sequencer.theory.TIntervals;
+import com.orionletizi.sequencer.theory.TNote;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import org.apache.commons.io.FileUtils;
-import org.jfugue.theory.Note;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public class SampleSetCreator {
 
@@ -16,15 +19,11 @@ public class SampleSetCreator {
 
 
   private final File directory;
-  private final String startingNoteName;
-  private final int startingNoteNumber;
-  private final Note startingNote;
+  private final TNote startingNote;
 
   public SampleSetCreator(File directory, String startingNote) {
     this.directory = directory;
-    this.startingNote = new Note(startingNote);
-    startingNoteName = startingNote.substring(0, startingNote.length() - 1);
-    startingNoteNumber = Integer.parseInt(startingNote.substring(startingNote.length() - 1));
+    this.startingNote = new TNote(startingNote);
   }
 
   public static void main(String[] args) {
@@ -39,21 +38,42 @@ public class SampleSetCreator {
 
   private void run() {
     int i = 0;
-    logger.info("Starting note name: " + startingNoteName);
-    logger.info("Starting note number: " + startingNoteNumber);
-    for (String filename : directory.list(new FilenameFilter() {
+    logger.info("Starting note:" + startingNote);
+
+    TNote baseNote = this.startingNote;
+    final TIntervals chromatic = TIntervals.chromatic();
+    chromatic.setRoot(baseNote);
+    List<TNote> notes = chromatic.getNotes();
+    final String[] filenames = directory.list(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
         return name.endsWith(".wav");
       }
-    })) {
+    });
 
+    Arrays.sort(filenames, new Comparator<String>() {
+      @Override
+      public int compare(String o1, String o2) {
+        return parseFileNumber(o1) - parseFileNumber(o2);
+      }
+    });
+
+
+    for (String filename : filenames) {
+      if (i > 0 && i % 12 == 0) {
+        baseNote = new TNote((byte) (baseNote.getValue() + 12));
+        chromatic.setRoot(baseNote);
+        notes.clear();
+        notes.addAll(chromatic.getNotes());
+        logger.info("next octave. i: " + i + ", new base note: " + baseNote + ", first note in list: " + notes.get(0));
+      }
       logger.info("Matching filename: " + filename);
-      final int noteNumber = (i / Theory.NOTE_NAMES.length) + startingNoteNumber;
+      logger.info("i=" + i + ", notes index: " + i % 12);
+      final TNote note = notes.get(i % 12);
+      logger.info("Note: " + note);
       final String basename = filename.substring(0, filename.indexOf('.'));
-      final String noteName = Theory.NOTE_NAMES[i % Theory.NOTE_NAMES.length];
       final File originalFile = new File(directory, filename);
-      final File destinationFile = new File(directory, basename + "-" + noteName + noteNumber + ".wav");
+      final File destinationFile = new File(directory, basename + "-" + note + ".wav");
       logger.info("original file: " + originalFile + ", dest file: " + destinationFile);
       try {
         FileUtils.moveFile(originalFile, destinationFile);
@@ -62,5 +82,9 @@ public class SampleSetCreator {
       }
       i++;
     }
+  }
+
+  private int parseFileNumber(String filename) {
+    return Integer.parseInt(filename.substring(filename.indexOf('.') + 1, filename.lastIndexOf('.')));
   }
 }

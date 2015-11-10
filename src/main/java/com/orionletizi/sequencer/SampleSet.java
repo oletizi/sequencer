@@ -1,5 +1,6 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.sequencer.theory.TNote;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 
@@ -19,15 +20,17 @@ public class SampleSet {
         return name.endsWith(".wav");
       }
     })) {
-      final String note = filename.substring(filename.indexOf('-') + 1, filename.indexOf(".wav"));
-      final byte noteValue = Theory.parseNoteValue(note);
-      logger.info("filename: " + filename + ", note: " + note + ", note value: " + noteValue);
-      noteFiles[noteValue] = new File(directory, filename);
+      final String noteName = filename.substring(filename.indexOf('-') + 1, filename.indexOf(".wav"));
+      logger.info("Note name: " + noteName);
+      //final byte noteValue = new TNTheory.parseNoteValue(note);
+      final TNote note = new TNote(noteName);
+      logger.info("filename: " + filename + ", note: " + note);
+      noteFiles[note.getValue()] = new File(directory, filename);
     }
   }
 
-  public File getSampleFileForNoteName(String note) {
-    return noteFiles[Theory.parseNoteValue(note)];
+  public File getSampleFileForNoteName(String noteString) {
+    return noteFiles[new TNote(noteString).getValue()];
   }
 
   public File getSampleFileForNote(byte i) {
