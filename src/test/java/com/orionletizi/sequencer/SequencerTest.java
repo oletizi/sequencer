@@ -14,12 +14,12 @@ import javax.sound.midi.*;
 import java.io.File;
 import java.net.URL;
 
-public class OfflineSequencerTest {
+public class SequencerTest {
 
   private URL midiSource;
   private StandardMidiFileReader reader;
   private Sequence sequence;
-  private OfflineSequencer sequencer;
+  private Sequencer sequencer;
   private File sampleDirectory;
   private AudioContext ac;
 
@@ -32,7 +32,7 @@ public class OfflineSequencerTest {
     sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
-    sequencer = new OfflineSequencer(ac, new SampleSet(sampleDirectory));
+    sequencer = new Sequencer(ac, new SampleSet(sampleDirectory));
   }
 
   @Test

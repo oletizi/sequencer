@@ -17,28 +17,28 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class OfflineSequencer extends MidiParser {
+public class Sequencer extends MidiParser {
 
-  private static final Logger logger = LoggerImpl.forClass(OfflineSequencer.class);
+  private static final Logger logger = LoggerImpl.forClass(Sequencer.class);
 
-  private final Map<Byte, NoteEvent> onNotes = new HashMap<>();
-  private final Map<Long, Set<NoteEvent>> tickEvents = new HashMap<>();
+  private final Map<Byte, NoteOnEvent> onNotes = new HashMap<>();
+  private final Map<Long, Set<NoteOnEvent>> tickEvents = new HashMap<>();
   private final AudioContext ac;
   private final SampleSet sampleSet;
 
   private long maxTick;
   private int tempo;
 
-  public OfflineSequencer(final AudioContext ac, final SampleSet sampleSet) {
+  public Sequencer(final AudioContext ac, final SampleSet sampleSet) {
     this.ac = ac;
     this.sampleSet = sampleSet;
   }
 
   public void play() {
     for (long i = 0; i <= maxTick; i++) {
-      final Set<NoteEvent> events = tickEvents.get(i);
+      final Set<NoteOnEvent> events = tickEvents.get(i);
       if (events != null) {
-        for (NoteEvent event : events) {
+        for (NoteOnEvent event : events) {
           final double durationInTicks = event.tickDuration;
           final double durationInMs = this.ticksToMs((long) durationInTicks);
           final double startTick = event.tickStart;
@@ -76,8 +76,7 @@ public class OfflineSequencer extends MidiParser {
     try {
       final Sample sample = new Sample(sampleFile.getAbsolutePath());
       final SamplePlayer player = new SamplePlayer(ac, sample);
-      final NoteEvent noteEvent = new NoteEvent(ac, (float) startTime, note, player);
-      ac.out.addDependent(noteEvent);
+      final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
       onNotes.put(note.getValue(), noteEvent);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -90,10 +89,10 @@ public class OfflineSequencer extends MidiParser {
     final long tick = event.getTick();
     maxTick = Math.max(maxTick, tick);
     logger.info("noteReleased: tick: " + tick + ", note: " + note);
-    final NoteEvent noteOn = onNotes.get(note.getValue());
+    final NoteOnEvent noteOn = onNotes.get(note.getValue());
     if (noteOn != null) {
       noteOn.setTickDuration(tick - noteOn.tickStart);
-      Set<NoteEvent> eventsAtTick = tickEvents.get(tick);
+      Set<NoteOnEvent> eventsAtTick = tickEvents.get(tick);
       if (eventsAtTick == null) {
         eventsAtTick = new HashSet<>();
         tickEvents.put(tick, eventsAtTick);
@@ -103,15 +102,40 @@ public class OfflineSequencer extends MidiParser {
     }
   }
 
-  private class NoteEvent extends DelayEvent {
+  private class NoteOffTrigger extends DelayEvent {
+
+    private final NoteOnEvent onEvent;
+    private boolean triggered = false;
+
+    public NoteOffTrigger(AudioContext context, double delay, NoteOnEvent onEvent) {
+      super(context, delay);
+      this.onEvent = onEvent;
+      context.out.addDependent(this);
+    }
+
+    @Override
+    public void trigger() {
+      if (!triggered) {
+        logger.info("Note off triggered. Pausing player.");
+        onEvent.player.pause(true);
+        // TODO: Figure out how to remove the triggers that have already fired.
+//        context.out.removeDependent(onEvent);
+//        context.out.removeDependent(this);
+        triggered = true;
+      }
+    }
+  }
+
+  private class NoteOnEvent extends DelayEvent {
     private final double tickStart;
     private double tickDuration;
     private final Note note;
     private final SamplePlayer player;
     private boolean triggered = false;
 
-    public NoteEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
+    public NoteOnEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
       super(context, tickStart);
+      context.out.addDependent(this);
       this.tickStart = tickStart;
       this.note = note;
       this.player = player;
@@ -124,6 +148,7 @@ public class OfflineSequencer extends MidiParser {
     @Override
     public void trigger() {
       if (!triggered) {
+        new NoteOffTrigger(ac, ticksToMs((long) tickDuration), this);
         ac.out.addInput(player);
         player.start();
         logger.info("I got triggered!");
