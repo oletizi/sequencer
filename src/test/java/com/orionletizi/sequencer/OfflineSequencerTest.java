@@ -1,6 +1,9 @@
 package com.orionletizi.sequencer;
 
 import com.sun.media.sound.StandardMidiFileReader;
+import net.beadsproject.beads.core.AudioContext;
+import net.beadsproject.beads.core.AudioIO;
+import net.beadsproject.beads.core.io.JavaSoundAudioIO;
 import org.jfugue.parser.ParserListener;
 import org.jfugue.theory.Chord;
 import org.jfugue.theory.Note;
@@ -8,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.sound.midi.*;
+import java.io.File;
 import java.net.URL;
 
 public class OfflineSequencerTest {
@@ -16,13 +20,19 @@ public class OfflineSequencerTest {
   private StandardMidiFileReader reader;
   private Sequence sequence;
   private OfflineSequencer sequencer;
+  private File sampleDirectory;
+  private AudioContext ac;
 
   @Before
   public void before() throws Exception {
+    AudioIO io = new JavaSoundAudioIO();
+    ac = new AudioContext(io);
+
     midiSource = ClassLoader.getSystemResource("midi.mid");
+    sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
-    sequencer = new OfflineSequencer();
+    sequencer = new OfflineSequencer(ac, new SampleSet(sampleDirectory));
   }
 
   @Test
@@ -31,6 +41,9 @@ public class OfflineSequencerTest {
     sequencer.parse(sequence);
     sequencer.startParser();
     sequencer.play();
+    synchronized (this) {
+      wait();
+    }
   }
 
   @Test

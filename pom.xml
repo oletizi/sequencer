@@ -28,6 +28,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.java.openjdk</groupId>
+            <artifactId>javax-sound</artifactId>
+            <version>custom-1.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.orionletizi</groupId>
             <artifactId>audiogen</artifactId>
             <version>0.9.1</version>

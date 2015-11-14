@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class TheoryTest {
+public class TIntervalsTest {
   @Test
   public void test() {
     final TIntervals chromatic = TIntervals.chromatic();
