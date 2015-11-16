@@ -196,7 +196,7 @@ public class Sequencer extends MidiParser {
 
     public NoteOnEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
       super(context, tickStart);
-      logger.info("  adding note on trigger ");
+      logger.info("  adding note on trigger: " + note);
       context.out.addDependent(this);
       this.tickStart = tickStart;
       this.note = note;

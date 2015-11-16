@@ -45,7 +45,7 @@ public class SequencerTest {
     ac.out.addDependent(recorder);
     recorder.addInput(ac.out);
 
-    midiSource = ClassLoader.getSystemResource("midi/wurli4.mid");
+    midiSource = ClassLoader.getSystemResource("midi/wurli5.mid");
     sampleDirectory = new File(ClassLoader.getSystemResource("sfz/mellotron").getFile());
     programFile = new File(sampleDirectory, "mk2flute.sfz");
     program = new SfzSamplerProgram(sampleDirectory);
