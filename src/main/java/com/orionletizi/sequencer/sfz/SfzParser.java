@@ -38,18 +38,17 @@ public class SfzParser {
       } else if (line.startsWith("<group>")) {
         state = States.group;
         observer.notifyGroup();
-        line = stripLeadingWhitespace(line.substring("<group>".length()));
+        line = shift("<group>", line);
       } else if (line.startsWith("<region>")) {
         state = States.region;
         observer.notifyRegion();
-        line = stripLeadingWhitespace(line.substring("<region>".length()));
+        line = shift("<region>", line);
       }
 
       while (!"".equals(line)) {
-        info("line: " + line);
         if (line.startsWith("sample=")) {
-          line = line.substring("sample=".length());
-          final String sample = nextToken(line);//line.substring(0, line.indexOf(' '));
+          line = shift("sample=", line);
+          final String sample = nextToken(line);
           observer.notifySample(sample);
           line = shift(sample, line);
         } else if (line.startsWith("lokey=")) {
@@ -74,23 +73,22 @@ public class SfzParser {
     }
   }
 
-  private void info(String s) {
-    System.out.println("INFO: " + s);
-  }
-
   private String nextToken(String line) {
     final int nextSpace = line.indexOf(' ');
     return nextSpace != -1 ? line.substring(0, line.indexOf(' ')) : line;
   }
 
+  // removes everything from the beginning of the line through the next contiguous whitespace
   private String shift(String line) {
     return shift(nextToken(line), line);
   }
 
+  // removes the token (if it's at the beginning of the line) through the next contiguous whitespace
   private String shift(String token, String line) {
     return stripLeadingWhitespace(line.replaceAll("^" + token, ""));
   }
 
+  // removes all contiguous whitespace from the beginning of the line
   private String stripLeadingWhitespace(String line) {
     return line.replaceAll("^\\s+", "");
   }
