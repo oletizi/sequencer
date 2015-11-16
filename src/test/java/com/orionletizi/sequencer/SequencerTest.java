@@ -1,5 +1,7 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.sequencer.sfz.SfzParser;
+import com.orionletizi.sequencer.sfz.SfzSamplerProgram;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import com.sun.media.sound.StandardMidiFileReader;
@@ -30,6 +32,8 @@ public class SequencerTest {
   private File sampleDirectory;
   private AudioContext ac;
   private RecordToFile recorder;
+  private File programFile;
+  private SfzSamplerProgram program;
 
   @Before
   public void before() throws Exception {
@@ -42,7 +46,11 @@ public class SequencerTest {
     recorder.addInput(ac.out);
 
     midiSource = ClassLoader.getSystemResource("midi/wurli4.mid");
-    sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
+    sampleDirectory = new File(ClassLoader.getSystemResource("sfz/mellotron").getFile());
+    programFile = new File(sampleDirectory, "mk2flute.sfz");
+    program = new SfzSamplerProgram(sampleDirectory);
+    new SfzParser().addObserver(program).parse(programFile);
+
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
     sequencer = new Sequencer(ac, new BasicSamplerProgram(sampleDirectory));
