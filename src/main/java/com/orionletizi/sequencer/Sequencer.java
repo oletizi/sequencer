@@ -24,14 +24,14 @@ public class Sequencer extends MidiParser {
 
   private final Map<Long, TickEvents> tickEvents = new TreeMap<>();
   private final AudioContext ac;
-  private final SampleSet sampleSet;
+  private final BasicSamplerProgram program;
 
   private int tempo;
   private int resolution;
 
-  public Sequencer(final AudioContext ac, final SampleSet sampleSet) {
+  public Sequencer(final AudioContext ac, final BasicSamplerProgram program) {
     this.ac = ac;
-    this.sampleSet = sampleSet;
+    this.program = program;
   }
 
   public void play() {
@@ -103,7 +103,7 @@ public class Sequencer extends MidiParser {
     final long tick = event.getTick();
     final long startTime = this.ticksToMs(tick);
 //logger.info("notePressed: tick: " + tick + ", start time: " + startTime + ", note: " + note + ", duration: " + note.getDuration());
-    final File sampleFile = sampleSet.getSampleFileForNote(note.getValue());
+    final File sampleFile = program.getSampleFileForNote(note.getValue());
     try {
       if (sampleFile != null && sampleFile.exists()) {
         final Sample sample = new Sample(sampleFile.getAbsolutePath());

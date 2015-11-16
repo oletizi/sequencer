@@ -45,7 +45,7 @@ public class SequencerTest {
     sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
-    sequencer = new Sequencer(ac, new SampleSet(sampleDirectory));
+    sequencer = new Sequencer(ac, new BasicSamplerProgram(sampleDirectory));
   }
 
   @After

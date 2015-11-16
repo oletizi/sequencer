@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-public class SampleSet {
+public class BasicSamplerProgram implements SamplerProgram {
 
-  static final Logger logger = new NullLogger();//LoggerImpl.forClass(SampleSet.class);
+  static final Logger logger = new NullLogger();//LoggerImpl.forClass(BasicSamplerProgram.class);
 
   final File[] noteFiles = new File[128];
   final Sample[] samples = new Sample[128];
 
-  public SampleSet(File directory) throws IOException {
+  public BasicSamplerProgram(File directory) throws IOException {
     for (String filename : directory.list(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
@@ -34,14 +34,17 @@ public class SampleSet {
     }
   }
 
+  @Override
   public File getSampleFileForNoteName(String noteString) {
     return noteFiles[new TNote(noteString).getValue()];
   }
 
+  @Override
   public File getSampleFileForNote(byte i) {
     return noteFiles[i];
   }
 
+  @Override
   public Sample getSampleForNote(byte i) {
     return samples[i];
   }
