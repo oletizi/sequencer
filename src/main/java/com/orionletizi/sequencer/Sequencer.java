@@ -12,21 +12,19 @@ import org.jfugue.theory.Note;
 import javax.sound.midi.MidiEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Sequencer extends MidiParser {
 
   private static final Logger logger = LoggerImpl.forClass(Sequencer.class);
 
-  private final Map<Byte, NoteOnEvent> onNotes = new HashMap<>();
-  private final Map<Long, Set<NoteOnEvent>> tickEvents = new HashMap<>();
+
+  private final Map<Byte, Set<NoteOnEvent>> playingNotes = new HashMap<>();
+
+  private final Map<Long, TickEvents> tickEvents = new TreeMap<>();
   private final AudioContext ac;
   private final SampleSet sampleSet;
 
-  private long maxTick;
   private int tempo;
 
   public Sequencer(final AudioContext ac, final SampleSet sampleSet) {
@@ -35,16 +33,27 @@ public class Sequencer extends MidiParser {
   }
 
   public void play() {
-    for (long i = 0; i <= maxTick; i++) {
-      final Set<NoteOnEvent> events = tickEvents.get(i);
-      if (events != null) {
-        for (NoteOnEvent event : events) {
-          final double durationInTicks = event.tickDuration;
-          final double durationInMs = this.ticksToMs((long) durationInTicks);
-          final double startTick = event.tickStart;
-          final long startMs = this.ticksToMs((long) startTick);
-          logger.info("Tick: " + startTick + ", ms: " + startMs + ", play note: " + event.note + " for " + durationInMs + "ms");
-          logger.info("Play sample: " + sampleSet.getSampleFileForNote(event.note.getValue()));
+
+    for (Map.Entry<Long, TickEvents> entry : tickEvents.entrySet()) {
+      final TickEvents events = entry.getValue();
+      // Add every note on to the playing set
+      for (NoteOnEvent noteOn : events.getNoteOnEvents()) {
+        Set<NoteOnEvent> playing = playingNotes.get(noteOn.note.getValue());
+        if (playing == null) {
+          playing = new HashSet<>();
+        }
+        playing.add(noteOn);
+      }
+
+      // Remove every playing note corresponding to the notes off
+      for (NoteOffEvent noteOff : events.getNoteOffEvents()) {
+        final Set<NoteOnEvent> playing = playingNotes.get(noteOff.note.getValue());
+        if (playing != null) {
+          final long tickOff = noteOff.event.getTick();
+          for (NoteOnEvent noteOn : playing) {
+            new NoteOffTrigger(ac, noteOff.event.getTick() - noteOn.tickStart, noteOn);
+          }
+          playing.clear();
         }
       }
     }
@@ -69,15 +78,18 @@ public class Sequencer extends MidiParser {
   public void fireNotePressed(MidiEvent event, Note note) {
     super.fireNotePressed(event, note);
     final long tick = event.getTick();
-    logger.info("notePressed: tick: " + tick + ", " + note + ", duration: " + note.getDuration());
     final long startTime = this.ticksToMs(tick);
-    logger.info("  ms: " + startTime);
+//logger.info("notePressed: tick: " + tick + ", start time: " + startTime + ", note: " + note + ", duration: " + note.getDuration());
     final File sampleFile = sampleSet.getSampleFileForNote(note.getValue());
     try {
-      final Sample sample = new Sample(sampleFile.getAbsolutePath());
-      final SamplePlayer player = new SamplePlayer(ac, sample);
-      final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
-      onNotes.put(note.getValue(), noteEvent);
+      if (sampleFile != null && sampleFile.exists()) {
+        final Sample sample = new Sample(sampleFile.getAbsolutePath());
+        final SamplePlayer player = new SamplePlayer(ac, sample);
+        final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
+        getTickEvents(event.getTick()).addNoteOn(noteEvent);
+      } else {
+        logger.info("No sample for note: " + note);
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -86,20 +98,16 @@ public class Sequencer extends MidiParser {
   @Override
   public void fireNoteReleased(MidiEvent event, Note note) {
     super.fireNoteReleased(event, note);
-    final long tick = event.getTick();
-    maxTick = Math.max(maxTick, tick);
-    logger.info("noteReleased: tick: " + tick + ", note: " + note);
-    final NoteOnEvent noteOn = onNotes.get(note.getValue());
-    if (noteOn != null) {
-      noteOn.setTickDuration(tick - noteOn.tickStart);
-      Set<NoteOnEvent> eventsAtTick = tickEvents.get(tick);
-      if (eventsAtTick == null) {
-        eventsAtTick = new HashSet<>();
-        tickEvents.put(tick, eventsAtTick);
-      }
+    getTickEvents(event.getTick()).addNoteOff(new NoteOffEvent(event, note));
+  }
 
-      eventsAtTick.add(noteOn);
+  private TickEvents getTickEvents(long tick) {
+    TickEvents ticks = this.tickEvents.get(tick);
+    if (ticks == null) {
+      ticks = new TickEvents();
+      tickEvents.put(tick, ticks);
     }
+    return ticks;
   }
 
   private class NoteOffTrigger extends DelayEvent {
@@ -116,19 +124,48 @@ public class Sequencer extends MidiParser {
     @Override
     public void trigger() {
       if (!triggered) {
-        logger.info("Note off triggered. Pausing player.");
+        logger.info("Note off triggered: " + onEvent.note);
         onEvent.player.pause(true);
         // TODO: Figure out how to remove the triggers that have already fired.
-//        context.out.removeDependent(onEvent);
-//        context.out.removeDependent(this);
         triggered = true;
       }
     }
   }
 
+  private class TickEvents {
+
+    private final Set<NoteOnEvent> noteOnEvents = new HashSet<>();
+    private final Set<NoteOffEvent> noteOffEvents = new HashSet<>();
+
+    public void addNoteOn(final NoteOnEvent event) {
+      noteOnEvents.add(event);
+    }
+
+    public void addNoteOff(final NoteOffEvent event) {
+      noteOffEvents.add(event);
+    }
+
+    public Set<NoteOnEvent> getNoteOnEvents() {
+      return new HashSet<>(noteOnEvents);
+    }
+
+    public Set<NoteOffEvent> getNoteOffEvents() {
+      return new HashSet<>(noteOffEvents);
+    }
+  }
+
+  private class NoteOffEvent {
+    private final MidiEvent event;
+    private final Note note;
+
+    public NoteOffEvent(final MidiEvent event, final Note note) {
+      this.event = event;
+      this.note = note;
+    }
+  }
+
   private class NoteOnEvent extends DelayEvent {
     private final double tickStart;
-    private double tickDuration;
     private final Note note;
     private final SamplePlayer player;
     private boolean triggered = false;
@@ -141,17 +178,12 @@ public class Sequencer extends MidiParser {
       this.player = player;
     }
 
-    public void setTickDuration(final double tickDuration) {
-      this.tickDuration = tickDuration;
-    }
-
     @Override
     public void trigger() {
       if (!triggered) {
-        new NoteOffTrigger(ac, ticksToMs((long) tickDuration), this);
         ac.out.addInput(player);
         player.start();
-        logger.info("I got triggered!");
+        logger.info("Note on triggered: " + this.note);
         triggered = true;
       }
     }

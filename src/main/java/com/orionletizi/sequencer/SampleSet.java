@@ -2,7 +2,7 @@ package com.orionletizi.sequencer;
 
 import com.orionletizi.sequencer.theory.TNote;
 import com.orionletizi.util.logging.Logger;
-import com.orionletizi.util.logging.LoggerImpl;
+import com.orionletizi.util.logging.NullLogger;
 import net.beadsproject.beads.data.Sample;
 
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class SampleSet {
 
-  static final Logger logger = LoggerImpl.forClass(SampleSet.class);
+  static final Logger logger = new NullLogger();//LoggerImpl.forClass(SampleSet.class);
 
   final File[] noteFiles = new File[128];
   final Sample[] samples = new Sample[128];

@@ -1,12 +1,17 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.util.logging.Logger;
+import com.orionletizi.util.logging.LoggerImpl;
 import com.sun.media.sound.StandardMidiFileReader;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.AudioIO;
 import net.beadsproject.beads.core.io.JavaSoundAudioIO;
+import net.beadsproject.beads.ugens.RecordToFile;
+import org.jfugue.midi.MidiParser;
 import org.jfugue.parser.ParserListener;
 import org.jfugue.theory.Chord;
 import org.jfugue.theory.Note;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,23 +21,57 @@ import java.net.URL;
 
 public class SequencerTest {
 
+  private static final Logger logger = LoggerImpl.forClass(SequencerTest.class);
+
   private URL midiSource;
   private StandardMidiFileReader reader;
   private Sequence sequence;
   private Sequencer sequencer;
   private File sampleDirectory;
   private AudioContext ac;
+  private RecordToFile recorder;
 
   @Before
   public void before() throws Exception {
     AudioIO io = new JavaSoundAudioIO();
     ac = new AudioContext(io);
 
-    midiSource = ClassLoader.getSystemResource("midi.mid");
+    final File outfile = new File("/tmp/sampler-" + System.currentTimeMillis() + ".wav");
+    recorder = new RecordToFile(ac, 2, outfile);
+    ac.out.addDependent(recorder);
+    recorder.addInput(ac.out);
+
+    midiSource = ClassLoader.getSystemResource("midi/wurli3.mid");
     sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
     sequencer = new Sequencer(ac, new SampleSet(sampleDirectory));
+  }
+
+  @After
+  public void after() throws Exception {
+    System.out.println("Stopping recorder.");
+    recorder.kill();
+  }
+
+  @Test
+  public void testMidParser() throws Exception {
+    final MidiParser parser = new MidiParser() {
+      @Override
+      public void fireNotePressed(MidiEvent event, Note note) {
+        super.fireNotePressed(event, note);
+        logger.info("Tick: " + event.getTick() + ", Note pressed: " + note);
+
+      }
+
+      @Override
+      public void fireNoteReleased(MidiEvent event, Note note) {
+        super.fireNoteReleased(event, note);
+        logger.info("Tick: " + event.getTick() + ", Note released: " + note);
+      }
+    };
+
+    parser.parse(sequence);
   }
 
   @Test
@@ -42,7 +81,7 @@ public class SequencerTest {
     sequencer.startParser();
     sequencer.play();
     synchronized (this) {
-      wait();
+      wait(10 * 1000);
     }
   }
 

@@ -28,6 +28,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.leff.midi</groupId>
+            <artifactId>android-midi-lib</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>net.java.openjdk</groupId>
             <artifactId>javax-sound</artifactId>
             <version>custom-1.1</version>
