@@ -21,9 +21,9 @@ import javax.sound.midi.*;
 import java.io.File;
 import java.net.URL;
 
-public class SequencerTest {
+public class SequencerTestIT {
 
-  private static final Logger logger = LoggerImpl.forClass(SequencerTest.class);
+  private static final Logger logger = LoggerImpl.forClass(SequencerTestIT.class);
 
   private URL midiSource;
   private StandardMidiFileReader reader;
@@ -89,7 +89,7 @@ public class SequencerTest {
     sequencer.startParser();
     sequencer.play();
     synchronized (this) {
-      wait(60 * 1000);
+      wait(10 * 1000);
     }
   }
 

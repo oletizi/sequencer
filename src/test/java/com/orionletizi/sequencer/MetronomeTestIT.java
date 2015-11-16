@@ -5,7 +5,7 @@ import net.beadsproject.beads.core.io.JavaSoundAudioIO;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MetronomeTest {
+public class MetronomeTestIT {
 
   private AudioContext ac;
 

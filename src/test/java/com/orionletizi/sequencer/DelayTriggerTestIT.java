@@ -10,9 +10,9 @@ import net.beadsproject.beads.ugens.DelayEvent;
 import net.beadsproject.beads.ugens.SamplePlayer;
 import org.junit.Test;
 
-public class DelayTriggerTest {
+public class DelayTriggerTestIT {
 
-  private static final Logger logger = LoggerImpl.forClass(DelayTriggerTest.class);
+  private static final Logger logger = LoggerImpl.forClass(DelayTriggerTestIT.class);
 
   @Test
   public void test() throws Exception {
@@ -33,7 +33,7 @@ public class DelayTriggerTest {
     logger.info("Audio context started.");
 
     synchronized (this) {
-      wait();
+      wait(10 * 1000);
     }
 
   }
