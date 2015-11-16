@@ -10,6 +10,7 @@ import org.jfugue.midi.MidiParser;
 import org.jfugue.theory.Note;
 
 import javax.sound.midi.MidiEvent;
+import javax.sound.midi.Sequence;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -26,6 +27,7 @@ public class Sequencer extends MidiParser {
   private final SampleSet sampleSet;
 
   private int tempo;
+  private int resolution;
 
   public Sequencer(final AudioContext ac, final SampleSet sampleSet) {
     this.ac = ac;
@@ -36,7 +38,9 @@ public class Sequencer extends MidiParser {
 
     for (Map.Entry<Long, TickEvents> entry : tickEvents.entrySet()) {
       final TickEvents events = entry.getValue();
-      logger.info("tick: " + entry.getKey() + ", ms: " + ticksToMs(entry.getKey()) + ", note on events: " + events.getNoteOnEvents().size()
+      final Long tick = entry.getKey();
+      final long tickMillisecond = ticksToMs(tick);
+      logger.info("tick: " + tick + ", ms: " + tickMillisecond + ", note on events: " + events.getNoteOnEvents().size()
           + ", note off events: " + events.getNoteOffEvents().size());
       // Add every note on to the playing set
       for (NoteOnEvent noteOn : events.getNoteOnEvents()) {
@@ -45,7 +49,7 @@ public class Sequencer extends MidiParser {
           playing = new HashSet<>();
           playingNotes.put(noteOn.note.getValue(), playing);
         }
-        logger.info("  adding note on to playing: " + noteOn.note);
+        logger.info("  adding note on: " + noteOn.note);
         playing.add(noteOn);
       }
 
@@ -56,7 +60,7 @@ public class Sequencer extends MidiParser {
         logger.info("  turning off currently playing notes: " + playing);
         if (playing != null) {
           for (NoteOnEvent noteOn : playing) {
-            new NoteOffTrigger(ac, ticksToMs(entry.getKey()), noteOn);
+            new NoteOffTrigger(ac, tickMillisecond, noteOn);
           }
           playing.clear();
         }
@@ -69,6 +73,20 @@ public class Sequencer extends MidiParser {
     final Metronome metronome = new Metronome(ac, this.tempo);
     metronome.start();
     ac.start();
+  }
+
+  @Override
+  public void parse(Sequence sequence) {
+    resolution = sequence.getResolution();
+    super.parse(sequence);
+  }
+
+  @Override
+  public long ticksToMs(long ticks) {
+    // millis = tick * 60000 / ppqn / tempo
+    long millis = ticks * 60 * 1000 / resolution / tempo;
+    logger.info("ticksToMs: ticks: " + ticks + ", resolution: " + resolution + ", tempo: " + tempo + ", millis: " + millis);
+    return millis;
   }
 
   @Override
@@ -178,6 +196,7 @@ public class Sequencer extends MidiParser {
 
     public NoteOnEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
       super(context, tickStart);
+      logger.info("  adding note on trigger ");
       context.out.addDependent(this);
       this.tickStart = tickStart;
       this.note = note;
@@ -192,6 +211,11 @@ public class Sequencer extends MidiParser {
         logger.info("Note on triggered: " + this.note);
         triggered = true;
       }
+    }
+
+    @Override
+    public String toString() {
+      return "<tickStart: " + tickStart + ", note: " + note + ">";
     }
   }
 }
