@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.orionletizi</groupId>
-    <artifactId>sequencer</artifactId>
-    <version>0.1</version>
+    <artifactId>audiogen-sequencer</artifactId>
+    <version>0.2</version>
     <build>
         <extensions>
             <extension>
@@ -26,8 +26,8 @@
     </build>
     <packaging>jar</packaging>
 
-    <name>sequencer</name>
-    <url>http://maven.apache.org</url>
+    <name>AudiogenSequencer</name>
+    <url>http://github.com/oletizi/sequencer/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
