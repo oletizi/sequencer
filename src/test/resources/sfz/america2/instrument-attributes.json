@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Bass",
+    "type": "rhythm",
+    "gain": 1.0
+  },
+  {
+    "name": "Guitar",
+    "type": "chords",
+    "gain": 1.0
+  },
+  {
+    "name": "Wurli",
+    "type": "chords",
+    "gain": 0.8
+  },
+  {
+    "name": "OohAhh",
+    "type": "unknown",
+    "gain": 0.5
+  },
+  {
+    "name": "AcousticGuitar",
+    "type": "chords",
+    "gain": 0.8
+  },
+  {
+    "name": "Drums",
+    "type": "rhythm",
+    "gain": 1.0
+  },
+  {
+    "name": "Organ",
+    "type": "chords",
+    "gain": 1.0
+  }
+]
