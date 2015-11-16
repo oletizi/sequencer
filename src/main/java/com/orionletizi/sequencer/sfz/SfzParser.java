@@ -8,12 +8,6 @@ import java.util.Set;
 public class SfzParser {
 
   private final CompositeObserver observer = new CompositeObserver();
-  private States state;
-
-  private enum States {
-    group, region
-  }
-
 
   public SfzParser addObserver(SfzParserObserver o) {
     observer.addObserver(o);
@@ -30,17 +24,15 @@ public class SfzParser {
 
   public void parse(final InputStream inputStream) throws IOException {
     final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-    String line = null;
+    String line;
     while ((line = in.readLine()) != null) {
       line = stripLeadingWhitespace(line);
       if (line.startsWith("//")) {
         continue;
       } else if (line.startsWith("<group>")) {
-        state = States.group;
         observer.notifyGroup();
         line = shift("<group>", line);
       } else if (line.startsWith("<region>")) {
-        state = States.region;
         observer.notifyRegion();
         line = shift("<region>", line);
       }
