@@ -36,22 +36,27 @@ public class Sequencer extends MidiParser {
 
     for (Map.Entry<Long, TickEvents> entry : tickEvents.entrySet()) {
       final TickEvents events = entry.getValue();
+      logger.info("tick: " + entry.getKey() + ", ms: " + ticksToMs(entry.getKey()) + ", note on events: " + events.getNoteOnEvents().size()
+          + ", note off events: " + events.getNoteOffEvents().size());
       // Add every note on to the playing set
       for (NoteOnEvent noteOn : events.getNoteOnEvents()) {
         Set<NoteOnEvent> playing = playingNotes.get(noteOn.note.getValue());
         if (playing == null) {
           playing = new HashSet<>();
+          playingNotes.put(noteOn.note.getValue(), playing);
         }
+        logger.info("  adding note on to playing: " + noteOn.note);
         playing.add(noteOn);
       }
 
       // Remove every playing note corresponding to the notes off
+      // create a new note off trigger for every playing note
       for (NoteOffEvent noteOff : events.getNoteOffEvents()) {
         final Set<NoteOnEvent> playing = playingNotes.get(noteOff.note.getValue());
+        logger.info("  turning off currently playing notes: " + playing);
         if (playing != null) {
-          final long tickOff = noteOff.event.getTick();
           for (NoteOnEvent noteOn : playing) {
-            new NoteOffTrigger(ac, noteOff.event.getTick() - noteOn.tickStart, noteOn);
+            new NoteOffTrigger(ac, ticksToMs(entry.getKey()), noteOn);
           }
           playing.clear();
         }
@@ -119,6 +124,7 @@ public class Sequencer extends MidiParser {
       super(context, delay);
       this.onEvent = onEvent;
       context.out.addDependent(this);
+      logger.info("  Note off trigger: note: " + onEvent.note + ", delay: " + delay);
     }
 
     @Override

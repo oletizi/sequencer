@@ -41,7 +41,7 @@ public class SequencerTest {
     ac.out.addDependent(recorder);
     recorder.addInput(ac.out);
 
-    midiSource = ClassLoader.getSystemResource("midi/wurli3.mid");
+    midiSource = ClassLoader.getSystemResource("midi/wurli4.mid");
     sampleDirectory = new File(ClassLoader.getSystemResource("samples/piano").getFile());
     reader = new StandardMidiFileReader();
     sequence = reader.getSequence(midiSource);
@@ -81,7 +81,7 @@ public class SequencerTest {
     sequencer.startParser();
     sequencer.play();
     synchronized (this) {
-      wait(10 * 1000);
+      wait(60 * 1000);
     }
   }
 
