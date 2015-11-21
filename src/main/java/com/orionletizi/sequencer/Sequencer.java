@@ -4,15 +4,18 @@ import com.orionletizi.sequencer.midi.Transform;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.core.AudioContext;
+import net.beadsproject.beads.core.UGen;
 import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.ugens.DelayEvent;
+import net.beadsproject.beads.ugens.Envelope;
+import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.SamplePlayer;
 import org.jfugue.midi.MidiParser;
 import org.jfugue.theory.Note;
 
 import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.ShortMessage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -31,6 +34,7 @@ public class Sequencer extends MidiParser {
 
   private int tempo;
   private int resolution;
+  private Sequence sequence;
 
   public Sequencer(final AudioContext ac, final SamplerProgram program) {
     this(ac, program, new PassthroughTransform());
@@ -40,6 +44,10 @@ public class Sequencer extends MidiParser {
     this.ac = ac;
     this.program = program;
     this.transform = transform;
+  }
+
+  public double getMicrosecondLength() {
+    return sequence.getMicrosecondLength();
   }
 
   public void play() {
@@ -78,13 +86,14 @@ public class Sequencer extends MidiParser {
     // TODO: Make metronome configurable
     // TODO: Make metronome sensitive to tempo change events
 
-    final Metronome metronome = new Metronome(ac, this.tempo);
-    metronome.start();
+    //final Metronome metronome = new Metronome(ac, this.tempo);
+    //metronome.start();
     ac.start();
   }
 
   @Override
   public void parse(Sequence sequence) {
+    this.sequence = sequence;
     resolution = sequence.getResolution();
     super.parse(sequence);
   }
@@ -107,12 +116,14 @@ public class Sequencer extends MidiParser {
 
   @Override
   public void fireNotePressed(MidiEvent event, Note note) {
-    final MidiMessage message = event.getMessage();
+    final ShortMessage message = (ShortMessage) event.getMessage();
+    // using velocity from the midi message because the Note doesn't seem to have it set right.
+    byte velocity = (byte) message.getData2();
     note = transform.transform(note);
     super.fireNotePressed(event, note);
     final long tick = event.getTick();
     final long startTime = this.ticksToMs(tick);
-    final File sampleFile = program.getSampleFileForNote(note.getValue(), note.getOnVelocity());
+    final File sampleFile = program.getSampleFileForNote(note.getValue(), velocity);
     try {
       if (sampleFile != null && sampleFile.exists()) {
         final Sample sample = new Sample(sampleFile.getAbsolutePath());
@@ -152,6 +163,16 @@ public class Sequencer extends MidiParser {
       super(context, delay);
       this.onEvent = onEvent;
       context.out.addDependent(this);
+      final Envelope gainEnvelope = new Envelope(context, 1);
+
+      final float duration = (float) (delay - onEvent.getTickStart());
+      final float fadeTime = 1;
+
+      gainEnvelope.addSegment(1, duration - 2 * fadeTime);
+      gainEnvelope.addSegment(0, fadeTime);
+
+      onEvent.setEnvelope(gainEnvelope);
+
       logger.info("  Note off trigger: note: " + onEvent.note + ", delay: " + delay);
     }
 
@@ -202,6 +223,7 @@ public class Sequencer extends MidiParser {
     private final double tickStart;
     private final Note note;
     private final SamplePlayer player;
+    private final Gain gain;
     private boolean triggered = false;
 
     public NoteOnEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
@@ -211,14 +233,25 @@ public class Sequencer extends MidiParser {
       this.tickStart = tickStart;
       this.note = note;
       this.player = player;
+      gain = new Gain(context, 1);
+      gain.addInput(player);
+    }
+
+    public double getTickStart() {
+      return tickStart;
+    }
+
+    public void setEnvelope(final UGen envelope) {
+      gain.setGain(envelope);
     }
 
     @Override
     public void trigger() {
       if (!triggered) {
-        ac.out.addInput(player);
+
+        ac.out.addInput(gain);
         player.start();
-        logger.info("Note on triggered: " + this.note);
+        logger.info("Note on triggered: " + this.note + ", file: " + player.getSample().getFileName());
         triggered = true;
       }
     }

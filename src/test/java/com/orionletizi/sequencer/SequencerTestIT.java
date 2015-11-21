@@ -55,7 +55,7 @@ public class SequencerTestIT {
 
   @Test
   public void testPlayIbanezBass() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/bass1.mid"), new File(ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz").getFile()),
+    testPlay(ClassLoader.getSystemResource("midi/bass3.mid"), new File(ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz").getFile()),
         new Transpose(0));
   }
 
@@ -86,8 +86,9 @@ public class SequencerTestIT {
     sequencer.parse(sequence);
     sequencer.startParser();
     sequencer.play();
+
     synchronized (this) {
-      wait(10 * 1000);
+      wait(30 * 1000);
     }
   }
 

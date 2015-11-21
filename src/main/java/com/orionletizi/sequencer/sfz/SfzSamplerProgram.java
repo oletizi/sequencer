@@ -31,7 +31,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @Override
   public File getSampleFileForNote(byte i, byte velocity) {
-    info("getSampleFileForNote(" + i + ")");
+    info("getSampleFileForNote(note: " + i + ", velocity: " + velocity + ")");
     final Sample sample = getSampleForNote(i, velocity);
     return sample == null ? null : new File(sample.getFileName());
   }
