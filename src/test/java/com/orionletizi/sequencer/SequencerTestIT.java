@@ -55,20 +55,23 @@ public class SequencerTestIT {
 
   @Test
   public void testPlayIbanezBass() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/bass1.mid"), new File(ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz").getFile()));
+    testPlay(ClassLoader.getSystemResource("midi/bass1.mid"), new File(ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz").getFile()),
+        new Transpose(0));
   }
 
   @Test
   public void testPlayMellotron() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/wurli5.mid"), new File(ClassLoader.getSystemResource("sfz/mellotron/mk2flute.sfz").getFile()));
+    testPlay(ClassLoader.getSystemResource("midi/wurli5.mid"), new File(ClassLoader.getSystemResource("sfz/mellotron/mk2flute.sfz").getFile()),
+        new Transpose(-12));
   }
 
   @Test
   public void testPlayProspector() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/prospector1.mid"), new File("/Users/orion/audiogen-data/data/songs/prospector/prospector.sfz"));
+    testPlay(ClassLoader.getSystemResource("midi/prospector1.mid"), new File("/Users/orion/audiogen-data/data/songs/prospector/prospector.sfz"),
+        new Transpose(-12));
   }
 
-  private void testPlay(final URL midiSource, final File programFile) throws Exception {
+  private void testPlay(final URL midiSource, final File programFile, Transpose transpose) throws Exception {
 
     final File sampleDirectory = programFile.getParentFile();
     //final File programFile = new File(sampleDirectory, "mk2flute.sfz");
@@ -77,7 +80,7 @@ public class SequencerTestIT {
 
     Sequence sequence = reader.getSequence(midiSource);
     // the transposition here is because Logic Pro seems to export midi notes higher than expected.
-    Sequencer sequencer = new Sequencer(ac, program, new Transpose(-12));
+    Sequencer sequencer = new Sequencer(ac, program, transpose);
 
     sequencer.startParser();
     sequencer.parse(sequence);
