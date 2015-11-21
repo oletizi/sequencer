@@ -1,5 +1,6 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.sequencer.midi.Transform;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.core.AudioContext;
@@ -24,14 +25,20 @@ public class Sequencer extends MidiParser {
 
   private final Map<Long, TickEvents> tickEvents = new TreeMap<>();
   private final AudioContext ac;
-  private final BasicSamplerProgram program;
+  private final SamplerProgram program;
+  private final Transform transform;
 
   private int tempo;
   private int resolution;
 
-  public Sequencer(final AudioContext ac, final BasicSamplerProgram program) {
+  public Sequencer(final AudioContext ac, final SamplerProgram program) {
+    this(ac, program, new PassthroughTransform());
+  }
+
+  public Sequencer(final AudioContext ac, final SamplerProgram program, final Transform transform) {
     this.ac = ac;
     this.program = program;
+    this.transform = transform;
   }
 
   public void play() {
@@ -49,7 +56,7 @@ public class Sequencer extends MidiParser {
           playing = new HashSet<>();
           playingNotes.put(noteOn.note.getValue(), playing);
         }
-        logger.info("  adding note on: " + noteOn.note);
+        logger.info("  adding note on: " + noteOn.note + ", file: " + noteOn.player.getSample().getFileName());
         playing.add(noteOn);
       }
 
@@ -99,6 +106,7 @@ public class Sequencer extends MidiParser {
 
   @Override
   public void fireNotePressed(MidiEvent event, Note note) {
+    note = transform.transform(note);
     super.fireNotePressed(event, note);
     final long tick = event.getTick();
     final long startTime = this.ticksToMs(tick);
@@ -120,6 +128,7 @@ public class Sequencer extends MidiParser {
 
   @Override
   public void fireNoteReleased(MidiEvent event, Note note) {
+    note = transform.transform(note);
     super.fireNoteReleased(event, note);
     getTickEvents(event.getTick()).addNoteOff(new NoteOffEvent(event, note));
   }
@@ -216,6 +225,14 @@ public class Sequencer extends MidiParser {
     @Override
     public String toString() {
       return "<tickStart: " + tickStart + ", note: " + note + ">";
+    }
+  }
+
+  // TODO: Figure out why Idea won't import this if it's in the midi package
+  public static class PassthroughTransform implements Transform {
+    @Override
+    public Note transform(Note note) {
+      return note;
     }
   }
 }

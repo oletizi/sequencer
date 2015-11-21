@@ -1,5 +1,7 @@
 package com.orionletizi.sequencer.sfz;
 
+import org.jfugue.theory.Note;
+
 public interface SfzParserObserver {
   void notifyGroup();
 
@@ -7,9 +9,15 @@ public interface SfzParserObserver {
 
   void notifySample(String sample);
 
-  void notifyLokey(String lokey);
+  void notifyLokey(Note lokey);
 
-  void notifyHikey(String hikey);
+  void notifyHikey(Note hikey);
 
-  void notifyPitchKeycenter(String pitchKeycenter);
+  void notifyPitchKeycenter(Note pitchKeycenter);
+
+  void notifyKey(byte key);
+
+  void notifyHivel(byte hivel);
+
+  void notifyLovel(byte lovel);
 }

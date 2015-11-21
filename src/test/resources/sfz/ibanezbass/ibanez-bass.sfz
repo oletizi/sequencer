@@ -1,0 +1,639 @@
+/////////////////////////////////////////////////////////////////////////////
+/// sfz definition file 
+/// copyright rgc:audio 2004 
+/// -------------------------------------------------------------------------
+/// Application: HighLife 
+/// Vendor: discoDSP 
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE E_ 
+
+<region>
+sample=E_1.wav 
+key=52
+lovel=111 hivel=127
+
+<region>
+sample=E_2.wav 
+key=52
+lovel=86 hivel=110
+
+<region>
+sample=E_3.wav
+key=52
+lovel=71 hivel=85
+
+<region>
+sample=E_4.wav
+key=52
+lovel=0 hivel=70
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE F_ 
+
+<region>
+sample=F_1.wav 
+key=53
+lovel=111 hivel=127
+
+<region>
+sample=F_2.wav 
+key=53
+lovel=86 hivel=110
+
+<region>
+sample=F_3.wav
+key=53
+lovel=71 hivel=85
+
+<region>
+sample=F_4.wav
+key=53
+lovel=0 hivel=70
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE FIS_ 
+
+<region>
+sample=FIS_1.wav 
+key=54
+lovel=111 hivel=127
+
+<region>
+sample=FIS_2.wav 
+key=54
+lovel=86 hivel=110
+
+<region>
+sample=FIS_3.wav
+key=54
+lovel=71 hivel=85
+
+<region>
+sample=FIS_4.wav
+key=54
+lovel=0 hivel=70
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE G_ 
+
+<region>
+sample=G_1.wav 
+key=55
+lovel=111 hivel=127
+
+<region>
+sample=G_2.wav 
+key=55
+lovel=86 hivel=110
+
+<region>
+sample=G_3.wav
+key=55
+lovel=71 hivel=85
+
+<region>
+sample=G_4.wav
+key=55
+lovel=0 hivel=70
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE GIS_ 
+
+<region>
+sample=GIS_1.wav 
+key=56
+lovel=111 hivel=127
+
+<region>
+sample=GIS_2.wav 
+key=56
+lovel=86 hivel=110
+
+<region>
+sample=GIS_3.wav
+key=56
+lovel=71 hivel=85
+
+<region>
+sample=GIS_4.wav
+key=56
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE A_ 
+
+<region>
+sample=A_1.wav 
+key=57
+lovel=111 hivel=127
+
+<region>
+sample=A_2.wav 
+key=57
+lovel=86 hivel=110
+
+<region>
+sample=A_3.wav
+key=57
+lovel=71 hivel=85
+
+<region>
+sample=A_4.wav
+key=57
+lovel=0 hivel=70
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE AIS_ 
+
+<region>
+sample=AIS_1.wav 
+key=58
+lovel=111 hivel=127
+
+<region>
+sample=AIS_2.wav 
+key=58
+lovel=86 hivel=110
+
+<region>
+sample=AIS_3.wav
+key=58
+lovel=71 hivel=85
+
+<region>
+sample=AIS_4.wav
+key=58
+lovel=0 hivel=70
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE B_ 
+
+<region>
+sample=B_1.wav 
+key=59
+lovel=111 hivel=127
+
+<region>
+sample=B_2.wav 
+key=59
+lovel=86 hivel=110
+
+<region>
+sample=B_3.wav
+key=59
+lovel=71 hivel=85
+
+<region>
+sample=B_4.wav
+key=59
+lovel=0 hivel=70
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE C_ 
+
+<region>
+sample=C_1.wav 
+key=60
+lovel=111 hivel=127
+
+<region>
+sample=C_2.wav 
+key=60
+lovel=86 hivel=110
+
+<region>
+sample=C_3.wav
+key=60
+lovel=71 hivel=85
+
+<region>
+sample=C_4.wav
+key=60
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE CIS_ 
+
+<region>
+sample=CIS_1.wav 
+key=61
+lovel=111 hivel=127
+
+<region>
+sample=CIS_2.wav 
+key=61
+lovel=86 hivel=110
+
+<region>
+sample=CIS_3.wav
+key=61
+lovel=71 hivel=85
+
+<region>
+sample=CIS_4.wav
+key=61
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE D_ 
+
+<region>
+sample=D_1.wav 
+key=62
+lovel=111 hivel=127
+
+<region>
+sample=D_2.wav 
+key=62
+lovel=86 hivel=110
+
+<region>
+sample=D_3.wav
+key=62
+lovel=71 hivel=85
+
+<region>
+sample=D_4.wav
+key=62
+lovel=0 hivel=70
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE DIS_ 
+
+<region>
+sample=DIS_1.wav 
+key=63
+lovel=111 hivel=127
+
+<region>
+sample=DIS_2.wav 
+key=63
+lovel=86 hivel=110
+
+<region>
+sample=DIS_3.wav
+key=63
+lovel=71 hivel=85
+
+<region>
+sample=DIS_4.wav
+key=63
+lovel=0 hivel=70
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE E_ 
+
+<region>
+sample=E1_1.wav 
+key=64
+lovel=111 hivel=127
+
+<region>
+sample=E1_2.wav 
+key=64
+lovel=86 hivel=110
+
+<region>
+sample=E1_3.wav
+key=64
+lovel=71 hivel=85
+
+<region>
+sample=E1_4.wav
+key=64
+lovel=0 hivel=70
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE F_ 
+
+<region>
+sample=F1_1.wav 
+key=65
+lovel=111 hivel=127
+
+<region>
+sample=F1_2.wav 
+key=65
+lovel=86 hivel=110
+
+<region>
+sample=F1_3.wav
+key=65
+lovel=71 hivel=85
+
+<region>
+sample=F1_4.wav
+key=65
+lovel=0 hivel=70
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE FIS_ 
+
+<region>
+sample=FIS1_1.wav 
+key=66
+lovel=111 hivel=127
+
+<region>
+sample=FIS1_2.wav 
+key=66
+lovel=86 hivel=110
+
+<region>
+sample=FIS1_3.wav
+key=66
+lovel=71 hivel=85
+
+<region>
+sample=FIS1_4.wav
+key=66
+lovel=0 hivel=70
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE G_ 
+
+<region>
+sample=G1_1.wav 
+key=67
+lovel=111 hivel=127
+
+<region>
+sample=G1_2.wav 
+key=67
+lovel=86 hivel=110
+
+<region>
+sample=G1_3.wav
+key=67
+lovel=71 hivel=85
+
+<region>
+sample=G1_4.wav
+key=67
+lovel=0 hivel=70
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE GIS_ 
+
+<region>
+sample=GIS1_1.wav 
+key=68
+lovel=111 hivel=127
+
+<region>
+sample=GIS1_2.wav 
+key=68
+lovel=86 hivel=110
+
+<region>
+sample=GIS1_3.wav
+key=68
+lovel=71 hivel=85
+
+<region>
+sample=GIS1_4.wav
+key=68
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE A_ 
+
+<region>
+sample=A1_1.wav 
+key=69
+lovel=111 hivel=127
+
+<region>
+sample=A1_2.wav 
+key=69
+lovel=86 hivel=110
+
+<region>
+sample=A1_3.wav
+key=69
+lovel=71 hivel=85
+
+<region>
+sample=A1_4.wav
+key=69
+lovel=0 hivel=70
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE AIS_ 
+
+<region>
+sample=AIS1_1.wav 
+key=70
+lovel=111 hivel=127
+
+<region>
+sample=AIS1_2.wav 
+key=70
+lovel=86 hivel=110
+
+<region>
+sample=AIS1_3.wav
+key=70
+lovel=71 hivel=85
+
+<region>
+sample=AIS1_4.wav
+key=70
+lovel=0 hivel=70
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE B_ 
+
+<region>
+sample=B1_1.wav 
+key=71
+lovel=111 hivel=127
+
+<region>
+sample=B1_2.wav 
+key=71
+lovel=86 hivel=110
+
+<region>
+sample=B1_3.wav
+key=71
+lovel=71 hivel=85
+
+<region>
+sample=B1_4.wav
+key=71
+lovel=0 hivel=70
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE C_ 
+
+<region>
+sample=C1_1.wav 
+key=72
+lovel=111 hivel=127
+
+<region>
+sample=C1_2.wav 
+key=72
+lovel=86 hivel=110
+
+<region>
+sample=C1_3.wav
+key=72
+lovel=71 hivel=85
+
+<region>
+sample=C1_4.wav
+key=72
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE CIS_ 
+
+<region>
+sample=CIS1_1.wav 
+key=73
+lovel=111 hivel=127
+
+<region>
+sample=CIS1_2.wav 
+key=73
+lovel=86 hivel=110
+
+<region>
+sample=CIS1_3.wav
+key=73
+lovel=71 hivel=85
+
+<region>
+sample=CIS1_4.wav
+key=73
+lovel=0 hivel=70
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE D_ 
+
+<region>
+sample=D1_1.wav 
+key=74
+lovel=111 hivel=127
+
+<region>
+sample=D1_2.wav 
+key=74
+lovel=86 hivel=110
+
+<region>
+sample=D1_3.wav
+key=74
+lovel=71 hivel=85
+
+<region>
+sample=D1_4.wav
+key=74
+lovel=0 hivel=70
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE DIS_ 
+
+<region>
+sample=DIS1_1.wav 
+key=75
+lovel=111 hivel=127
+
+<region>
+sample=DIS1_2.wav 
+key=75
+lovel=86 hivel=110
+
+<region>
+sample=DIS1_3.wav
+key=75
+lovel=71 hivel=85
+
+<region>
+sample=DIS1_4.wav
+key=75
+lovel=0 hivel=70
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Region Name: NOTE E_ 
+
+<region>
+sample=E2_1.wav 
+key=76
+lovel=111 hivel=127
+
+<region>
+sample=E2_2.wav 
+key=76
+lovel=86 hivel=110
+
+<region>
+sample=E2_3.wav
+key=76
+lovel=71 hivel=85
+
+<region>
+sample=E2_4.wav
+key=76
+lovel=0 hivel=70
+
+
+
+

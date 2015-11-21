@@ -1,0 +1,2080 @@
+{
+  "name" : "prospector",
+  "bpm" : 112.0,
+  "timeSignature" : "4/4",
+  "sections" : [ {
+    "name" : "section1",
+    "length" : 21428.5625,
+    "types" : [ "verse", "intro" ],
+    "chordStructure" : {
+      "cycles" : 4,
+      "chordSpans" : [ {
+        "beats" : 4,
+        "chord" : {
+          "name" : "I",
+          "mode" : "major"
+        },
+        "name" : null
+      }, {
+        "beats" : 2,
+        "chord" : {
+          "name" : "V",
+          "mode" : "major"
+        },
+        "name" : null
+      }, {
+        "beats" : 2,
+        "chord" : {
+          "name" : "IV",
+          "mode" : "major"
+        },
+        "name" : null
+      } ]
+    },
+    "affinities" : [ ]
+  }, {
+    "name" : "section10",
+    "length" : 8571.4375,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ {
+      "sectionName" : "section11",
+      "affinity" : 1.0
+    } ]
+  }, {
+    "name" : "section11",
+    "length" : 8571.4169921875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ {
+      "sectionName" : "section10",
+      "affinity" : 1.0
+    } ]
+  }, {
+    "name" : "section12",
+    "length" : 8571.4375,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ {
+      "sectionName" : "section13",
+      "affinity" : 1.0
+    } ]
+  }, {
+    "name" : "section13",
+    "length" : 8571.4169921875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ {
+      "sectionName" : "section12",
+      "affinity" : 1.0
+    } ]
+  }, {
+    "name" : "section14",
+    "length" : 4285.7294921875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section15",
+    "length" : 17142.875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section2",
+    "length" : 17142.85546875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section5",
+    "length" : 8571.4375,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section6",
+    "length" : 17142.85546875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section7",
+    "length" : 8571.4169921875,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section8",
+    "length" : 8571.4375,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  }, {
+    "name" : "section9",
+    "length" : 8571.4375,
+    "types" : [ ],
+    "chordStructure" : null,
+    "affinities" : [ ]
+  } ],
+  "instruments" : [ {
+    "name" : "Bass",
+    "type" : "rhythm",
+    "gain" : 0.66
+  }, {
+    "name" : "Drum",
+    "type" : "rhythm",
+    "gain" : 0.66
+  }, {
+    "name" : "Griffon",
+    "type" : "melody",
+    "gain" : 0.66
+  }, {
+    "name" : "Acoustic_Guitar",
+    "type" : "chords",
+    "gain" : 0.66
+  }, {
+    "name" : "Uke",
+    "type" : "melody",
+    "gain" : 0.66
+  }, {
+    "name" : "Organ",
+    "type" : "chords",
+    "gain" : 0.66
+  } ],
+  "parts" : [ {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section8.wav",
+    "fileName" : "Acoustic_Guitar-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section1.wav",
+    "fileName" : "Acoustic_Guitar-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section10.wav",
+    "fileName" : "Organ-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section5.wav",
+    "fileName" : "Uke-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section5.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section10.wav",
+    "fileName" : "Uke-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section1.wav",
+    "fileName" : "Drum-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section14.wav",
+    "fileName" : "Uke-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section11.wav",
+    "fileName" : "Acoustic_Guitar-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section11.wav",
+    "fileName" : "Organ-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section14.wav",
+    "fileName" : "Drum-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section13.wav",
+    "fileName" : "Drum-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section5.wav",
+    "fileName" : "Organ-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section5.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section13.wav",
+    "fileName" : "Bass-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section13.wav",
+    "fileName" : "Uke-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section12.wav",
+    "fileName" : "Bass-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section9.wav",
+    "fileName" : "Acoustic_Guitar-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section13.wav",
+    "fileName" : "Organ-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section11.wav",
+    "fileName" : "Bass-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section12.wav",
+    "fileName" : "Drum-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section2.wav",
+    "fileName" : "Uke-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section1.wav",
+    "fileName" : "Bass-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section6.wav",
+    "fileName" : "Drum-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section15.wav",
+    "fileName" : "Drum-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section14.wav",
+    "fileName" : "Acoustic_Guitar-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section15.wav",
+    "fileName" : "Uke-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section9.wav",
+    "fileName" : "Griffon-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section13.wav",
+    "fileName" : "Griffon-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section5.wav",
+    "fileName" : "Acoustic_Guitar-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section5.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section12.wav",
+    "fileName" : "Uke-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section8.wav",
+    "fileName" : "Griffon-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section9.wav",
+    "fileName" : "Uke-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section9.wav",
+    "fileName" : "Bass-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section12.wav",
+    "fileName" : "Griffon-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section10.wav",
+    "fileName" : "Bass-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section1.wav",
+    "fileName" : "Griffon-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section7.wav",
+    "fileName" : "Organ-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section8.wav",
+    "fileName" : "Uke-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section12.wav",
+    "fileName" : "Acoustic_Guitar-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section9.wav",
+    "fileName" : "Organ-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section1.wav",
+    "fileName" : "Uke-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section7.wav",
+    "fileName" : "Uke-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section2.wav",
+    "fileName" : "Organ-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section7.wav",
+    "fileName" : "Acoustic_Guitar-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section9",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section9.wav",
+    "fileName" : "Drum-A-section9.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section9.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section10.wav",
+    "fileName" : "Griffon-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section11.wav",
+    "fileName" : "Griffon-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section14.wav",
+    "fileName" : "Organ-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section2.wav",
+    "fileName" : "Acoustic_Guitar-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section2.wav",
+    "fileName" : "Drum-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section7.wav",
+    "fileName" : "Griffon-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section5.wav",
+    "fileName" : "Griffon-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section5.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section6.wav",
+    "fileName" : "Bass-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section11.wav",
+    "fileName" : "Uke-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section5.wav",
+    "fileName" : "Drum-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section5.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section10.wav",
+    "fileName" : "Acoustic_Guitar-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section13",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section12",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section13.wav",
+    "fileName" : "Acoustic_Guitar-A-section13.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section13.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section10",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section11",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section10.wav",
+    "fileName" : "Drum-A-section10.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section10.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section7.wav",
+    "fileName" : "Bass-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section12",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section13",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section12.wav",
+    "fileName" : "Organ-A-section12.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section12.wav"
+  }, {
+    "instrument" : {
+      "name" : "Uke",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section6.wav",
+    "fileName" : "Uke-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Uke-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section6.wav",
+    "fileName" : "Griffon-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section11",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ {
+        "sectionName" : "section10",
+        "affinity" : 1.0
+      } ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section11.wav",
+    "fileName" : "Drum-A-section11.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section11.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section15.wav",
+    "fileName" : "Organ-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section8.wav",
+    "fileName" : "Bass-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section6.wav",
+    "fileName" : "Acoustic_Guitar-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section2.wav",
+    "fileName" : "Bass-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section8.wav",
+    "fileName" : "Organ-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section14.wav",
+    "fileName" : "Bass-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section1",
+      "length" : 21428.5625,
+      "types" : [ "verse", "intro" ],
+      "chordStructure" : {
+        "cycles" : 4,
+        "chordSpans" : [ {
+          "beats" : 4,
+          "chord" : {
+            "name" : "I",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "V",
+            "mode" : "major"
+          },
+          "name" : null
+        }, {
+          "beats" : 2,
+          "chord" : {
+            "name" : "IV",
+            "mode" : "major"
+          },
+          "name" : null
+        } ]
+      },
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section1.wav",
+    "fileName" : "Organ-A-section1.wav",
+    "lengthMillis" : 21428.5625,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section1.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section15.wav",
+    "fileName" : "Griffon-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section15.wav",
+    "fileName" : "Bass-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Acoustic_Guitar",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section15",
+      "length" : 17142.875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section15.wav",
+    "fileName" : "Acoustic_Guitar-A-section15.wav",
+    "lengthMillis" : 17142.875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Acoustic_Guitar-A-section15.wav"
+  }, {
+    "instrument" : {
+      "name" : "Organ",
+      "type" : "chords",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section6",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section6.wav",
+    "fileName" : "Organ-A-section6.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Organ-A-section6.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section7",
+      "length" : 8571.4169921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section7.wav",
+    "fileName" : "Drum-A-section7.wav",
+    "lengthMillis" : 8571.4169921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section7.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section14",
+      "length" : 4285.7294921875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section14.wav",
+    "fileName" : "Griffon-A-section14.wav",
+    "lengthMillis" : 4285.7294921875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section14.wav"
+  }, {
+    "instrument" : {
+      "name" : "Drum",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section8",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section8.wav",
+    "fileName" : "Drum-A-section8.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Drum-A-section8.wav"
+  }, {
+    "instrument" : {
+      "name" : "Griffon",
+      "type" : "melody",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section2",
+      "length" : 17142.85546875,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section2.wav",
+    "fileName" : "Griffon-A-section2.wav",
+    "lengthMillis" : 17142.85546875,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Griffon-A-section2.wav"
+  }, {
+    "instrument" : {
+      "name" : "Bass",
+      "type" : "rhythm",
+      "gain" : 0.66
+    },
+    "variation" : {
+      "name" : "A"
+    },
+    "section" : {
+      "name" : "section5",
+      "length" : 8571.4375,
+      "types" : [ ],
+      "chordStructure" : null,
+      "affinities" : [ ]
+    },
+    "partURL" : "file:/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section5.wav",
+    "fileName" : "Bass-A-section5.wav",
+    "lengthMillis" : 8571.4375,
+    "intensity" : 0.5,
+    "fileSize" : 0,
+    "filePath" : "/Users/orion/audiogen-data/data/songs/prospector/Bass-A-section5.wav"
+  } ],
+  "gain" : 0.66,
+  "intensityEnvelopeOptions" : [ ]
+}

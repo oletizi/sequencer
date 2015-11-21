@@ -1,0 +1,119 @@
+[
+  {
+    "name": "section1",
+    "types": [
+      "intro",
+      "verse"
+    ],
+    "chordStructure": {
+      "cycles": 4,
+      "chordSpans": [
+        {
+          "beats": 4,
+          "chord": {
+            "name": "I",
+            "mode": "major"
+          }
+        },
+        {
+          "beats": 2,
+          "chord": {
+            "name": "V",
+            "mode": "major"
+          }
+        },
+        {
+          "beats": 2,
+          "chord": {
+            "name": "IV",
+            "mode": "major"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "section10",
+    "types": [],
+    "chordStructure": null,
+    "affinities": [
+      {
+        "sectionName": "section11",
+        "affinity": 1.0
+      }
+    ]
+  },
+  {
+    "name": "section11",
+    "types": [],
+    "chordStructure": null,
+    "affinities": [
+      {
+        "sectionName": "section10",
+        "affinity": 1.0
+      }
+    ]
+  },
+  {
+    "name": "section12",
+    "types": [],
+    "chordStructure": null,
+    "affinities": [
+      {
+        "sectionName": "section13",
+        "affinity": 1.0
+      }
+    ]
+  },
+  {
+    "name": "section13",
+    "types": [],
+    "chordStructure": null,
+    "affinities": [
+      {
+        "sectionName": "section12",
+        "affinity": 1.0
+      }
+    ]
+  },
+  {
+    "name": "section14",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section15",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section2",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section5",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section6",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section7",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section8",
+    "types": [],
+    "chordStructure": null
+  },
+  {
+    "name": "section9",
+    "types": [],
+    "chordStructure": null
+  }
+]

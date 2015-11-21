@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Bass",
+    "type": "rhythm",
+    "gain": 0.66
+  },
+  {
+    "name": "Drum",
+    "type": "rhythm",
+    "gain": 0.66
+  },
+  {
+    "name": "Griffon",
+    "type": "melody",
+    "gain": 0.66
+  },
+  {
+    "name": "Acoustic_Guitar",
+    "type": "chords",
+    "gain": 0.66
+  },
+  {
+    "name": "Uke",
+    "type": "melody",
+    "gain": 0.66
+  },
+  {
+    "name": "Organ",
+    "type": "chords",
+    "gain": 0.66
+  }
+]

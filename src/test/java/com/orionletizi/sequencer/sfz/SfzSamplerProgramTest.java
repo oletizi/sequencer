@@ -39,5 +39,4 @@ public class SfzSamplerProgramTest {
     final Sample actual = program.getSampleForNote(new Note("A2").getValue());
     assertEquals(expected.getFileName(), actual.getFileName());
   }
-
 }
