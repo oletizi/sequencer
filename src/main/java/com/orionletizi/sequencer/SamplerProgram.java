@@ -8,9 +8,9 @@ import java.io.File;
  * Created by orion on 11/16/15.
  */
 public interface SamplerProgram {
-  File getSampleFileForNoteName(String noteString);
+  File getSampleFileForNoteName(String noteString, byte velocity);
 
-  File getSampleFileForNote(byte i);
+  File getSampleFileForNote(byte i, byte velocity);
 
-  Sample getSampleForNote(byte i);
+  Sample getSampleForNote(byte i, byte velocity);
 }

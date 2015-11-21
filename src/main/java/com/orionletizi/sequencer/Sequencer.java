@@ -11,6 +11,7 @@ import org.jfugue.midi.MidiParser;
 import org.jfugue.theory.Note;
 
 import javax.sound.midi.MidiEvent;
+import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Sequence;
 import java.io.File;
 import java.io.IOException;
@@ -106,12 +107,12 @@ public class Sequencer extends MidiParser {
 
   @Override
   public void fireNotePressed(MidiEvent event, Note note) {
+    final MidiMessage message = event.getMessage();
     note = transform.transform(note);
     super.fireNotePressed(event, note);
     final long tick = event.getTick();
     final long startTime = this.ticksToMs(tick);
-//logger.info("notePressed: tick: " + tick + ", start time: " + startTime + ", note: " + note + ", duration: " + note.getDuration());
-    final File sampleFile = program.getSampleFileForNote(note.getValue());
+    final File sampleFile = program.getSampleFileForNote(note.getValue(), note.getOnVelocity());
     try {
       if (sampleFile != null && sampleFile.exists()) {
         final Sample sample = new Sample(sampleFile.getAbsolutePath());

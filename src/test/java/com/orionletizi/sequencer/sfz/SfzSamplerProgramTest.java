@@ -1,5 +1,6 @@
 package com.orionletizi.sequencer.sfz;
 
+import com.sun.org.apache.bcel.internal.util.ClassLoader;
 import net.beadsproject.beads.data.Sample;
 import org.jfugue.theory.Note;
 import org.junit.Before;
@@ -33,10 +34,37 @@ public class SfzSamplerProgramTest {
 
     final File file = new File(ClassLoader.getSystemResource("sfz/mellotron/A2.wav").getFile());
 
-    assertEquals(file, program.getSampleFileForNoteName("A2"));
-    assertEquals(file, program.getSampleFileForNote(new Note("A2").getValue()));
+    assertEquals(file, program.getSampleFileForNoteName("A2", (byte) 127));
+    assertEquals(file, program.getSampleFileForNote(new Note("A2").getValue(), (byte) 127));
     final Sample expected = new Sample(file.getAbsolutePath());
-    final Sample actual = program.getSampleForNote(new Note("A2").getValue());
+    final Sample actual = program.getSampleForNote(new Note("A2").getValue(), (byte) 127);
     assertEquals(expected.getFileName(), actual.getFileName());
+  }
+
+  @Test
+  public void testNoteAndVelocity() throws Exception {
+    programRoot = new File(ClassLoader.getSystemResource("sfz/ibanezbass/").getFile());
+    programResource = ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz");
+    program = new SfzSamplerProgram(programRoot);
+    parser.addObserver(program);
+    parser.parse(programResource);
+
+    File file = new File(programRoot, "E_1.wav");
+    testSampleFile((byte) 52, file, 111, 127);
+
+    file = new File(programRoot, "E_2.wav");
+    testSampleFile((byte) 52, file, 86, 110);
+
+    file = new File(programRoot, "E_3.wav");
+    testSampleFile((byte) 52, file, 71, 85);
+
+    file = new File(programRoot, "E_4.wav");
+    testSampleFile((byte) 52, file, 0, 70);
+  }
+
+  private void testSampleFile(byte note, File file, int lovel, int hivel) {
+    for (int b = (byte) lovel; b <= hivel; b++) {
+      assertEquals(file, program.getSampleFileForNote(note, (byte) b));
+    }
   }
 }

@@ -6,11 +6,10 @@ import org.jfugue.theory.Note;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
-  private final Region[] regions = new Region[128];
+  private final Region[][] regions = new Region[128][128];
   private final File sampleBase;
   private Region currentRegion;
 
@@ -18,27 +17,30 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     this.sampleBase = sampleBase;
     final Region nullRegion = new Region();
     for (int i = 0; i < regions.length; i++) {
-      regions[i] = nullRegion;
+      for (int j = 0; j > regions[i].length; j++) {
+        regions[i][j] = nullRegion;
+      }
     }
   }
 
   @Override
-  public File getSampleFileForNoteName(String noteString) {
+  public File getSampleFileForNoteName(String noteString, byte velocity) {
     final Note note = new Note(noteString);
-    return getSampleFileForNote(note.getValue());
+    return getSampleFileForNote(note.getValue(), velocity);
   }
 
   @Override
-  public File getSampleFileForNote(byte i) {
-    final Region region = regions[i];
-    info("getSampleFileForNote(" + i + "), regions: " + Arrays.deepToString(regions));
-    final Sample sample = region.getSample();
+  public File getSampleFileForNote(byte i, byte velocity) {
+    info("getSampleFileForNote(" + i + ")");
+    final Sample sample = getSampleForNote(i, velocity);
     return sample == null ? null : new File(sample.getFileName());
   }
 
   @Override
-  public Sample getSampleForNote(byte i) {
-    return regions[i].getSample();
+  public Sample getSampleForNote(byte i, byte velocity) {
+    info("getSampleForNote: note: " + i + ", velocity: " + velocity);
+    final Region region = regions[i][velocity];
+    return region == null ? null : region.getSample();
   }
 
   @Override
@@ -50,8 +52,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   public void notifyRegion() {
     // we're done with the previous region. Plop it in the regions array across it's range.
     if (currentRegion != null) {
-      int lokey = 127;
-      int hikey = 0;
+      byte lokey = 127;
+      byte hikey = 0;
+      Note key = currentRegion.getKey();
+      byte hivel = currentRegion.getHivel();
+      byte lovel = currentRegion.getLovel();
       if (currentRegion.getLokey() != null) {
         lokey = currentRegion.getLokey().getValue();
       }
@@ -59,11 +64,21 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
         hikey = currentRegion.getHikey().getValue();
       }
 
-      info("lokey: " + lokey + ", hikey: " + hikey);
-      for (int i = lokey; i <= hikey; i++) {
-        info("placing region in " + i + ": " + currentRegion);
-        regions[i] = currentRegion;
+      info("key: " + key + ", lokey: " + lokey + ", hikey: " + hikey + ", lovel: " + lovel + ", hivel: " + hivel);
+      if (key != null) {
+        final byte value = key.getValue();
+        //while (velocity <= hivel) {
+        for (int velocity = lovel; velocity <= hivel; velocity++) {
+          regions[value][velocity] = currentRegion;
+        }
+      } else {
+        for (int i = lokey; i <= hikey; i++) {
+          for (int velocity = lovel; velocity <= hivel; velocity++) {
+            regions[i][velocity] = currentRegion;
+          }
+        }
       }
+
     }
 
     // start a new Region.
@@ -121,10 +136,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private class Region {
     private Note hikey;
     private Note lokey;
+    private Note key;
+
     private Sample sample;
-    private byte key;
-    private byte hivel;
-    private byte lovel;
+    private byte hivel = 127;
+    private byte lovel = 0;
 
     public Note getHikey() {
       return hikey;
@@ -158,7 +174,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
 
     public void setKey(byte key) {
-      this.key = key;
+      this.key = new Note(key);
     }
 
     public void setHivel(byte hivel) {
@@ -167,6 +183,18 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     public void setLovel(byte lovel) {
       this.lovel = lovel;
+    }
+
+    public byte getHivel() {
+      return hivel;
+    }
+
+    public byte getLovel() {
+      return lovel;
+    }
+
+    public Note getKey() {
+      return key;
     }
   }
 }
