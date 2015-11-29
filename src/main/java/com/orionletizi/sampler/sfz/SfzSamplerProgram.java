@@ -148,6 +148,16 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     throw new RuntimeException("Implement me");
   }
 
+  @Override
+  public void notifyLoopMode(String loopMode) {
+    throw new RuntimeException("Implement me");
+  }
+
+  @Override
+  public void notifyOffBy(String offBy) {
+    throw new RuntimeException("Implement me");
+  }
+
   private class Region {
     private Note hikey;
     private Note lokey;

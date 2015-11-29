@@ -116,6 +116,16 @@ public class SfzParser {
           final String groupNumber = nextToken(line);
           composite.notifyGroupNumber(groupNumber);
           line = shift(groupNumber, line);
+        } else if (line.startsWith("loop_mode")) {
+          line = line.substring("loop_mode=".length());
+          final String loopMode = nextToken(line);
+          composite.notifyLoopMode(loopMode);
+          line = shift(loopMode, line);
+        } else if (line.startsWith("off_by")) {
+          line = line.substring("off_by=".length());
+          final String offBy = nextToken(line);
+          composite.notifyOffBy(offBy);
+          line = shift(offBy, line);
         } else {
           line = shift(line);
         }
@@ -247,6 +257,20 @@ public class SfzParser {
         observer.notifyGroupNumber(groupNumber);
       }
 
+    }
+
+    @Override
+    public void notifyLoopMode(String loopMode) {
+      for (SfzParserObserver observer : observers) {
+        observer.notifyLoopMode(loopMode);
+      }
+    }
+
+    @Override
+    public void notifyOffBy(String offBy) {
+      for (SfzParserObserver observer : observers) {
+        observer.notifyOffBy(offBy);
+      }
     }
   }
 }
