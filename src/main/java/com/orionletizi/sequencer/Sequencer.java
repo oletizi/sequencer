@@ -1,6 +1,7 @@
 package com.orionletizi.sequencer;
 
-import com.orionletizi.sequencer.midi.Transform;
+import com.orionletizi.com.orionletizi.midi.Transform;
+import com.orionletizi.sampler.SamplerProgram;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.core.AudioContext;

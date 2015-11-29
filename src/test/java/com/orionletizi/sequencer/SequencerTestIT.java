@@ -1,8 +1,8 @@
 package com.orionletizi.sequencer;
 
-import com.orionletizi.sequencer.midi.Transpose;
-import com.orionletizi.sequencer.sfz.SfzParser;
-import com.orionletizi.sequencer.sfz.SfzSamplerProgram;
+import com.orionletizi.com.orionletizi.midi.Transpose;
+import com.orionletizi.sampler.sfz.SfzParser;
+import com.orionletizi.sampler.sfz.SfzSamplerProgram;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import com.sun.media.sound.StandardMidiFileReader;
