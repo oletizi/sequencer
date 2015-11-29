@@ -1,5 +1,6 @@
 package com.orionletizi.com.orionletizi.midi.device;
 
+import com.orionletizi.sampler.sfz.SfzParser;
 import com.orionletizi.sampler.sfz.SfzSampler;
 import com.orionletizi.sampler.sfz.SfzSamplerProgram;
 
@@ -48,7 +49,7 @@ public class MidiAdapter implements Receiver {
     final URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
     info("Got program resource: " + programResource);
 
-    final SfzSamplerProgram program = new SfzSamplerProgram(programResource, new File(programResource.getFile()));
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, new File(programResource.getFile()));
     info("Got program: " + programResource);
 
     final SfzSampler sampler = new SfzSampler(program);

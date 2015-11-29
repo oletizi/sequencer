@@ -7,28 +7,68 @@ import org.jfugue.theory.Note;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
-  private final Region[][] regions = new Region[128][128];
+  private enum Scope {
+    global,
+    group,
+    region
+  }
+
   private final File sampleBase;
-  private Region currentRegion;
+  private final Region[][] regions = new Region[128][128];
+  private final Set<Group> allGroups = new HashSet<>();
+  private final Map<Byte, Group> groupByNote = new HashMap<>();
+  private final Map<String, Group> groupById = new HashMap<>();
+  //private final Map<Group, Set<String>> groupOffBy = new HashMap<>();
+  private Group currentGroup; //= new Group();
+  private Region currentRegion; //= new Region(currentGroup);
+  private Scope scope = Scope.global;
 
-  public SfzSamplerProgram(final URL programResource, final File sampleBase) throws IOException, SfzParserException {
-    info("Creating parser...");
-    final SfzParser parser = new SfzParser();
-    info("Created parser: " + parser);
-
+  public SfzSamplerProgram(final SfzParser parser, final URL programResource, final File sampleBase) throws IOException, SfzParserException {
+    assert sampleBase != null;
+    assert sampleBase.exists();
+    assert sampleBase.isDirectory();
+    this.sampleBase = sampleBase;
     parser.addObserver(this);
     info("Added self as an observer.");
-    info("parsing program resource: " + programResource);
+    info("parsing program: " + programResource);
     parser.parse(programResource);
-    info("done parsing programe resource.");
-    this.sampleBase = sampleBase;
-    final Region nullRegion = new Region();
-    for (int i = 0; i < regions.length; i++) {
-      for (int j = 0; j > regions[i].length; j++) {
-        regions[i][j] = nullRegion;
+    commitGroup();
+    commitRegion();
+    prepareGroups();
+    info("done parsing program.");
+  }
+
+  private void prepareGroups() {
+    for (Group group : allGroups) {
+      // set the low and high keys range to keys, if they aren't set yet.
+      if (group.getHikey() != null & group.getLokey() != null) {
+        final byte min = group.getLokey().getValue();
+        final byte max = group.getHikey().getValue();
+        for (int i = min; i <= max; i++) {
+          group.addKey((byte) i);
+        }
+      }
+
+      // put the group in groupByNote across its keyspan
+      for (Note key : group.getKeys()) {
+        groupByNote.put(key.getValue(), group);
+      }
+
+      // setup the offBy stuff
+      for (String groupId : group.getOffByGroups()) {
+        info("looking for off-by group: " + groupId);
+        final Group offByGroup = groupById.get(groupId);
+        if (offByGroup != null) {
+          info("setting off group: offgroup: " + group.getGroupId() + ", offbygroup: " + offByGroup.getGroupId());
+          offByGroup.addOffGroup(group);
+        }
       }
     }
   }
@@ -54,45 +94,98 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
+  public Set<Byte> getOffNotesForNoteOn(byte note, byte velocity) {
+    final Set<Byte> rv = new HashSet<>();
+    // Find all the groups that should be turned off by this on note
+    // XXX: This is probably wrong. It's probably allowed to have more than one group per note
+    final Group group = groupByNote.get(note);
+    if (group != null) {
+      final Set<Group> offGroups = group.getOffGroups();
+      for (Group offGroup : offGroups) {
+        for (Note key : offGroup.getKeys()) {
+          rv.add(key.getValue());
+        }
+      }
+    }
+    rv.remove(note);
+    return rv;
+  }
+
+  @Override
+  public Set<Byte> getNotesForNoteOff(byte note, byte onVelocity, byte offVelocity) {
+    final Set<Byte> rv = new HashSet<>();
+
+    final Region region = regions[note][onVelocity];
+    if (region != null) {
+      final String loopMode = region.getLoopMode();
+      if (!"one_shot".equals(loopMode)) {
+        rv.add(note);
+      }
+    }
+    // XXX: This is wrong. The loop mode of the individual region should have priority over the
+    // loop mode of the group
+    final Group group = groupByNote.get(note);
+    if (group != null) {
+      final String loopMode = group.getLoopMode();
+      if (!"one_shot".equals(loopMode)) {
+        rv.add(note);
+      }
+    }
+    return rv;
+  }
+
+  @Override
   public void notifyGroup() {
-    // TODO: Support multiple groups.
+    setScope(Scope.group);
+    commitGroup();
+    currentGroup = new Group();
+  }
+
+  private void commitGroup() {
+    if (currentGroup != null) {
+      allGroups.add(currentGroup);
+    }
   }
 
   @Override
   public void notifyRegion() {
-    // we're done with the previous region. Plop it in the regions array across it's range.
+    //scope = Scope.region;
+    setScope(Scope.region);
+    commitRegion();
+    info("new region");
+    if (currentGroup == null) {
+      currentGroup = new Group();
+    }
+    currentRegion = new Region(currentGroup);
+  }
+
+  private void setScope(final Scope scope) {
+    info("change scope from " + this.scope + " to " + scope);
+    this.scope = scope;
+  }
+
+  private void commitRegion() {
     if (currentRegion != null) {
-      byte lokey = 127;
-      byte hikey = 0;
-      Note key = currentRegion.getKey();
-      byte hivel = currentRegion.getHivel();
-      byte lovel = currentRegion.getLovel();
-      if (currentRegion.getLokey() != null) {
-        lokey = currentRegion.getLokey().getValue();
-      }
-      if (currentRegion.getHikey() != null) {
-        hikey = currentRegion.getHikey().getValue();
+
+      if (currentRegion.getLokey() != null && currentRegion.getHikey() != null) {
+        byte min = currentRegion.getLokey().getValue();
+        byte max = currentRegion.getHikey().getValue();
+        for (int i = min; i <= max; i++) {
+          currentRegion.addKey((byte) i);
+        }
       }
 
-      info("key: " + key + ", lokey: " + lokey + ", hikey: " + hikey + ", lovel: " + lovel + ", hivel: " + hivel);
-      if (key != null) {
-        final byte value = key.getValue();
-        //while (velocity <= hivel) {
+      byte hivel = currentRegion.getHivel();
+      byte lovel = currentRegion.getLovel();
+
+      //info("keys: " + key + ", lokey: " + lokey + ", hikey: " + hikey + ", lovel: " + lovel + ", hivel: " + hivel);
+      for (Note key : currentRegion.getKeys()) {
+        byte value = key.getValue();
         for (int velocity = lovel; velocity <= hivel; velocity++) {
           regions[value][velocity] = currentRegion;
         }
-      } else {
-        for (int i = lokey; i <= hikey; i++) {
-          for (int velocity = lovel; velocity <= hivel; velocity++) {
-            regions[i][velocity] = currentRegion;
-          }
-        }
       }
-
     }
-
-    // start a new Region.
-    currentRegion = new Region();
   }
 
   @Override
@@ -112,14 +205,28 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @Override
   public void notifyLokey(Note lokey) {
-    currentRegion.setLokey(lokey);
-    info("Notify lokey: " + lokey + ", currentRegion: " + currentRegion);
+    switch (scope) {
+      case group:
+        currentGroup.setLokey(lokey);
+        break;
+      case region:
+        currentRegion.setLokey(lokey);
+        break;
+    }
+    info("Notify lokey: " + lokey + ", currentGroup: " + currentGroup + ", currentRegion: " + currentRegion);
   }
 
   @Override
   public void notifyHikey(Note hikey) {
-    currentRegion.setHikey(hikey);
-    info("Notify hikey: " + hikey + ", currentRegion: " + currentRegion);
+    switch (scope) {
+      case group:
+        currentGroup.setHikey(hikey);
+        break;
+      case region:
+        currentRegion.setHikey(hikey);
+        break;
+    }
+    info("Notify hikey: " + hikey + ", currentGroup: " + currentGroup + ", currentRegion: " + currentRegion);
   }
 
   @Override
@@ -129,8 +236,15 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @Override
   public void notifyKey(byte key) {
-    currentRegion.setKey(key);
-    info("Notify key: " + key + ", currentRegion: " + currentRegion);
+    switch (scope) {
+      case group:
+        currentGroup.addKey(key);
+        break;
+      case region:
+        currentRegion.addKey(key);
+        break;
+    }
+    info("Notify keys: " + key + ", currentRegion: " + currentRegion);
   }
 
   @Override
@@ -144,28 +258,46 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public void notifyGroupNumber(String groupNumber) {
-    throw new RuntimeException("Implement me");
+  public void notifyGroupId(String groupId) {
+    final Group group = groupById.get(groupId);
+    if (group != null) {
+      group.merge(currentGroup);
+      currentGroup = group;
+    } else {
+      groupById.put(groupId, currentGroup);
+      currentGroup.setGroupId(groupId);
+    }
   }
 
   @Override
   public void notifyLoopMode(String loopMode) {
-    throw new RuntimeException("Implement me");
+    switch (scope) {
+      case group:
+        currentGroup.setLoopMode(loopMode);
+        break;
+      case region:
+        currentRegion.setLoopMode(loopMode);
+        break;
+    }
   }
 
   @Override
   public void notifyOffBy(String offBy) {
-    throw new RuntimeException("Implement me");
+    if (scope.equals(Scope.group)) {
+      currentGroup.setOffByGroups(offBy);
+    }
   }
 
-  private class Region {
+
+  private class Group {
     private Note hikey;
     private Note lokey;
-    private Note key;
-
-    private Sample sample;
-    private byte hivel = 127;
-    private byte lovel = 0;
+    private Set<Note> keys = new HashSet<>();
+    private String groupId;
+    private String loopMode;
+    private Set<String> offByGroups = new HashSet<>();
+    private Set<Group> offGroups = new HashSet<>();
+    private Set<Region> regions = new HashSet<>();
 
     public Note getHikey() {
       return hikey;
@@ -183,23 +315,116 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       this.lokey = lokey;
     }
 
-    public Sample getSample() {
-      return sample;
+    public void addKey(byte key) {
+      addKey(new Note(key));
     }
 
-    public void setSample(Sample sample) {
-      this.sample = sample;
+    public void addKey(Note key) {
+      keys.add(key);
+    }
+
+    public Set<Note> getKeys() {
+      return new HashSet<>(keys);
     }
 
     @Override
     public String toString() {
       byte lokeyVal = lokey == null ? -1 : lokey.getValue();
       byte hikeyVal = hikey == null ? -1 : hikey.getValue();
-      return "[Region: lokey: " + lokey + " (val: " + lokeyVal + "), hikey: " + hikey + " (val: " + hikeyVal + "), sample: " + sample + "]";
+      return "[Group: lokey: " + lokey + " (val: " + lokeyVal + "), hikey: " + hikey + " (val: " + hikeyVal + ")]";
     }
 
-    public void setKey(byte key) {
-      this.key = new Note(key);
+    public void setGroupId(String groupId) {
+      this.groupId = groupId;
+    }
+
+    public String getGroupId() {
+      return groupId;
+    }
+
+    public void setLoopMode(String loopMode) {
+      this.loopMode = loopMode;
+    }
+
+    public void setOffByGroups(String offByGroup) {
+      this.offByGroups.add(offByGroup);
+    }
+
+    public void addRegion(Region region) {
+      this.regions.add(region);
+    }
+
+    public Set<String> getOffByGroups() {
+      return new HashSet<>(offByGroups);
+    }
+
+    public void merge(Group group) {
+      if (group.getHikey() != null) {
+        setHikey(group.getHikey());
+      }
+      if (group.getLokey() != null) {
+        setLokey(group.getLokey());
+      }
+      if (group.getGroupId() != null) {
+        setGroupId(group.getGroupId());
+      }
+      if (group.getLoopMode() != null) {
+        this.loopMode = group.getLoopMode();
+      }
+
+      keys.addAll(group.keys);
+      regions.addAll(group.regions);
+      offGroups.addAll(group.getOffGroups());
+      offByGroups.addAll(group.getOffByGroups());
+    }
+
+    public void addOffGroup(Group group) {
+      offGroups.add(group);
+    }
+
+    public Set<Group> getOffGroups() {
+      return new HashSet<>(offGroups);
+    }
+
+    public String getLoopMode() {
+      return loopMode;
+    }
+  }
+
+  private class Region extends Group {
+
+    private final Group group;
+    private Sample sample;
+    private byte hivel = 127;
+    private byte lovel = 0;
+
+    public Region(Group group) {
+      super();
+      this.group = group;
+      this.group.addRegion(this);
+    }
+
+    @Override
+    public Note getHikey() {
+      return super.getHikey() == null ? group.getHikey() : super.getHikey();
+    }
+
+    @Override
+    public Note getLokey() {
+      return super.getLokey() == null ? group.getLokey() : super.getLokey();
+    }
+
+    @Override
+    public Set<Note> getKeys() {
+      return super.getKeys().isEmpty() ? group.getKeys() : super.getKeys();
+    }
+
+    public Sample getSample() {
+      return sample;
+    }
+
+    public void setSample(Sample sample) {
+      this.sample = sample;
     }
 
     public void setHivel(byte hivel) {
@@ -216,10 +441,6 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     public byte getLovel() {
       return lovel;
-    }
-
-    public Note getKey() {
-      return key;
     }
   }
 }

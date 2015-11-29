@@ -33,6 +33,7 @@ public class SfzParser {
   }
 
   public void parse(final URL sfzResource) throws IOException, SfzParserException {
+    assert sfzResource != null;
     info("opening stream for url: " + sfzResource);
     parse(sfzResource.openStream());
   }
@@ -114,7 +115,7 @@ public class SfzParser {
         } else if (line.startsWith("group=")) {
           line = line.substring("group=".length());
           final String groupNumber = nextToken(line);
-          composite.notifyGroupNumber(groupNumber);
+          composite.notifyGroupId(groupNumber);
           line = shift(groupNumber, line);
         } else if (line.startsWith("loop_mode")) {
           line = line.substring("loop_mode=".length());
@@ -252,9 +253,9 @@ public class SfzParser {
     }
 
     @Override
-    public void notifyGroupNumber(String groupNumber) {
+    public void notifyGroupId(String groupNumber) {
       for (SfzParserObserver observer : observers) {
-        observer.notifyGroupNumber(groupNumber);
+        observer.notifyGroupId(groupNumber);
       }
 
     }

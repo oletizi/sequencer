@@ -21,7 +21,7 @@ public interface SfzParserObserver {
 
   void notifyLovel(byte lovel);
 
-  void notifyGroupNumber(String groupNumber);
+  void notifyGroupId(String groupNumber);
 
   void notifyLoopMode(String loopMode);
 

@@ -27,7 +27,7 @@ public class SfzParserTest {
     setup("program/drums/program.sfz");
     parser.parse(sfzResource);
     // make sure the hh group was parsed three times
-    verify(observer, times(3)).notifyGroupNumber("0");
+    verify(observer, times(3)).notifyGroupId("0");
     verify(observer, times(1)).notifyLoopMode("one_shot");
     verify(observer, times(3)).notifyOffBy("0");
   }
