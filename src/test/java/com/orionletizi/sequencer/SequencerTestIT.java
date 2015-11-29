@@ -75,7 +75,7 @@ public class SequencerTestIT {
 
     final File sampleDirectory = programFile.getParentFile();
     //final File programFile = new File(sampleDirectory, "mk2flute.sfz");
-    SfzSamplerProgram program = new SfzSamplerProgram(programFile.getParentFile());
+    SfzSamplerProgram program = new SfzSamplerProgram(new URL(programFile.getAbsolutePath()), programFile.getParentFile());
     new SfzParser().addObserver(program).parse(programFile);
 
     Sequence sequence = reader.getSequence(midiSource);

@@ -4,42 +4,78 @@ import org.jfugue.theory.Note;
 
 import java.io.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class SfzParser {
 
+  private enum Scope {
+    global,
+    declaration,
+    group,
+    region
+  }
+
   private final CompositeObserver composite = new CompositeObserver();
+  private final Map<String, String> variables = new HashMap<>();
+  private int currentLine;
+  private Scope scope = Scope.global;
 
   public SfzParser addObserver(SfzParserObserver o) {
     composite.addObserver(o);
     return this;
   }
 
-  public void parse(final File sfzFile) throws IOException {
+  public void parse(final File sfzFile) throws IOException, SfzParserException {
     parse(new FileInputStream(sfzFile));
   }
 
-  public void parse(final URL sfzResource) throws IOException {
+  public void parse(final URL sfzResource) throws IOException, SfzParserException {
+    info("opening stream for url: " + sfzResource);
     parse(sfzResource.openStream());
   }
 
-  public void parse(final InputStream inputStream) throws IOException {
+  private void info(String s) {
+    System.out.println(getClass().getSimpleName() + ": " + s);
+  }
+
+  public void parse(final InputStream inputStream) throws IOException, SfzParserException {
+    info("parsing input stream...");
     final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
     String line;
+    currentLine = 0;
     while ((line = in.readLine()) != null) {
+      currentLine++;
       line = stripLeadingWhitespace(line);
       if (line.startsWith("//")) {
         continue;
+      } else if (line.startsWith("#define")) {
+        scope = Scope.declaration;
+        line = shift(line);
+        final String declaration = nextToken(line);
+        line = shift(line);
+        final String value = nextToken(line);
+        line = shift(line);
+        variables.put(declaration, value);
+        scope = Scope.global;
       } else if (line.startsWith("<group>")) {
+        scope = Scope.group;
         composite.notifyGroup();
         line = shift("<group>", line);
       } else if (line.startsWith("<region>")) {
+        scope = Scope.region;
         composite.notifyRegion();
         line = shift("<region>", line);
       }
 
+      String previousLine = null;
       while (!"".equals(line)) {
+        if (line.equals(previousLine)) {
+          throw new SfzParserException("Error at line " + currentLine + ": " + line);
+        }
+        previousLine = line;
         if (line.startsWith("sample=")) {
           line = shift("sample=", line);
           final String sample = nextToken(line);
@@ -75,6 +111,11 @@ public class SfzParser {
           final String lovel = nextToken(line);
           composite.notifyLovel(Byte.valueOf(lovel));
           line = shift(lovel, line);
+        } else if (line.startsWith("group=")) {
+          line = line.substring("group=".length());
+          final String groupNumber = nextToken(line);
+          composite.notifyGroupNumber(groupNumber);
+          line = shift(groupNumber, line);
         } else {
           line = shift(line);
         }
@@ -92,19 +133,35 @@ public class SfzParser {
     return new Note(noteString);
   }
 
-  private String nextToken(String line) {
+  private String nextToken(String line) throws SfzParserException {
     final int nextSpace = line.indexOf(' ');
-    return nextSpace != -1 ? line.substring(0, line.indexOf(' ')) : line;
+    String rv = nextSpace != -1 ? line.substring(0, line.indexOf(' ')) : line;
+    if (rv.startsWith("$") && !scope.equals(Scope.declaration)) {
+      final String variable = rv;
+      rv = variables.get(rv);
+      if (rv == null) {
+        throw new SfzParserException("Undeclared variable: " + variable + " at line " + currentLine);
+      }
+    }
+    return rv;
   }
 
   // removes everything from the beginning of the line through the next contiguous whitespace
-  private String shift(String line) {
+  private String shift(String line) throws SfzParserException {
     return shift(nextToken(line), line);
   }
 
   // removes the token (if it's at the beginning of the line) through the next contiguous whitespace
-  private String shift(String token, String line) {
-    return stripLeadingWhitespace(line.replaceAll("^" + token, ""));
+  private String shift(String token, String line) throws SfzParserException {
+    if (line.startsWith(token)) {
+      line = line.substring(line.indexOf(token) + token.length());
+    } else if (line.startsWith("$")) {
+      // this was an interpolated variable--the token passed in will be the interpolated value; shift to next whitespace
+      // XXX: This recursion could result in stack overflow.
+      line = line.replaceFirst("\\$", "");
+      line = shift(line);
+    }
+    return stripLeadingWhitespace(line);
   }
 
   // removes all contiguous whitespace from the beginning of the line
@@ -182,6 +239,14 @@ public class SfzParser {
       for (SfzParserObserver observer : observers) {
         observer.notifyLovel(lovel);
       }
+    }
+
+    @Override
+    public void notifyGroupNumber(String groupNumber) {
+      for (SfzParserObserver observer : observers) {
+        observer.notifyGroupNumber(groupNumber);
+      }
+
     }
   }
 }

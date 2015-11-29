@@ -6,6 +6,7 @@ import org.jfugue.theory.Note;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
@@ -13,7 +14,16 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private final File sampleBase;
   private Region currentRegion;
 
-  public SfzSamplerProgram(final File sampleBase) {
+  public SfzSamplerProgram(final URL programResource, final File sampleBase) throws IOException, SfzParserException {
+    info("Creating parser...");
+    final SfzParser parser = new SfzParser();
+    info("Created parser: " + parser);
+
+    parser.addObserver(this);
+    info("Added self as an observer.");
+    info("parsing program resource: " + programResource);
+    parser.parse(programResource);
+    info("done parsing programe resource.");
     this.sampleBase = sampleBase;
     final Region nullRegion = new Region();
     for (int i = 0; i < regions.length; i++) {
@@ -97,7 +107,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   private void info(String s) {
-    System.out.println("INFO " + s);
+    System.out.println(getClass().getSimpleName() + ": " + s);
   }
 
   @Override
@@ -131,6 +141,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   @Override
   public void notifyLovel(byte lovel) {
     currentRegion.setLovel(lovel);
+  }
+
+  @Override
+  public void notifyGroupNumber(String groupNumber) {
+    throw new RuntimeException("Implement me");
   }
 
   private class Region {

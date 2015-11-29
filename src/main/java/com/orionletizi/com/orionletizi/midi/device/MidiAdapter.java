@@ -1,8 +1,11 @@
 package com.orionletizi.com.orionletizi.midi.device;
 
 import com.orionletizi.sampler.sfz.SfzSampler;
+import com.orionletizi.sampler.sfz.SfzSamplerProgram;
 
 import javax.sound.midi.*;
+import java.io.File;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +23,7 @@ public class MidiAdapter implements Receiver {
   }
 
   public void addReceiver(final Receiver receiver) {
+    info("adding receiver: " + receiver);
     receivers.add(receiver);
   }
 
@@ -33,12 +37,26 @@ public class MidiAdapter implements Receiver {
         break;
       }
     }
-    if (info != null) {
-      final MidiDevice device = MidiSystem.getMidiDevice(info);
-      device.open();
-      final MidiAdapter adapter = new MidiAdapter(device);
-      adapter.addReceiver(new SfzSampler());
-    }
+    final MidiDevice device = MidiSystem.getMidiDevice(info);
+    info("got midi device: " + device);
+    device.open();
+    info("opened midi device: " + device);
+
+    final MidiAdapter adapter = new MidiAdapter(device);
+    info("created midi adapter: " + adapter);
+
+    final URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
+    info("Got program resource: " + programResource);
+
+    final SfzSamplerProgram program = new SfzSamplerProgram(programResource, new File(programResource.getFile()));
+    info("Got program: " + programResource);
+
+    final SfzSampler sampler = new SfzSampler(program);
+    info("Created sampler: " + sampler);
+
+    adapter.addReceiver(sampler);
+    info("added sampler as receiver: " + sampler);
+
     final Object lock = new Object();
     synchronized (lock) {
       lock.wait();
@@ -51,7 +69,9 @@ public class MidiAdapter implements Receiver {
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
+    info("sending message to receivers: " + receivers);
     for (Receiver receiver : receivers) {
+      info("sending message " + message + " to receiver: " + receiver);
       receiver.send(message, timeStamp);
     }
   }

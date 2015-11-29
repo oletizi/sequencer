@@ -20,4 +20,6 @@ public interface SfzParserObserver {
   void notifyHivel(byte hivel);
 
   void notifyLovel(byte lovel);
+
+  void notifyGroupNumber(String groupNumber);
 }

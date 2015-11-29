@@ -1,7 +1,6 @@
 package com.orionletizi.sampler.sfz;
 
 import org.jfugue.theory.Note;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URL;
@@ -15,9 +14,8 @@ public class SfzParserTest {
   private SfzParser parser;
   private SfzParserObserver observer;
 
-  @Before
-  public void before() throws Exception {
-    sfzResource = ClassLoader.getSystemResource("sfz/mellotron/mk2flute.sfz");
+  private void setup(String resource) throws Exception {
+    sfzResource = ClassLoader.getSystemResource(resource);
     assertNotNull(sfzResource);
     parser = new SfzParser();
     observer = mock(SfzParserObserver.class);
@@ -25,9 +23,16 @@ public class SfzParserTest {
   }
 
   @Test
+  public void testDrums() throws Exception {
+    setup("program/drums/program.sfz");
+    parser.parse(sfzResource);
+    // make sure the hh group was parsed three times
+    verify(observer, times(3)).notifyGroupNumber("0");
+  }
+
+  @Test
   public void testWithKey() throws Exception {
-    sfzResource = ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz");
-    assertNotNull(sfzResource);
+    setup("sfz/ibanezbass/ibanez-bass.sfz");
     parser.parse(sfzResource);
 
     verify(observer, times(100)).notifyRegion();
@@ -38,6 +43,7 @@ public class SfzParserTest {
 
   @Test
   public void testParse() throws Exception {
+    setup("sfz/mellotron/mk2flute.sfz");
     parser.parse(sfzResource);
 
     verify(observer, times(1)).notifyGroup();
@@ -50,7 +56,7 @@ public class SfzParserTest {
 
   @Test
   public void testParseWithoutLinebreaks() throws Exception {
-    sfzResource = ClassLoader.getSystemResource("sfz/prospector/prospector.sfz");
+    setup("sfz/prospector/prospector.sfz");
     assertNotNull(sfzResource);
 
     parser.parse(sfzResource);

@@ -24,7 +24,7 @@ public class SfzSamplerProgramTest {
     programRoot = new File(ClassLoader.getSystemResource("sfz/mellotron/").getFile());
     programResource = ClassLoader.getSystemResource("sfz/mellotron/mk2flute.sfz");
     parser = new SfzParser();
-    program = new SfzSamplerProgram(programRoot);
+    program = new SfzSamplerProgram(programResource, programRoot);
   }
 
   @Test
@@ -45,7 +45,7 @@ public class SfzSamplerProgramTest {
   public void testNoteAndVelocity() throws Exception {
     programRoot = new File(ClassLoader.getSystemResource("sfz/ibanezbass/").getFile());
     programResource = ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz");
-    program = new SfzSamplerProgram(programRoot);
+    program = new SfzSamplerProgram(programResource, programRoot);
     parser.addObserver(program);
     parser.parse(programResource);
 
