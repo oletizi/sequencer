@@ -17,8 +17,6 @@ import org.jfugue.theory.Note;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class Sequencer extends MidiParser {
@@ -124,18 +122,13 @@ public class Sequencer extends MidiParser {
     super.fireNotePressed(event, note);
     final long tick = event.getTick();
     final long startTime = this.ticksToMs(tick);
-    final File sampleFile = program.getSampleFileForNote(note.getValue(), velocity);
-    try {
-      if (sampleFile != null && sampleFile.exists()) {
-        final Sample sample = new Sample(sampleFile.getAbsolutePath());
-        final SamplePlayer player = new SamplePlayer(ac, sample);
-        final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
-        getTickEvents(event.getTick()).addNoteOn(noteEvent);
-      } else {
-        logger.info("No sample for note: " + note);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    final Sample sample = program.getSampleForNote(note.getValue(), velocity);
+    if (sample != null) {
+      final SamplePlayer player = new SamplePlayer(ac, sample);
+      final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
+      getTickEvents(event.getTick()).addNoteOn(noteEvent);
+    } else {
+      logger.info("No sample for note: " + note);
     }
   }
 

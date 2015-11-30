@@ -33,18 +33,18 @@ public class SfzSamplerProgramTest {
   public void testDrums() throws Exception {
     before("program/drums/", "program/drums/program.sfz");
 
-    Set<Byte> offNotes = program.getOffNotesForNoteOn((byte) 42, (byte) 100);
+    Set<Byte> offNotes = program.getOffNotesForNoteOn((byte) 42);
     info("off notes: " + offNotes);
     assertEquals(2, offNotes.size());
     assertTrue(offNotes.contains((byte) 44));
     assertTrue(offNotes.contains((byte) 46));
 
-    offNotes = program.getNotesForNoteOff((byte) 32, (byte) 100, (byte) 100);
+    offNotes = program.getOffNotesForNoteOff((byte) 32, (byte) 100);
     // except for the hi hats, all note offs should be ignored
     assertTrue(offNotes.isEmpty());
 
     // hihats: 42, 44, 46
-    offNotes = program.getNotesForNoteOff((byte) 42, (byte) 100, (byte) 100);
+    offNotes = program.getOffNotesForNoteOff((byte) 42, (byte) 100);
     info("off notes: " + offNotes);
     assertEquals(1, offNotes.size());
     assertTrue(offNotes.contains((byte) 42));
@@ -59,14 +59,12 @@ public class SfzSamplerProgramTest {
     before("sfz/mellotron/", "sfz/mellotron/mk2flute.sfz");
     final File file = new File(ClassLoader.getSystemResource("sfz/mellotron/A2.wav").getFile());
 
-    assertEquals(file, program.getSampleFileForNoteName("A2", (byte) 127));
     final byte note = new Note("A2").getValue();
-    assertEquals(file, program.getSampleFileForNote(note, (byte) 127));
-    final Sample expected = new Sample(file.getAbsolutePath());
+    assertEquals(file.getAbsolutePath(), program.getSampleForNote(note, (byte) 127).getFileName());
     final Sample actual = program.getSampleForNote(note, (byte) 127);
-    assertEquals(expected.getFileName(), actual.getFileName());
+    assertEquals(file.getAbsolutePath(), actual.getFileName());
 
-    final Set<Byte> offNotes = program.getNotesForNoteOff(note, (byte) 100, (byte) 100);
+    final Set<Byte> offNotes = program.getOffNotesForNoteOff(note, (byte) 100);
     assertEquals(1, offNotes.size());
     assertTrue(offNotes.contains(note));
   }
@@ -90,7 +88,7 @@ public class SfzSamplerProgramTest {
 
   private void testSampleFile(byte note, File file, int lovel, int hivel) {
     for (int b = (byte) lovel; b <= hivel; b++) {
-      assertEquals(file, program.getSampleFileForNote(note, (byte) b));
+      assertEquals(file.getAbsolutePath(), program.getSampleForNote(note, (byte) b).getFileName());
     }
   }
 }

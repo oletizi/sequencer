@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
+
   private enum Scope {
     global,
     group,
@@ -26,6 +27,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private final Map<Byte, Group> groupByNote = new HashMap<>();
   private final Map<String, Group> groupById = new HashMap<>();
   //private final Map<Group, Set<String>> groupOffBy = new HashMap<>();
+  private String globalLoopMode;
   private Group currentGroup; //= new Group();
   private Region currentRegion; //= new Region(currentGroup);
   private Scope scope = Scope.global;
@@ -63,10 +65,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
       // setup the offBy stuff
       for (String groupId : group.getOffByGroups()) {
-        info("looking for off-by group: " + groupId);
+        //info("looking for off-by group: " + groupId);
         final Group offByGroup = groupById.get(groupId);
         if (offByGroup != null) {
-          info("setting off group: offgroup: " + group.getGroupId() + ", offbygroup: " + offByGroup.getGroupId());
+          //info("setting off group: offgroup: " + group.getGroupId() + ", offbygroup: " + offByGroup.getGroupId());
           offByGroup.addOffGroup(group);
         }
       }
@@ -74,27 +76,14 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public File getSampleFileForNoteName(String noteString, byte velocity) {
-    final Note note = new Note(noteString);
-    return getSampleFileForNote(note.getValue(), velocity);
-  }
-
-  @Override
-  public File getSampleFileForNote(byte i, byte velocity) {
-    info("getSampleFileForNote(note: " + i + ", velocity: " + velocity + ")");
-    final Sample sample = getSampleForNote(i, velocity);
-    return sample == null ? null : new File(sample.getFileName());
-  }
-
-  @Override
   public Sample getSampleForNote(byte i, byte velocity) {
-    info("getSampleForNote: note: " + i + ", velocity: " + velocity);
     final Region region = regions[i][velocity];
+    info("region for note on: velocity: " + velocity + ", regin: " + region);
     return region == null ? null : region.getSample();
   }
 
   @Override
-  public Set<Byte> getOffNotesForNoteOn(byte note, byte velocity) {
+  public Set<Byte> getOffNotesForNoteOn(byte note) {
     final Set<Byte> rv = new HashSet<>();
     // Find all the groups that should be turned off by this on note
     // XXX: This is probably wrong. It's probably allowed to have more than one group per note
@@ -112,19 +101,21 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public Set<Byte> getNotesForNoteOff(byte note, byte onVelocity, byte offVelocity) {
+  public Set<Byte> getOffNotesForNoteOff(byte note, byte onVelocity) {
     final Set<Byte> rv = new HashSet<>();
 
     final Region region = regions[note][onVelocity];
+    info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);
     if (region != null) {
       final String loopMode = region.getLoopMode();
-      if (!"one_shot".equals(loopMode)) {
+      if (loopMode != null && !loopMode.startsWith("one_shot")) {
         rv.add(note);
       }
     }
     // XXX: This is wrong. The loop mode of the individual region should have priority over the
     // loop mode of the group
     final Group group = groupByNote.get(note);
+    info("group for notes off: onVelocity: " + onVelocity + ", note: " + note + ", group: " + group);
     if (group != null) {
       final String loopMode = group.getLoopMode();
       if (!"one_shot".equals(loopMode)) {
@@ -136,9 +127,12 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @Override
   public void notifyGroup() {
-    setScope(Scope.group);
+    changeScope(Scope.group);
     commitGroup();
     currentGroup = new Group();
+    if (globalLoopMode != null) {
+      currentGroup.setLoopMode(globalLoopMode);
+    }
   }
 
   private void commitGroup() {
@@ -150,17 +144,17 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   @Override
   public void notifyRegion() {
     //scope = Scope.region;
-    setScope(Scope.region);
+    changeScope(Scope.region);
     commitRegion();
-    info("new region");
+    //info("new region");
     if (currentGroup == null) {
       currentGroup = new Group();
     }
     currentRegion = new Region(currentGroup);
   }
 
-  private void setScope(final Scope scope) {
-    info("change scope from " + this.scope + " to " + scope);
+  private void changeScope(final Scope scope) {
+    //info("change scope from " + this.scope + " to " + scope);
     this.scope = scope;
   }
 
@@ -193,7 +187,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     try {
       final File sampleFile = new File(sampleBase, sample);
       currentRegion.setSample(new Sample(sampleFile.getAbsolutePath()));
-      info("Notify sample: " + sampleFile + ", currentRegion: " + currentRegion);
+      //info("Notify sample: " + sampleFile + ", currentRegion: " + currentRegion);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -244,7 +238,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
         currentRegion.addKey(key);
         break;
     }
-    info("Notify keys: " + key + ", currentRegion: " + currentRegion);
+    //info("Notify key: " + key + ", currentRegion: " + currentRegion);
   }
 
   @Override
@@ -271,7 +265,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @Override
   public void notifyLoopMode(String loopMode) {
+    info("setting loop mode: " + loopMode);
     switch (scope) {
+      case global:
+        globalLoopMode = loopMode;
+        break;
       case group:
         currentGroup.setLoopMode(loopMode);
         break;
@@ -331,7 +329,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     public String toString() {
       byte lokeyVal = lokey == null ? -1 : lokey.getValue();
       byte hikeyVal = hikey == null ? -1 : hikey.getValue();
-      return "[Group: lokey: " + lokey + " (val: " + lokeyVal + "), hikey: " + hikey + " (val: " + hikeyVal + ")]";
+      return "[" + getClass().getSimpleName() + ": loopMode: " + loopMode + ", keys: " + keys;
     }
 
     public void setGroupId(String groupId) {
@@ -344,6 +342,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     public void setLoopMode(String loopMode) {
       this.loopMode = loopMode;
+      info("Set loop mode: " + loopMode + ", this: " + this);
     }
 
     public void setOffByGroups(String offByGroup) {

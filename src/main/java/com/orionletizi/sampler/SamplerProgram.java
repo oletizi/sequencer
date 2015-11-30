@@ -2,14 +2,9 @@ package com.orionletizi.sampler;
 
 import net.beadsproject.beads.data.Sample;
 
-import java.io.File;
 import java.util.Set;
 
 public interface SamplerProgram {
-  File getSampleFileForNoteName(String noteString, byte velocity);
-
-  File getSampleFileForNote(byte i, byte velocity);
-
   Sample getSampleForNote(byte i, byte velocity);
 
   /**
@@ -20,7 +15,7 @@ public interface SamplerProgram {
    * @param note
    * @return
    */
-  Set<Byte> getNotesForNoteOff(byte note, byte onVelocity, byte offVelocity);
+  Set<Byte> getOffNotesForNoteOff(byte note, byte onVelocity);
 
-  Set<Byte> getOffNotesForNoteOn(byte note, byte velocity);
+  Set<Byte> getOffNotesForNoteOn(byte note);
 }

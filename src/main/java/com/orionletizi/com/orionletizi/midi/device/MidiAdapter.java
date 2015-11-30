@@ -1,8 +1,10 @@
 package com.orionletizi.com.orionletizi.midi.device;
 
+import com.orionletizi.sampler.Sampler;
 import com.orionletizi.sampler.sfz.SfzParser;
-import com.orionletizi.sampler.sfz.SfzSampler;
 import com.orionletizi.sampler.sfz.SfzSamplerProgram;
+import net.beadsproject.beads.core.AudioContext;
+import net.beadsproject.beads.core.io.JavaSoundAudioIO;
 
 import javax.sound.midi.*;
 import java.io.File;
@@ -49,10 +51,11 @@ public class MidiAdapter implements Receiver {
     final URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
     info("Got program resource: " + programResource);
 
-    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, new File(programResource.getFile()));
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource,
+        new File(programResource.getFile()).getParentFile());
     info("Got program: " + programResource);
 
-    final SfzSampler sampler = new SfzSampler(program);
+    final Sampler sampler = new Sampler(new AudioContext(new JavaSoundAudioIO()), program);
     info("Created sampler: " + sampler);
 
     adapter.addReceiver(sampler);
@@ -65,7 +68,7 @@ public class MidiAdapter implements Receiver {
   }
 
   private static void info(String s) {
-    System.out.println(MidiAdapter.class.getSimpleName() + ": " + s);
+    //System.out.println(MidiAdapter.class.getSimpleName() + ": " + s);
   }
 
   @Override
