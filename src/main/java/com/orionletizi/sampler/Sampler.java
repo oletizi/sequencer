@@ -75,6 +75,18 @@ public class Sampler implements Receiver {
     player.pause(paused);
     player.setPosition(0);
     player.start();
+
+    // find all players than need to be turned off by this note on
+    final Set<Byte> offNotes = program.getOffNotesForNoteOn(note.getValue());
+    for (Byte offNote : offNotes) {
+      final Set<SamplePlayer> offPlayers = this.notePlayerCache.get(offNote);
+      if (offPlayers != null) {
+        for (SamplePlayer offPlayer : offPlayers) {
+          offPlayer.pause(true);
+        }
+      }
+    }
+
   }
 
   private void handleNoteOff(ShortMessage message) {
@@ -87,13 +99,10 @@ public class Sampler implements Receiver {
     }
   }
   private void noteOff(Note note) {
-    info("Note off: " + note);
     final Set<Byte> notesForNoteOff = program.getOffNotesForNoteOff(note.getValue(), note.getOnVelocity());
-    info("notes for note off: " + notesForNoteOff);
     for (Byte key : notesForNoteOff) {
       final Set<SamplePlayer> players = notePlayerCache.get(key);
       for (SamplePlayer player : players) {
-        info("Pausing player: " + player);
         player.pause(true);
         player.setToLoopStart();
       }

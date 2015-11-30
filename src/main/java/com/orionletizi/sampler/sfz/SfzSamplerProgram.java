@@ -65,7 +65,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
         final Set<Group> offByGroups = groupsById.get(groupId);
         if (offByGroups != null) {
           for (Group offByGroup : offByGroups) {
-            offByGroups.add(offByGroup);
+            offByGroup.addOffGroup(group);
           }
         }
       }
@@ -99,7 +99,6 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
         } else if (i > 0 && i + 1 < regions.size()) {
           // handle the middle regions; the lovel of the first region should be set properly by the code above
           final Region nextRegion = regions.get(i + 1);
-          info("prepare: setting lovel: this: " + region + ", next: " + region);
           nextRegion.setLovel((byte) (region.getHivel() + 1));
         } // nothing to do for the last region
       }
@@ -150,7 +149,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     final Set<Byte> rv = new HashSet<>();
 
     final Region region = regions[note][onVelocity];
-    info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);
+    //info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);
     if (region != null) {
       final String loopMode = region.getLoopMode();
       if (loopMode != null && !loopMode.startsWith("one_shot")) {
@@ -160,7 +159,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     // XXX: This is wrong. The loop mode of the individual region should have priority over the
     // loop mode of the group
     final Group group = groupByNote.get(note);
-    info("group for notes off: onVelocity: " + onVelocity + ", note: " + note + ", group: " + group);
+    //info("group for notes off: onVelocity: " + onVelocity + ", note: " + note + ", group: " + group);
     if (group != null) {
       final String loopMode = group.getLoopMode();
       if (!"one_shot".equals(loopMode)) {
@@ -373,7 +372,6 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     public void setLoopMode(String loopMode) {
       this.loopMode = loopMode;
-      info("Set loop mode: " + loopMode + ", this: " + this);
     }
 
     public void setOffByGroups(String offByGroup) {
@@ -413,9 +411,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
           .append("hikey", hikey)
           .append("lokey", lokey)
           .append("groupId", groupId)
-          .append("regions", regions)
           .append("offGroups", offGroups)
-          .append("offByGroups", offByGroups).toString();
+          .append("offByGroups", offByGroups)
+          .append("regions", regions)
+          .toString();
     }
   }
 
@@ -457,12 +456,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     public void setHivel(byte hivel) {
       this.hivel = hivel;
-      info("Set hivel: " + this);
     }
 
     public void setLovel(byte lovel) {
       this.lovel = lovel;
-      info("Set lovel: " + this);
     }
 
     public byte getHivel() {
