@@ -70,7 +70,6 @@ public class Sampler implements Receiver {
       this.notePlayerCache.put(note.getValue(), players);
     }
     players.add(player);
-    info("starting player: " + player + ", sample: " + player.getSample());
     info("note on: " + note + ", play sample " + sample);
     final boolean paused = player.isPaused();
     player.pause(paused);
