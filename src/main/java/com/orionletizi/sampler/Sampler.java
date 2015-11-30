@@ -1,5 +1,6 @@
 package com.orionletizi.sampler;
 
+import com.orionletizi.com.orionletizi.midi.Transform;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.ugens.SamplePlayer;
@@ -18,14 +19,20 @@ public class Sampler implements Receiver {
 
   private final AudioContext ac;
   private final SamplerProgram program;
+  private final Transform transform;
   private final Map<Sample, SamplePlayer> playerCache = new HashMap<>();
   private final Map<Byte, Set<SamplePlayer>> notePlayerCache = new HashMap<>();
   private final Map<Byte, Note> onNotes = new HashMap<>();
 
 
   public Sampler(final AudioContext ac, final SamplerProgram program) {
+    this(ac, program, note -> note);
+  }
+
+  public Sampler(final AudioContext ac, final SamplerProgram program, final Transform transform) {
     this.ac = ac;
     this.program = program;
+    this.transform = transform;
   }
 
   @Override
@@ -54,27 +61,33 @@ public class Sampler implements Receiver {
   }
 
   public void noteOn(Note note) {
+    note = transform.transform(note);
     info("Note on: " + note + ", velocity: " + note.getOnVelocity());
     final Sample sample = program.getSampleForNote(note.getValue(), note.getOnVelocity());
-    SamplePlayer player = playerCache.get(sample);
-    if (player == null) {
-      player = new SamplePlayer(ac, sample);
-      player.setKillOnEnd(false);
-      ac.out.addInput(player);
-      playerCache.put(sample, player);
-    }
+    if (sample != null) {
+      SamplePlayer player = playerCache.get(sample);
+      if (player == null) {
+        player = new SamplePlayer(ac, sample);
+        player.setKillOnEnd(false);
+        ac.out.addInput(player);
+        ac.out.addDependent(player);
+        playerCache.put(sample, player);
+      }
 
-    Set<SamplePlayer> players = this.notePlayerCache.get(note.getValue());
-    if (players == null) {
-      players = new HashSet<>();
-      this.notePlayerCache.put(note.getValue(), players);
+      Set<SamplePlayer> players = this.notePlayerCache.get(note.getValue());
+      if (players == null) {
+        players = new HashSet<>();
+        this.notePlayerCache.put(note.getValue(), players);
+      }
+      players.add(player);
+      //info("note on: " + note + ", play sample " + sample);
+      final boolean paused = player.isPaused();
+      player.pause(paused);
+      player.setPosition(0);
+      player.start();
+    } else {
+      info("No sample for note: " + note + " (" + note.getValue() + ")");
     }
-    players.add(player);
-    info("note on: " + note + ", play sample " + sample);
-    final boolean paused = player.isPaused();
-    player.pause(paused);
-    player.setPosition(0);
-    player.start();
 
     // find all players than need to be turned off by this note on
     final Set<Byte> offNotes = program.getOffNotesForNoteOn(note.getValue());
@@ -99,6 +112,8 @@ public class Sampler implements Receiver {
     }
   }
   private void noteOff(Note note) {
+    info("Note off: " + note);
+    note = transform.transform(note);
     final Set<Byte> notesForNoteOff = program.getOffNotesForNoteOff(note.getValue(), note.getOnVelocity());
     for (Byte key : notesForNoteOff) {
       final Set<SamplePlayer> players = notePlayerCache.get(key);

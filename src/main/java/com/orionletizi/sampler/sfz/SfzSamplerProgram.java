@@ -232,7 +232,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   private void info(String s) {
-    System.out.println(getClass().getSimpleName() + ": " + s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
   }
 
   @Override
