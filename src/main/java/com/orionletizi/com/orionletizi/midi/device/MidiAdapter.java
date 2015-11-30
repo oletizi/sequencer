@@ -55,8 +55,13 @@ public class MidiAdapter implements Receiver {
         new File(programResource.getFile()).getParentFile());
     info("Got program: " + programResource);
 
-    final Sampler sampler = new Sampler(new AudioContext(new JavaSoundAudioIO()), program);
+    final AudioContext ac = new AudioContext(new JavaSoundAudioIO());
+
+    final Sampler sampler = new Sampler(ac, program);
     info("Created sampler: " + sampler);
+
+    ac.start();
+    info("Started audio context.");
 
     adapter.addReceiver(sampler);
     info("added sampler as receiver: " + sampler);
