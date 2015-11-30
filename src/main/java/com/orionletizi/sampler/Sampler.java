@@ -59,6 +59,7 @@ public class Sampler implements Receiver {
     SamplePlayer player = playerCache.get(sample);
     if (player == null) {
       player = new SamplePlayer(ac, sample);
+      player.setKillOnEnd(false);
       ac.out.addInput(player);
       playerCache.put(sample, player);
     }
