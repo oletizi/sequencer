@@ -125,7 +125,7 @@ public class Sampler implements Receiver {
   }
 
   private void info(String s) {
-    System.out.println(getClass().getSimpleName() + ": " + s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
   }
 
   @Override

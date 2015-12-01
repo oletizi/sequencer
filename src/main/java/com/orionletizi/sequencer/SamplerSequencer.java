@@ -1,5 +1,6 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.com.orionletizi.midi.message.MidiMetaMessage;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.Bead;
 import net.beadsproject.beads.core.UGen;
@@ -62,8 +63,10 @@ public class SamplerSequencer extends UGen {
     private final int ticksPerBeat;
     private final Receiver instrument;
     private final Track track;
-    private final Map<Long, Set<MidiEvent>> eventsByTick = new HashMap<>();
-    private int currentTempo = 120;
+    private final Map<Long, List<MidiEvent>> eventsByTick = new HashMap<>();
+    private double currentTempo = 120d;
+    private long currentTick = -1;
+    private boolean initialTempoIsSet = false;
 
     public InstrumentTrack(float sampleRate, int ticksPerBeat, Receiver instrument, Track track) {
       this.sampleRate = sampleRate;
@@ -76,15 +79,31 @@ public class SamplerSequencer extends UGen {
       for (int i = 0; i < track.size(); i++) {
         final MidiEvent midiEvent = track.get(i);
         final long tick = midiEvent.getTick();
-        Set<MidiEvent> events = eventsByTick.get(tick);
+        List<MidiEvent> events = eventsByTick.get(tick);
         if (events == null) {
-          // TODO: find the first tempo event and set the tempo
-          events = new HashSet<>();
+          events = new ArrayList<>();
           eventsByTick.put(tick, events);
         }
+        if (!initialTempoIsSet) {
+          initialTempoIsSet = checkAndSetTempo(midiEvent);
+
+        }
+        // TODO: find the first tempo event and set the tempo
         events.add(midiEvent);
-        info("tick: " + tick + ", events: " + events);
       }
+    }
+
+    private boolean checkAndSetTempo(MidiEvent midiEvent) {
+      boolean rv = false;
+      final MidiMessage message = midiEvent.getMessage();
+      if (message instanceof MetaMessage) {
+        final MidiMetaMessage meta = new MidiMetaMessage((MetaMessage) message);
+        if (meta.isSetTempo()) {
+          currentTempo = meta.getTempo().getBPM();
+          rv = true;
+        }
+      }
+      return rv;
     }
 
     public long notifyFrame(long frame) {
@@ -101,22 +120,29 @@ public class SamplerSequencer extends UGen {
       // beat -> tick
       // ticks / beat = currentTick / currentBeat
       // (ticks / beat) * currentBeat = currentTick
-      final long currentTick = (long) (ticksPerBeat * currentBeat);
-      notifyTick(currentTick);
-      if (true && currentTick % 1000 == 0) {
+      final long thisTick = (long) (ticksPerBeat * currentBeat);
+
+      if (thisTick != currentTick) {
+        notifyTick(thisTick);
+        if (false && thisTick % 1000 == 0) {
         info("ac time: " + (ac.getTime() / 1000) + "s, buffer size: " + bufferSize + ", buffer time: " + ac.samplesToMs(bufferSize) / 1000 + "s");
         info("frame: " + frame + ", timeInSeconds: " + timeInSeconds + ", currentTempo: " + currentTempo + ", currentBeat: " + currentBeat
-            + ", currentTick: " + currentTick);
+            + ", currentTick: " + thisTick);
+        }
       }
+      currentTick = thisTick;
       return currentTick;
     }
 
     public void notifyTick(long tick) {
-      final Set<MidiEvent> midiEvents = eventsByTick.get(tick);
+      final List<MidiEvent> midiEvents = eventsByTick.get(tick);
       if (midiEvents != null) {
-        for (MidiEvent midiEvent : midiEvents) {
-          // TODO: check for tempo events and set the current tempo
-          info("tick: " + tick + ", time: " + ac.getTime() + ", message: " + midiEvent.getMessage());
+        for (int i = 0; i < midiEvents.size(); i++) {
+          final MidiEvent midiEvent = midiEvents.get(i);
+          final boolean tempoWasSet = checkAndSetTempo(midiEvent);
+          if (tempoWasSet) {
+            info("tempo set: tempo: " + currentTempo + ", tick: " + tick + ", time: " + ac.getTime() + ", message: " + midiEvent.getMessage());
+          }
           instrument.send(midiEvent.getMessage(), -1);
         }
       }
