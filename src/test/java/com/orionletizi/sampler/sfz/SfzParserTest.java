@@ -23,6 +23,15 @@ public class SfzParserTest {
   }
 
   @Test
+  public void testGuitar() throws Exception {
+    setup("sfz/guitar/guitar-fixed.sfz");
+    parser.parse(sfzResource);
+    verify(observer, times(1)).notifyGroup();
+    verify(observer, times(1)).notifySample("samples/A_quarter_notes.02_02.wav");
+    verify(observer, times(60)).notifyRegion();
+  }
+
+  @Test
   public void testDrums() throws Exception {
     setup("program/drums/program.sfz");
     parser.parse(sfzResource);

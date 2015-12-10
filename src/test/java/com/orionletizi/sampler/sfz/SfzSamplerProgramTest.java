@@ -30,6 +30,15 @@ public class SfzSamplerProgramTest {
   }
 
   @Test
+  public void testGuitar() throws Exception {
+    before("sfz/guitar/", "sfz/guitar/guitar-fixed.sfz");
+    final Sample sample = program.getSampleForNote((byte) 45, (byte) 127);
+    final File expected = new File(programRoot, "samples/A_quarter_notes.02_02.wav");
+    info("sample file: " + sample.getFileName());
+    assertEquals(expected.getAbsolutePath(), sample.getFileName());
+  }
+
+  @Test
   public void testDrums() throws Exception {
     before("program/drums/", "program/drums/program.sfz");
 
