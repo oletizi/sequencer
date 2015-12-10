@@ -8,7 +8,7 @@ import net.beadsproject.beads.analysis.segmenters.ShortFrameSegmenter;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.AudioIO;
 import net.beadsproject.beads.core.Bead;
-import net.beadsproject.beads.core.io.JavaSoundAudioIO;
+import net.beadsproject.beads.core.io.NonrealtimeIO;
 import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.data.SampleManager;
 import net.beadsproject.beads.ugens.BiquadFilter;
@@ -21,7 +21,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-public class BeadsAnalysisTest {
+public class BeadsAnalysisTestIT {
 
   private AudioContext ac;
   private Gain gain;
@@ -30,7 +30,8 @@ public class BeadsAnalysisTest {
 
   @Before
   public void before() throws Exception {
-    AudioIO io = new JavaSoundAudioIO();
+    //AudioIO io = new JavaSoundAudioIO();
+    AudioIO io = new NonrealtimeIO();
     ac = new AudioContext(io);
     gain = new Gain(ac, 1);
     ac.out.addInput(gain);

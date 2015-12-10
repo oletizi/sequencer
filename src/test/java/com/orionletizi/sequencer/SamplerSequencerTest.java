@@ -6,7 +6,7 @@ import com.orionletizi.sampler.sfz.SfzSamplerProgram;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.AudioIO;
 import net.beadsproject.beads.core.Bead;
-import net.beadsproject.beads.core.io.JavaSoundAudioIO;
+import net.beadsproject.beads.core.io.NonrealtimeIO;
 import net.beadsproject.beads.ugens.RecordToFile;
 import org.junit.Test;
 
@@ -25,8 +25,8 @@ public class SamplerSequencerTest {
     URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
     File sampleBase = new File(programResource.getFile()).getParentFile();
     final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, sampleBase);
-    final AudioIO io = new JavaSoundAudioIO();
-    //final AudioIO io = new NonrealtimeIO();
+    //final AudioIO io = new JavaSoundAudioIO();
+    final AudioIO io = new NonrealtimeIO();
     final AudioContext ac = new AudioContext(io);
     final Sampler sampler = new Sampler(ac, program);
     final List<Receiver> instruments = new ArrayList<>();

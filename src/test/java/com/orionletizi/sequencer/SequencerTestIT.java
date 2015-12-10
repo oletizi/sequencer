@@ -54,6 +54,12 @@ public class SequencerTestIT {
   }
 
   @Test
+  public void testPlayGuitar() throws Exception {
+    testPlay(ClassLoader.getSystemResource("midi/michael-guitar.mid"), new File(ClassLoader.getSystemResource("sfz/guitar/guitar-fixed.sfz").getFile()),
+        new Transpose(2 * 12));
+  }
+
+  @Test
   public void testPlayIbanezBass() throws Exception {
     testPlay(ClassLoader.getSystemResource("midi/bass3.mid"), new File(ClassLoader.getSystemResource("sfz/ibanezbass/ibanez-bass.sfz").getFile()),
         new Transpose(0));
