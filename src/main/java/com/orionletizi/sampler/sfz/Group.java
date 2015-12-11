@@ -1,7 +1,5 @@
 package com.orionletizi.sampler.sfz;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jfugue.theory.Note;
 
 import java.util.HashSet;
@@ -88,15 +86,26 @@ public class Group {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-        .append("loopMode", loopMode)
-        .append("keys", keys)
-        .append("hikey", hikey)
-        .append("lokey", lokey)
-        .append("groupId", groupId)
-        .append("offGroups", offGroups)
-        .append("offByGroups", offByGroups)
-        .append("regions", regions)
-        .toString();
+//    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+//        .append("loopMode", loopMode)
+//        .append("keys", keys)
+//        .append("hikey", hikey)
+//        .append("lokey", lokey)
+//        .append("groupId", groupId)
+//        .append("offGroups", offGroups)
+//        .append("offByGroups", offByGroups)
+//        .append("regions", regions)
+//        .toString();
+    final StringBuilder offBy = new StringBuilder();
+    for (String offByGroup : offByGroups) {
+      offBy.append("off_by=" + offByGroup);
+    }
+
+    return "<group>\n"
+        + ((groupId != null) ? "id=" + groupId + "\n" : "")
+        + ((getLoopMode() != null) ? "loop_mode=" + getLoopMode() + "\n" : "")
+        + (offByGroups.isEmpty() ? "" : offBy + "\n")
+        + (getLokey() != null ? "lokey=" + getLokey() + "\n" : "")
+        + (getHikey() != null ? "hikey=" + getHikey() + "\n" : "");
   }
 }

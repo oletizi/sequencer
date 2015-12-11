@@ -10,6 +10,8 @@ import javax.sound.midi.Sequence;
 import java.io.File;
 import java.net.URL;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
@@ -34,7 +36,7 @@ public class SfzResamplerTestIT {
     parser.addObserver(observer);
     program = new SfzSamplerProgram(parser, programResource, sampleBase);
     millisBetweenNotes = 1000;
-    final long ticksBetweenNotes = midiContext.millisecondsToTicks(millisBetweenNotes);
+    final int ticksBetweenNotes = (int) midiContext.millisecondsToTicks(millisBetweenNotes);
     info("Ticks between notes: " + ticksBetweenNotes);
     resampler = new SfzResampler(midiContext, program, ticksBetweenNotes);
 
@@ -42,7 +44,13 @@ public class SfzResamplerTestIT {
 
   @Test
   public void testCreateProgram() throws Exception {
-    ClassLoader.getSystemResource("audio/resampled-guitar.wav");
+    final URL source = ClassLoader.getSystemResource("audio/resampled-guitar.wav");
+    final File dest = new File("/tmp/resampled-" + System.currentTimeMillis());
+    assertFalse(dest.exists());
+
+    resampler.createNewProgram(source, dest);
+
+    assertTrue(dest.isDirectory());
   }
 
   @Test

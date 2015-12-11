@@ -1,8 +1,6 @@
 package com.orionletizi.sampler.sfz;
 
 import net.beadsproject.beads.data.Sample;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jfugue.theory.Note;
 
 import java.util.Set;
@@ -59,14 +57,28 @@ public class Region extends Group {
     return lovel;
   }
 
+  public String toString(final String sampleRoot) {
+    return "<region>\n"
+        + "lokey=" + getLokey() + "\n"
+        + "hikey=" + getHikey() + "\n"
+        + "lovel=" + getLovel() + "\n"
+        + "hivel=" + getHivel() + "\n"
+        + "sample=" + (sampleRoot != null ? sampleRoot + "/" + this.getSample().getSimpleName() : this.getSample().getSimpleName());
+  }
+
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-        .append("hikey", getHikey())
-        .append("lokey", getLokey())
-        .append("keys", getKeys())
-        .append("hivel", this.hivel)
-        .append("lovel", this.lovel)
-        .append("sample", this.sample).toString();
+//    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+//        .append("hikey", getHikey())
+//        .append("lokey", getLokey())
+//        .append("keys", getKeys())
+//        .append("hivel", this.hivel)
+//        .append("lovel", this.lovel)
+//        .append("sample", this.sample).toString();
+    return toString(null);
+  }
+
+  public Group getGroup() {
+    return group;
   }
 }
