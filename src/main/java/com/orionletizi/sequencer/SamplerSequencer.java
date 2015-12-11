@@ -1,5 +1,6 @@
 package com.orionletizi.sequencer;
 
+import com.orionletizi.com.orionletizi.midi.MidiContext;
 import com.orionletizi.com.orionletizi.midi.message.MidiMetaMessage;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.Bead;
@@ -107,27 +108,11 @@ public class SamplerSequencer extends UGen {
     }
 
     public long notifyFrame(long frame) {
-      // convert frame to tick
-      // frame -> time
-      // frames / second = frame / timeInSeconds
-      // (samples / second) * timeInSeconds = frame
-      // timeInSeconds = frame / (samples / second)
-      final double timeInSeconds = frame / sampleRate;
-      // time -> beat
-      // beats / minute = currentBeat / (timeInSeconds / 60)
-      // (beats / minute) * (seconds * 60) = beat
-      final double currentBeat = currentTempo * (timeInSeconds / 60);
-      // beat -> tick
-      // ticks / beat = currentTick / currentBeat
-      // (ticks / beat) * currentBeat = currentTick
-      final long thisTick = (long) (ticksPerBeat * currentBeat);
-
+      final long thisTick = new MidiContext(sampleRate, ticksPerBeat, currentTempo).frameToTick(frame);
       if (thisTick != currentTick) {
         notifyTick(thisTick);
         if (false && thisTick % 1000 == 0) {
-        info("ac time: " + (ac.getTime() / 1000) + "s, buffer size: " + bufferSize + ", buffer time: " + ac.samplesToMs(bufferSize) / 1000 + "s");
-        info("frame: " + frame + ", timeInSeconds: " + timeInSeconds + ", currentTempo: " + currentTempo + ", currentBeat: " + currentBeat
-            + ", currentTick: " + thisTick);
+          info("ac time: " + (ac.getTime() / 1000) + "s, buffer size: " + bufferSize + ", buffer time: " + ac.samplesToMs(bufferSize) / 1000 + "s");
         }
       }
       currentTick = thisTick;

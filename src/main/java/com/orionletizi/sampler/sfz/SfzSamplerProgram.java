@@ -2,8 +2,7 @@ package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.sampler.SamplerProgram;
 import net.beadsproject.beads.data.Sample;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.ArrayUtils;
 import org.jfugue.theory.Note;
 
 import java.io.File;
@@ -42,6 +41,14 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     commitRegion();
     prepareGroups();
     prepareRegions();
+  }
+
+  public Region[][] getRegions() {
+    final Region[][] rv = new Region[regions.length][];
+    for (int i = 0; i < regions.length; i++) {
+      rv[i] = ArrayUtils.clone(regions[i]);
+    }
+    return rv;
   }
 
   private void prepareGroups() {
@@ -324,161 +331,4 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
 
-  private class Group {
-    private Note hikey;
-    private Note lokey;
-    private Set<Note> keys = new HashSet<>();
-    private String groupId;
-    private String loopMode;
-    private Set<String> offByGroups = new HashSet<>();
-    private Set<Group> offGroups = new HashSet<>();
-    private Set<Region> regions = new HashSet<>();
-
-    public Note getHikey() {
-      return hikey;
-    }
-
-    public void setHikey(Note hikey) {
-      this.hikey = hikey;
-    }
-
-    public Note getLokey() {
-      return lokey;
-    }
-
-    public void setLokey(Note lokey) {
-      this.lokey = lokey;
-    }
-
-    public void addKey(byte key) {
-      addKey(new Note(key));
-    }
-
-    public void addKey(Note key) {
-      keys.add(key);
-    }
-
-    public Set<Note> getKeys() {
-      return new HashSet<>(keys);
-    }
-
-    public void setGroupId(String groupId) {
-      this.groupId = groupId;
-    }
-
-    public String getGroupId() {
-      return groupId;
-    }
-
-    public void setLoopMode(String loopMode) {
-      this.loopMode = loopMode;
-    }
-
-    public void setOffByGroups(String offByGroup) {
-      this.offByGroups.add(offByGroup);
-    }
-
-    public void addRegion(Region region) {
-      this.regions.add(region);
-    }
-
-    public Set<Region> getRegions() {
-      return new HashSet<>(regions);
-    }
-
-    public Set<String> getOffByGroups() {
-      return new HashSet<>(offByGroups);
-    }
-
-    public void addOffGroup(Group group) {
-      offGroups.add(group);
-    }
-
-    public Set<Group> getOffGroups() {
-      return new HashSet<>(offGroups);
-    }
-
-    public String getLoopMode() {
-      return loopMode;
-    }
-
-
-    @Override
-    public String toString() {
-      return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-          .append("loopMode", loopMode)
-          .append("keys", keys)
-          .append("hikey", hikey)
-          .append("lokey", lokey)
-          .append("groupId", groupId)
-          .append("offGroups", offGroups)
-          .append("offByGroups", offByGroups)
-          .append("regions", regions)
-          .toString();
-    }
-  }
-
-  private class Region extends Group {
-
-    private final Group group;
-    private Sample sample;
-    private byte hivel = 127;
-    private byte lovel = 0;
-
-    public Region(Group group) {
-      super();
-      this.group = group;
-      this.group.addRegion(this);
-    }
-
-    @Override
-    public Note getHikey() {
-      return super.getHikey() == null ? group.getHikey() : super.getHikey();
-    }
-
-    @Override
-    public Note getLokey() {
-      return super.getLokey() == null ? group.getLokey() : super.getLokey();
-    }
-
-    @Override
-    public Set<Note> getKeys() {
-      return super.getKeys().isEmpty() ? group.getKeys() : super.getKeys();
-    }
-
-    public Sample getSample() {
-      return sample;
-    }
-
-    public void setSample(Sample sample) {
-      this.sample = sample;
-    }
-
-    public void setHivel(byte hivel) {
-      this.hivel = hivel;
-    }
-
-    public void setLovel(byte lovel) {
-      this.lovel = lovel;
-    }
-
-    public byte getHivel() {
-      return hivel;
-    }
-
-    public byte getLovel() {
-      return lovel;
-    }
-
-    @Override
-    public String toString() {
-      return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-          .append("hikey", getHikey())
-          .append("lokey", getLokey())
-          .append("keys", getKeys())
-          .append("hivel", this.hivel)
-          .append("lovel", this.lovel)
-          .append("sample", this.sample).toString();
-    }
-  }
 }
