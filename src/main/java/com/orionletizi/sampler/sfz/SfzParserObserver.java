@@ -15,6 +15,8 @@ public interface SfzParserObserver {
 
   void notifyPitchKeycenter(Note pitchKeycenter);
 
+  void notifyPitchKeytrack(int keytrack);
+
   void notifyKey(byte key);
 
   void notifyHivel(byte hivel);

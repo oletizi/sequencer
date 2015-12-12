@@ -23,7 +23,7 @@ public class SfzResampler {
   public SfzResampler(final MidiContext midiContext, final SfzSamplerProgram program, final int samplesBetweenNotes) throws InvalidMidiDataException {
     this.midiContext = midiContext;
     this.program = program;
-    this.samplesBetweenNotes = samplesBetweenNotes;
+    this.samplesBetweenNotes = 0;//samplesBetweenNotes;
 
     sequence = new Sequence(Sequence.PPQ, midiContext.getTicksPerBeat());
     final Track track = sequence.createTrack();
@@ -106,8 +106,8 @@ public class SfzResampler {
           out.newLine();
         }
 
-        final Sample sample = region.getSample();
-        int frameCount = (int) sample.getNumFrames() + samplesBetweenNotes;
+        final Sample originalSample = region.getSample();
+        int frameCount = (int) originalSample.getNumFrames() + samplesBetweenNotes;
 
         final Sample destSample = new Sample(sourceSample.samplesToMs(frameCount), sourceSample.getNumChannels(),
             sourceSample.getSampleRate());
@@ -137,11 +137,33 @@ public class SfzResampler {
         out.newLine();
         out.newLine();
 
-        currentFrame += frameCount;
+        info("frame count: original sample: " + originalSample.getNumFrames() + ", dest sample: " + destSample.getNumFrames());
+        info("time: orig: " + originalSample.getLength() + ", dest sample: " + destSample.getLength());
+        info("dest sample: " + sampleFile.getName() + ", initial frame: " + currentFrame + ", finalFrame: " + (currentFrame + frameCount));
+        currentFrame += frameCount + 1;
         previousRegion = region;
         previousGroup = region.getGroup();
       }
     }
+    info("Final frame: " + currentFrame);
+    info("Source frame count: " + sourceSample.getNumFrames());
     out.close();
+  }
+
+  private void info(String s) {
+    System.out.println(getClass().getSimpleName() + ": " + s);
+  }
+
+  public static void main(final String args[]) throws Exception {
+    final int sampleRate = 48 * 1000;
+    final int ticksPerBeat = 96;
+    final int tempo = 120;
+    final int samplesBetweenNotes = 0;
+    final MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
+    final File sourceProgramFile = new File(args[0]);
+    final URL programResource = sourceProgramFile.toURI().toURL();
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, sourceProgramFile.getParentFile());
+    final SfzResampler resampler = new SfzResampler(midiContext, program, samplesBetweenNotes);
+    resampler.createNewProgram(new File(args[1]).toURI().toURL(), new File(System.getProperty("user.home") + "/tmp/resampler-" + System.currentTimeMillis()));
   }
 }

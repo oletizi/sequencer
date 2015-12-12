@@ -274,6 +274,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
+  public void notifyPitchKeytrack(int keytrack) {
+    currentRegion.setPitchKeytrack(keytrack);
+  }
+
+  @Override
   public void notifyKey(byte key) {
     switch (scope) {
       case group:

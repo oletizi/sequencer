@@ -29,6 +29,7 @@ public class SfzParserTest {
     verify(observer, times(1)).notifyGroup();
     verify(observer, times(1)).notifySample("samples/A_quarter_notes.02_02.wav");
     verify(observer, times(60)).notifyRegion();
+    verify(observer, times(60)).notifyPitchKeytrack(0);
   }
 
   @Test

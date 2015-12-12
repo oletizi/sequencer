@@ -127,6 +127,11 @@ public class SfzParser {
           final String offBy = nextToken(line);
           composite.notifyOffBy(offBy);
           line = shift(offBy, line);
+        } else if (line.startsWith("pitch_keytrack")) {
+          line = line.substring("pitch_keytrack=".length());
+          final String keytrack = nextToken(line);
+          composite.notifyPitchKeytrack(Integer.parseInt(keytrack));
+          line = shift(keytrack, line);
         } else {
           line = shift(line);
         }
@@ -229,6 +234,14 @@ public class SfzParser {
       for (SfzParserObserver observer : observers) {
         observer.notifyPitchKeycenter(pitchKeycenter);
       }
+    }
+
+    @Override
+    public void notifyPitchKeytrack(int keytrack) {
+      for (SfzParserObserver observer : observers) {
+        observer.notifyPitchKeytrack(keytrack);
+      }
+
     }
 
     @Override

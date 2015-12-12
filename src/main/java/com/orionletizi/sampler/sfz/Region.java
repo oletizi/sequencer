@@ -11,6 +11,8 @@ public class Region extends Group {
   private Sample sample;
   private byte hivel = 127;
   private byte lovel = 0;
+  // default keytrack is 100 which means 100 cents (one semitone) per key. Allowed values are -1200 - 1200
+  private int pitchKeytrack = 100;
 
   public Region(Group group) {
     super();
@@ -57,6 +59,14 @@ public class Region extends Group {
     return lovel;
   }
 
+  public void setPitchKeytrack(int pitchKeytrack) {
+    this.pitchKeytrack = pitchKeytrack;
+  }
+
+  public int getPitchKeytrack() {
+    return pitchKeytrack;
+  }
+
   public String toString(final String sampleRoot) {
 
     String samplePath = "";
@@ -68,6 +78,7 @@ public class Region extends Group {
         + (getHikey() != null ? "hikey=" + getHikey().getValue() + "\n" : "")
         + "lovel=" + getLovel() + "\n"
         + "hivel=" + getHivel() + "\n"
+        + "pitch_keytrack=" + getPitchKeytrack() + "\n"
         + "sample=" + samplePath;
   }
 
@@ -86,4 +97,5 @@ public class Region extends Group {
   public Group getGroup() {
     return group;
   }
+
 }
