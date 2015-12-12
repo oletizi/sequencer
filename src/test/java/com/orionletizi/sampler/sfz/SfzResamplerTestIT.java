@@ -10,6 +10,7 @@ import javax.sound.midi.Sequence;
 import java.io.File;
 import java.net.URL;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -42,19 +43,9 @@ public class SfzResamplerTestIT {
 
   }
 
-  @Test
-  public void testCreateProgram() throws Exception {
-    final URL source = ClassLoader.getSystemResource("audio/resampled-guitar.wav");
-    final File dest = new File("/tmp/resampled-" + System.currentTimeMillis());
-    assertFalse(dest.exists());
-
-    resampler.createNewProgram(source, dest);
-
-    assertTrue(dest.isDirectory());
-  }
 
   @Test
-  public void testGenerateMidi() throws Exception {
+  public void test() throws Exception {
 
     //final Track track = resampler.getTrack();
     final Sequence sequence = resampler.getSequence();
@@ -69,9 +60,43 @@ public class SfzResamplerTestIT {
 
     //assertEquals(regionCount, track.size());
 
-    final File outfile = new File("/tmp/midi-" + System.currentTimeMillis() + ".mid");
+    final File outfile = new File(System.getProperty("user.home") + "/tmp/midi-" + System.currentTimeMillis() + ".mid");
     MidiSystem.write(sequence, MidiSystem.getMidiFileTypes(sequence)[0], outfile);
-    info("Write sequence to :" + outfile);
+    info("Wrote sequence to :" + outfile);
+
+    final URL source = ClassLoader.getSystemResource("audio/resampled-guitar.wav");
+    final File dest = new File(System.getProperty("user.home") + "/tmp/resampled-" + System.currentTimeMillis());
+    final File destProgramFile = new File(dest, dest.getName() + ".sfz");
+    assertFalse(dest.exists());
+
+    resampler.createNewProgram(source, dest);
+
+    assertTrue(dest.isDirectory());
+    assertTrue(destProgramFile.isFile());
+    info("Wrote program to " + dest);
+
+    // load the program we just created and check it against the source program
+    final SfzSamplerProgram newProgram = new SfzSamplerProgram(
+        new SfzParser(),
+        destProgramFile.toURI().toURL(),
+        dest);
+
+    final Region[][] newRegions = newProgram.getRegions();
+    assertEquals(regions.length, newRegions.length);
+
+    for (int i = 0; i < regions.length; i++) {
+      assertEquals(regions[i].length, newRegions[i].length);
+      for (int j = 0; j < regions[i].length; j++) {
+        final Region sourceRegion = regions[i][j];
+        final Region destRegion = newRegions[i][j];
+        if (sourceRegion != null) {
+          assertEquals(sourceRegion.getLovel(), destRegion.getLovel());
+          assertEquals(sourceRegion.getHivel(), destRegion.getHivel());
+          assertEquals(sourceRegion.getLokey(), destRegion.getLokey());
+          assertEquals(sourceRegion.getHikey(), destRegion.getHikey());
+        }
+      }
+    }
   }
 
   private void info(String s) {

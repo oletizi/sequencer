@@ -123,8 +123,14 @@ public class SfzResampler {
         destSample.putFrames(0, buffer);
 
         // write the dest sample
-        final String destSampleName = new File(sample.getFileName()).getName();
-        destSample.write(new File(sampleDir, destSampleName).getAbsolutePath(), AudioFileType.WAV);
+        //final String destSampleName = new File(sample.getFileName()).getName();
+        final String destSampleName = "sample-lokey" + region.getLokey().getValue() + "-hikey" + region.getHikey().getValue()
+            + "-lovel" + region.getLovel() + "-hivel" + region.getHivel() + ".wav";
+        final File sampleFile = new File(sampleDir, destSampleName);
+        destSample.write(sampleFile.getAbsolutePath(), AudioFileType.WAV);
+
+        // XXX: This should be a clone
+        region.setSample(new Sample(sampleFile.getAbsolutePath()));
 
         // write the region to the program file
         out.write(region.toString("samples"));

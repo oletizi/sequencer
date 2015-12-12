@@ -58,12 +58,17 @@ public class Region extends Group {
   }
 
   public String toString(final String sampleRoot) {
+
+    String samplePath = "";
+    if (getSample() != null) {
+      samplePath = sampleRoot != null ? sampleRoot + "/" + this.getSample().getSimpleName() : this.getSample().getSimpleName();
+    }
     return "<region>\n"
-        + "lokey=" + getLokey() + "\n"
-        + "hikey=" + getHikey() + "\n"
+        + (getLokey() != null ? "lokey=" + getLokey().getValue() + "\n" : "")
+        + (getHikey() != null ? "hikey=" + getHikey().getValue() + "\n" : "")
         + "lovel=" + getLovel() + "\n"
         + "hivel=" + getHivel() + "\n"
-        + "sample=" + (sampleRoot != null ? sampleRoot + "/" + this.getSample().getSimpleName() : this.getSample().getSimpleName());
+        + "sample=" + samplePath;
   }
 
   @Override
