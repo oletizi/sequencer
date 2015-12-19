@@ -73,8 +73,6 @@ public class SfzResampler {
 
   public void createNewProgram(URL source, File dest) throws IOException {
 
-    assert !dest.exists();
-
     final File sampleDir = new File(dest, "samples");
     FileUtils.forceMkdir(sampleDir);
 

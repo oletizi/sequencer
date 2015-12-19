@@ -50,6 +50,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.orionletizi</groupId>
+            <artifactId>music-theory</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.leff.midi</groupId>
             <artifactId>android-midi-lib</artifactId>
             <version>1.0</version>
