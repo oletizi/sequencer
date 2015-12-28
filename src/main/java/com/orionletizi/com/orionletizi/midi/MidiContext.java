@@ -26,15 +26,14 @@ public class MidiContext {
     // beat -> tick
     // ticks / beat = currentTick / currentBeat
     // (ticks / beat) * currentBeat = currentTick
-    final long thisTick = (long) (ticksPerBeat * currentBeat);
-    return thisTick;
+    return (long) (ticksPerBeat * currentBeat);
   }
 
   public int getTicksPerBeat() {
     return ticksPerBeat;
   }
 
-  public double ticksToBeats(int ticks) {
+  public double ticksToBeats(long ticks) {
     return ticks / ticksPerBeat;
   }
 
