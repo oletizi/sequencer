@@ -34,7 +34,15 @@ public class MidiContext {
     return ticksPerBeat;
   }
 
-  public long millisecondsToTicks(int millis) {
+  public double ticksToBeats(int ticks) {
+    return ticks / ticksPerBeat;
+  }
+
+  public double ticksToMillisecond(int ticks) {
+    return (ticksToBeats(ticks) / tempo) * 60 * 1000;
+  }
+
+  public long millisecondsToTicks(long millis) {
     final long frameCount = (long) sampleRate * millis / 1000;
     return frameToTick(frameCount);
   }

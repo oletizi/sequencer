@@ -51,6 +51,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     return rv;
   }
 
+  public Set<Region> getRegionsByKey(final byte key) {
+    return regionsByKey.get(key);
+  }
+
   private void prepareGroups() {
     for (Group group : allGroups) {
       // set the low and high keys range to keys, if they aren't set yet.
