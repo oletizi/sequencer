@@ -37,7 +37,7 @@ public class MidiContext {
     return ticks / ticksPerBeat;
   }
 
-  public double ticksToMillisecond(int ticks) {
+  public double ticksToMillisecond(long ticks) {
     return (ticksToBeats(ticks) / tempo) * 60 * 1000;
   }
 
