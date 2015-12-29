@@ -16,17 +16,15 @@ import static org.junit.Assert.assertTrue;
 
 public class SfzSamplerProgramTest {
 
-  private URL programResource;
-  private SfzParser parser;
   private File programRoot;
   private SfzSamplerProgram program;
 
   private void before(String programRootPath, String programPath) throws Exception {
-    programRoot = new File(ClassLoader.getSystemResource(programRootPath).getFile());//new File(ClassLoader.getSystemResource("sfz/mellotron/").getFile());
-    programResource = ClassLoader.getSystemResource(programPath);//ClassLoader.getSystemResource("sfz/mellotron/mk2flute.sfz");
+    programRoot = new File(ClassLoader.getSystemResource(programRootPath).getPath());//new File(ClassLoader.getSystemResource("sfz/mellotron/").getFile());
+    URL programResource = ClassLoader.getSystemResource(programPath);
 
-    parser = new SfzParser();
-    program = new SfzSamplerProgram(parser, programResource, programRoot);
+    SfzParser parser = new SfzParser();
+    program = new SfzSamplerProgram(parser, new File(programResource.getPath()));
     parser.addObserver(program);
   }
 

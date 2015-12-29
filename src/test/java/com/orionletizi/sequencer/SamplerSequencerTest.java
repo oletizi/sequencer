@@ -23,8 +23,8 @@ public class SamplerSequencerTest {
   public void test() throws Exception {
     URL midi = ClassLoader.getSystemResource("midi/drum_pattern_tempo_change.mid");
     URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
-    File sampleBase = new File(programResource.getFile()).getParentFile();
-    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, sampleBase);
+    File programFile = new File(programResource.getPath());
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programFile);
     //final AudioIO io = new JavaSoundAudioIO();
     final AudioIO io = new NonrealtimeIO();
     final AudioContext ac = new AudioContext(io);

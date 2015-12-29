@@ -3,8 +3,6 @@ package com.orionletizi.sequencer;
 import com.orionletizi.com.orionletizi.midi.Transpose;
 import com.orionletizi.sampler.sfz.SfzParser;
 import com.orionletizi.sampler.sfz.SfzSamplerProgram;
-import com.orionletizi.util.logging.Logger;
-import com.orionletizi.util.logging.LoggerImpl;
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 import net.beadsproject.beads.core.AudioContext;
@@ -20,8 +18,6 @@ import java.io.File;
 import java.net.URL;
 
 public class SequencerTestIT {
-
-  private static final Logger logger = LoggerImpl.forClass(SequencerTestIT.class);
 
   //private URL midiSource;
   private StandardMidiFileReader reader;
@@ -79,9 +75,7 @@ public class SequencerTestIT {
 
   private void testPlay(final URL midiSource, final File programFile, Transpose transpose) throws Exception {
 
-    final File sampleDirectory = programFile.getParentFile();
-    //final File programFile = new File(sampleDirectory, "mk2flute.sfz");
-    SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), new URL("file://" + programFile.getAbsolutePath()), programFile.getParentFile());
+    SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programFile);
     new SfzParser().addObserver(program).parse(programFile);
 
     Sequence sequence = reader.getSequence(midiSource);

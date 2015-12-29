@@ -11,16 +11,15 @@ import java.io.File;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 
 public class MidiAdapter implements Receiver {
 
 
-  private final MidiDevice device;
   private final Set<Receiver> receivers = new HashSet<>();
 
   public MidiAdapter(MidiDevice device) throws MidiUnavailableException {
-    this.device = device;
     final Transmitter tx = device.getTransmitter();
     tx.setReceiver(this);
   }
@@ -33,8 +32,8 @@ public class MidiAdapter implements Receiver {
   public static void main(String args[]) throws Exception {
     final javax.sound.midi.MidiDevice.Info[] midiDeviceInfo = MidiSystem.getMidiDeviceInfo();
     javax.sound.midi.MidiDevice.Info info = null;
-    for (int i = 0; i < midiDeviceInfo.length; i++) {
-      info = midiDeviceInfo[i];
+    for (MidiDevice.Info aMidiDeviceInfo : midiDeviceInfo) {
+      info = aMidiDeviceInfo;
       System.out.println("info: " + info);
       if ("Arturia BeatStep".equals(info.getName())) {
         break;
@@ -51,8 +50,7 @@ public class MidiAdapter implements Receiver {
     final URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
     info("Got program resource: " + programResource);
 
-    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource,
-        new File(programResource.getFile()).getParentFile());
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), new File(programResource.getPath()));
     info("Got program: " + programResource);
 
     final AudioContext ac = new AudioContext(new JavaSoundAudioIO());
@@ -66,12 +64,10 @@ public class MidiAdapter implements Receiver {
     adapter.addReceiver(sampler);
     info("added sampler as receiver: " + sampler);
 
-    final Object lock = new Object();
-    synchronized (lock) {
-      lock.wait();
-    }
+    new CountDownLatch(1).await();
   }
 
+  @SuppressWarnings("unused")
   private static void info(String s) {
     //System.out.println(MidiAdapter.class.getSimpleName() + ": " + s);
   }

@@ -7,11 +7,12 @@ import org.jfugue.theory.Note;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
+
+  private File programFile;
 
   private enum Scope {
     global,
@@ -19,7 +20,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     region
   }
 
-  private final File sampleBase;
+  //  private final File sampleBase;
   private final Set<Group> allGroups = new HashSet<>();
   private final Map<Byte, Group> groupByNote = new HashMap<>();
   private final Map<String, Set<Group>> groupsById = new HashMap<>();
@@ -30,13 +31,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private Region currentRegion;
   private Scope scope = Scope.global;
 
-  public SfzSamplerProgram(final SfzParser parser, final URL programResource, final File sampleBase) throws IOException, SfzParserException {
-    assert sampleBase != null;
-    assert sampleBase.exists();
-    assert sampleBase.isDirectory();
-    this.sampleBase = sampleBase;
+  public SfzSamplerProgram(final SfzParser parser, final File programFile) throws IOException, SfzParserException {
+    this.programFile = programFile;
     parser.addObserver(this);
-    parser.parse(programResource);
+    parser.parse(programFile);
     commitGroup();
     commitRegion();
     prepareGroups();
@@ -51,6 +49,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     return rv;
   }
 
+  @SuppressWarnings("unused")
   public Set<Region> getRegionsByKey(final byte key) {
     return regionsByKey.get(key);
   }
@@ -146,6 +145,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     if (group != null) {
       final Set<Group> offGroups = group.getOffGroups();
       for (Group offGroup : offGroups) {
+        // RoboVM gets freaked out by streams, so I'm not using them
         for (Note key : offGroup.getKeys()) {
           rv.add(key.getValue());
         }
@@ -234,7 +234,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   @Override
   public void notifySample(String sample) {
     try {
-      final File sampleFile = new File(sampleBase, sample);
+      final File sampleFile = new File(programFile.getParentFile(), sample);
       currentRegion.setSample(new Sample(sampleFile.getAbsolutePath()));
       //info("Notify sample: " + sampleFile + ", currentRegion: " + currentRegion);
     } catch (IOException e) {
@@ -242,6 +242,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
   }
 
+  @SuppressWarnings("unused")
   private void info(String s) {
     //System.out.println(getClass().getSimpleName() + ": " + s);
   }

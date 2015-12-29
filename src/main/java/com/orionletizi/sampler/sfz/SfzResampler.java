@@ -159,8 +159,7 @@ public class SfzResampler {
     final int samplesBetweenNotes = 0;
     final MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
     final File sourceProgramFile = new File(args[0]);
-    final URL programResource = sourceProgramFile.toURI().toURL();
-    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programResource, sourceProgramFile.getParentFile());
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), sourceProgramFile);
     final SfzResampler resampler = new SfzResampler(midiContext, program, samplesBetweenNotes);
     resampler.createNewProgram(new File(args[1]).toURI().toURL(), new File(System.getProperty("user.home") + "/tmp/resampler-" + System.currentTimeMillis()));
   }

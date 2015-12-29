@@ -18,8 +18,6 @@ import static org.mockito.Mockito.mock;
 
 public class SfzResamplerTestIT {
 
-  private int millisBetweenNotes;
-  private MidiContext midiContext;
   private SfzResampler resampler;
   private SfzSamplerProgram program;
 
@@ -28,15 +26,15 @@ public class SfzResamplerTestIT {
     final int sampleRate = 48 * 1000;
     final int ticksPerBeat = 96;
     final int tempo = 120;
-    midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
+    MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
 
     final URL programResource = ClassLoader.getSystemResource("sfz/guitar/guitar-fixed.sfz");
-    final File sampleBase = new File(programResource.getFile()).getParentFile();
+    final File programFile = new File(programResource.getPath());
     final SfzParserObserver observer = mock(SfzParserObserver.class);
     final SfzParser parser = new SfzParser();
     parser.addObserver(observer);
-    program = new SfzSamplerProgram(parser, programResource, sampleBase);
-    millisBetweenNotes = 1000;
+    program = new SfzSamplerProgram(parser, programFile);
+    int millisBetweenNotes = 1000;
     final int ticksBetweenNotes = (int) midiContext.millisecondsToTicks(millisBetweenNotes);
     info("Ticks between notes: " + ticksBetweenNotes);
     resampler = new SfzResampler(midiContext, program, ticksBetweenNotes);
@@ -53,13 +51,6 @@ public class SfzResamplerTestIT {
 
 
     final Region[][] regions = program.getRegions();
-    int regionCount = 0;
-    for (Region[] regionsForNote : regions) {
-      regionCount += regionsForNote.length;
-    }
-
-    //assertEquals(regionCount, track.size());
-
     final File outfile = new File(System.getProperty("user.home") + "/tmp/midi-" + System.currentTimeMillis() + ".mid");
     MidiSystem.write(sequence, MidiSystem.getMidiFileTypes(sequence)[0], outfile);
     info("Wrote sequence to :" + outfile);
@@ -78,8 +69,7 @@ public class SfzResamplerTestIT {
     // load the program we just created and check it against the source program
     final SfzSamplerProgram newProgram = new SfzSamplerProgram(
         new SfzParser(),
-        destProgramFile.toURI().toURL(),
-        dest);
+        destProgramFile);
 
     final Region[][] newRegions = newProgram.getRegions();
     assertEquals(regions.length, newRegions.length);
