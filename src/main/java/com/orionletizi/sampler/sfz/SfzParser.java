@@ -11,6 +11,8 @@ import java.util.Set;
 
 public class SfzParser {
 
+  public static final String SAMPLE_FILENAME_TERMINATOR = ".wav";
+
   private enum Scope {
     global,
     declaration,
@@ -79,7 +81,7 @@ public class SfzParser {
         previousLine = line;
         if (line.startsWith("sample=")) {
           line = shift("sample=", line);
-          final String sample = nextToken(line);
+          final String sample = line.substring(0, line.indexOf(SAMPLE_FILENAME_TERMINATOR) + SAMPLE_FILENAME_TERMINATOR.length());
           composite.notifySample(sample);
           line = shift(sample, line);
         } else if (line.startsWith("key=")) {
@@ -148,6 +150,7 @@ public class SfzParser {
     }
     return new Note(noteString);
   }
+
 
   private String nextToken(String line) throws SfzParserException {
     final int nextSpace = line.indexOf(' ');

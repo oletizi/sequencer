@@ -4,7 +4,7 @@
 
     <groupId>com.orionletizi</groupId>
     <artifactId>audiogen-sequencer</artifactId>
-    <version>0.4</version>
+    <version>0.4-SNAPSHOT</version>
     <build>
         <extensions>
             <extension>

@@ -23,6 +23,13 @@ public class SfzParserTest {
   }
 
   @Test
+  public void testWithSpaces() throws Exception {
+    setup("sfz/guitar-nki/New guitar.sfz");
+    parser.parse(sfzResource);
+    verify(observer, times(1)).notifySample("New guitar Samples\\A quarter notes.02_02.wav");
+  }
+
+  @Test
   public void testGuitar() throws Exception {
     setup("sfz/guitar/guitar-fixed.sfz");
     parser.parse(sfzResource);

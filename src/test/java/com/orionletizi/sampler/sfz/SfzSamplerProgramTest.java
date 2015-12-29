@@ -1,17 +1,19 @@
 package com.orionletizi.sampler.sfz;
 
+import com.orionletizi.sampler.SamplerProgram;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 import net.beadsproject.beads.data.Sample;
 import org.jfugue.theory.Note;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.net.URL;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class SfzSamplerProgramTest {
@@ -19,13 +21,34 @@ public class SfzSamplerProgramTest {
   private File programRoot;
   private SfzSamplerProgram program;
 
+  @Rule
+  public TemporaryFolder tmp = new TemporaryFolder();
+
   private void before(String programRootPath, String programPath) throws Exception {
-    programRoot = new File(ClassLoader.getSystemResource(programRootPath).getPath());//new File(ClassLoader.getSystemResource("sfz/mellotron/").getFile());
+    programRoot = new File(ClassLoader.getSystemResource(programRootPath).getPath());
     URL programResource = ClassLoader.getSystemResource(programPath);
 
     SfzParser parser = new SfzParser();
-    program = new SfzSamplerProgram(parser, new File(programResource.getPath()));
+
+    program = new SfzSamplerProgram(parser, new File(programResource.toURI()));
     parser.addObserver(program);
+  }
+
+  @Test
+  public void testWithSpaces() throws Exception {
+    before("sfz/guitar", "sfz/guitar-nki/New guitar.sfz");
+  }
+
+  @Test
+  public void testCopyTo() throws Exception {
+    before("sfz/guitar/", "sfz/guitar-nki/New guitar.sfz");
+    final File destDir = tmp.newFolder();
+    final File destProgramFile = new File(destDir, "program.sfz");
+    assertFalse(destProgramFile.exists());
+
+    final SamplerProgram copy = program.copyTo(destDir);
+    assertNotNull(copy);
+    assertTrue(destProgramFile.exists());
   }
 
   @Test

@@ -1,0 +1,191 @@
+/////////////////////////////////////////////////////////////////////////////
+// sfz definition file
+// copyright Chicken Systems, Inc.
+// -------------------------------------------------------------------------
+// Application: Translator 6 6.1, Build 1
+// Vendor: 
+
+
+<group> group_label=Group 1
+
+<region> sample=New guitar Samples\A quarter notes.02_02.wav lokey=45 hikey=45 lovel=97 hivel=127 end=192000 pitch_keycenter=45 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B quarter notes.02_02.wav lokey=47 hikey=47 lovel=97 hivel=127 end=192000 pitch_keycenter=47 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# quarter.02_02.wav lokey=49 hikey=49 lovel=97 hivel=127 end=192000 pitch_keycenter=49 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E quarter notes.02_02.wav lokey=40 hikey=40 lovel=97 hivel=127 end=192000 pitch_keycenter=40 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Quarter Notes.02_02.wav lokey=42 hikey=42 lovel=97 hivel=127 end=192000 pitch_keycenter=42 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 8th note.02_02.wav lokey=57 hikey=57 lovel=97 hivel=127 end=192000 pitch_keycenter=57 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 8th notes.02_02.wav lokey=59 hikey=59 lovel=97 hivel=127 end=192000 pitch_keycenter=59 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 8th n.02_02.wav lokey=52 hikey=52 lovel=97 hivel=127 end=192000 pitch_keycenter=52 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 16th .02_02.wav lokey=69 hikey=69 lovel=97 hivel=127 end=192000 pitch_keycenter=69 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 16th notes.02_02.wav lokey=71 hikey=71 lovel=97 hivel=127 end=192000 pitch_keycenter=71 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# 16th note.02_02.wav lokey=73 hikey=73 lovel=97 hivel=127 end=192000 pitch_keycenter=73 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 16th notes.02_02.wav lokey=64 hikey=64 lovel=97 hivel=127 end=192000 pitch_keycenter=64 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# 16th notes.02_02.wav lokey=66 hikey=66 lovel=97 hivel=127 end=192000 pitch_keycenter=66 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A Half note.02_02.wav lokey=33 hikey=33 lovel=97 hivel=127 end=192000 pitch_keycenter=33 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B Half Notes.02_03.wav lokey=35 hikey=35 lovel=97 hivel=127 end=192000 pitch_keycenter=35 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# Half Note.02_02.wav lokey=37 hikey=37 lovel=97 hivel=127 end=192000 pitch_keycenter=37 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E half notes.02_02.wav lokey=28 hikey=28 lovel=97 hivel=127 end=192000 pitch_keycenter=28 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Half Notes.02_02.wav lokey=30 hikey=30 lovel=97 hivel=127 end=192000 pitch_keycenter=30 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A Whole note.02_02.wav lokey=21 hikey=21 lovel=97 hivel=127 end=192000 pitch_keycenter=21 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B Whole Notes.02_02.wav lokey=23 hikey=23 lovel=97 hivel=127 end=192000 pitch_keycenter=23 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# Whole note.02_02.wav lokey=25 hikey=25 lovel=97 hivel=127 end=192000 pitch_keycenter=25 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E whole notes.02_02.wav lokey=16 hikey=16 lovel=97 hivel=127 end=192000 pitch_keycenter=16 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Whole .02_02.wav lokey=18 hikey=18 lovel=97 hivel=127 end=192000 pitch_keycenter=18 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 2 bar.02_02.wav lokey=9 hikey=9 lovel=97 hivel=127 end=192000 pitch_keycenter=9 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 2 Bars.02_02.wav lokey=11 hikey=11 lovel=97 hivel=127 end=192000 pitch_keycenter=11 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C#2 Bars.02_02.wav lokey=13 hikey=13 lovel=97 hivel=127 end=192000 pitch_keycenter=13 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 2 bars.02_02.wav lokey=4 hikey=4 lovel=97 hivel=127 end=192000 pitch_keycenter=4 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# 2 bars.02_02.wav lokey=6 hikey=6 lovel=97 hivel=127 end=192000 pitch_keycenter=6 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 2 bars muted.02_02.wav lokey=9 hikey=9 lovel=0 hivel=96 end=192000 pitch_keycenter=9 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 2 Bars Muted.02_02.wav lokey=11 hikey=11 lovel=0 hivel=96 end=192000 pitch_keycenter=11 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# 2 bars muted.02_02.wav lokey=13 hikey=13 lovel=0 hivel=96 end=192000 pitch_keycenter=13 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 2 Bars Huted.02_02.wav lokey=4 hikey=4 lovel=0 hivel=96 end=192000 pitch_keycenter=4 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# 2 Bars Muted.02_02.wav lokey=6 hikey=6 lovel=0 hivel=96 end=192000 pitch_keycenter=6 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A Whole notes muted.02_02.wav lokey=21 hikey=21 lovel=0 hivel=96 end=192000 pitch_keycenter=21 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B Whole muted.02_02.wav lokey=23 hikey=23 lovel=0 hivel=96 end=192000 pitch_keycenter=23 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# Whole Muted.02_02.wav lokey=25 hikey=25 lovel=0 hivel=96 end=192000 pitch_keycenter=25 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E Whole Notes Muted.02_02.wav lokey=16 hikey=16 lovel=0 hivel=96 end=192000 pitch_keycenter=16 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Whole Muted.02_02.wav lokey=18 hikey=18 lovel=0 hivel=96 end=192000 pitch_keycenter=18 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A Half notes muted.02_02.wav lokey=33 hikey=33 lovel=0 hivel=96 end=192000 pitch_keycenter=33 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B half notes.02_04.wav lokey=35 hikey=35 lovel=0 hivel=96 end=192000 pitch_keycenter=35 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# half notes muted.02_02.wav lokey=37 hikey=37 lovel=0 hivel=96 end=192000 pitch_keycenter=37 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E Half Notes Muted.02_02.wav lokey=28 hikey=28 lovel=0 hivel=96 end=192000 pitch_keycenter=28 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Half notes muted.02_02.wav lokey=30 hikey=30 lovel=0 hivel=96 end=192000 pitch_keycenter=30 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A quarter notes muted.02_02.wav lokey=45 hikey=45 lovel=0 hivel=96 end=192000 pitch_keycenter=45 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B quarter muted.02_02.wav lokey=47 hikey=47 lovel=0 hivel=96 end=192000 pitch_keycenter=47 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# quarter muted.02_02.wav lokey=49 hikey=49 lovel=0 hivel=96 end=192000 pitch_keycenter=49 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E Quarter Muted.01_01.wav lokey=40 hikey=40 lovel=0 hivel=96 end=192000 pitch_keycenter=40 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# quarter notes muted.02_02.wav lokey=42 hikey=42 lovel=0 hivel=96 end=192000 pitch_keycenter=42 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 8th notes muted.02_02.wav lokey=57 hikey=57 lovel=0 hivel=96 end=192000 pitch_keycenter=57 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 8th notes muted.02_02.wav lokey=59 hikey=59 lovel=0 hivel=96 end=192000 pitch_keycenter=59 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# 8th notes muted.02_02.wav lokey=61 hikey=61 lovel=0 hivel=96 end=192000 pitch_keycenter=61 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 8th Muted.02_02.wav lokey=52 hikey=52 lovel=0 hivel=96 end=192000 pitch_keycenter=52 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# 8th notes muted.02_02.wav lokey=54 hikey=54 lovel=0 hivel=96 end=192000 pitch_keycenter=54 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\A 16th notes muted.02_02.wav lokey=69 hikey=69 lovel=0 hivel=96 end=192000 pitch_keycenter=69 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\B 16th Muted.02_02.wav lokey=71 hikey=71 lovel=0 hivel=96 end=192000 pitch_keycenter=71 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# 8th notes muted.02_02.wav lokey=73 hikey=73 lovel=0 hivel=96 end=192000 pitch_keycenter=73 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\E 16th Muted.02_02.wav lokey=64 hikey=64 lovel=0 hivel=96 end=192000 pitch_keycenter=64 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# 16th Notes Muted.02_02.wav lokey=66 hikey=66 lovel=0 hivel=96 end=192000 pitch_keycenter=66 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\C# Strum New.wav lokey=61 hikey=61 lovel=96 hivel=127 end=192000 pitch_keycenter=61 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+<region> sample=New guitar Samples\F# Strum ew New.wav lokey=54 hikey=54 lovel=97 hivel=127 end=192000 pitch_keycenter=54 pitch_keytrack=0 bend_up=1200 bend_down=-1200 pan=-78.740158 amp_veltrack=13.385826 ampeg_decay=25 ampeg_release=10.809 pitchlfo_depthcc1=1200 pitchlfo_freq=5.038391 
+
+
+

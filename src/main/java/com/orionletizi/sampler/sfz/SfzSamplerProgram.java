@@ -2,6 +2,8 @@ package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.sampler.SamplerProgram;
 import net.beadsproject.beads.data.Sample;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jfugue.theory.Note;
 
@@ -13,6 +15,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
 
   private File programFile;
+
 
   private enum Scope {
     global,
@@ -39,6 +42,65 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     commitRegion();
     prepareGroups();
     prepareRegions();
+  }
+
+  public SamplerProgram copyTo(final File destDir) throws IOException {
+    FileUtils.forceMkdir(destDir);
+    if (!destDir.isDirectory()) {
+      throw new IOException("Couldn't create destDir: " + destDir);
+    }
+
+    // load the program file
+    String programSource = FileUtils.readFileToString(programFile);
+
+    // copy the samples
+    final File sampleDir = new File(destDir, "samples");
+    FileUtils.forceMkdir(sampleDir);
+    if (!sampleDir.isDirectory()) {
+      throw new IOException("Failed to create sample directory: " + sampleDir);
+    }
+
+    // collect a set of unique source sample files
+    final Set<String> samplePaths = new HashSet<>();
+    final SfzParser parser = new SfzParser();
+    parser.addObserver(new SfzParserObserverAdapter() {
+      @Override
+      public void notifySample(String sample) {
+        samplePaths.add(sample);
+      }
+    });
+    try {
+      parser.parse(programFile);
+    } catch (SfzParserException e) {
+      throw new IOException(e);
+    }
+
+    // copy all the source sample files to the samples directory
+    for (String sourcePath : samplePaths) {
+      final File sourceFile = new File(programFile.getParentFile(), FilenameUtils.separatorsToSystem(sourcePath));
+      final String sampleName = FilenameUtils.getName(FilenameUtils.separatorsToSystem(sourceFile.getName()));
+      final String destPath = FilenameUtils.separatorsToSystem(sampleDir.getName() + File.separatorChar + sampleName);
+      final File dest = new File(sampleDir, sampleName);
+      assert programSource.contains(sourcePath);
+      programSource = programSource.replace(sourcePath, destPath);
+      FileUtils.copyFile(sourceFile, dest);
+      if (!dest.isFile()) {
+        throw new IOException("Failed to copy sample file: source: " + sourceFile + ", dest: " + dest);
+      }
+    }
+
+    // write the program source to the new location
+    final File destFile = new File(destDir, "program.sfz");
+    FileUtils.writeStringToFile(destFile, programSource);
+    if (!destFile.isFile()) {
+      throw new IOException("Failed to write program file: " + destFile);
+    }
+
+    try {
+      return new SfzSamplerProgram(new SfzParser(), destFile);
+    } catch (SfzParserException e) {
+      throw new IOException(e);
+    }
   }
 
   public Region[][] getRegions() {
@@ -234,7 +296,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   @Override
   public void notifySample(String sample) {
     try {
-      final File sampleFile = new File(programFile.getParentFile(), sample);
+      final File sampleFile = new File(programFile.getParentFile(), FilenameUtils.separatorsToSystem(sample));
       currentRegion.setSample(new Sample(sampleFile.getAbsolutePath()));
       //info("Notify sample: " + sampleFile + ", currentRegion: " + currentRegion);
     } catch (IOException e) {
