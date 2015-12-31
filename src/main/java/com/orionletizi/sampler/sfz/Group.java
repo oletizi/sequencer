@@ -31,7 +31,7 @@ public class Group {
     this.lokey = lokey;
   }
 
-  public void addKey(byte key) {
+  public void addKey(int key) {
     addKey(new Note(key));
   }
 

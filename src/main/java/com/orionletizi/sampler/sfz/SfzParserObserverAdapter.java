@@ -39,17 +39,17 @@ public class SfzParserObserverAdapter implements SfzParserObserver {
   }
 
   @Override
-  public void notifyKey(byte key) {
+  public void notifyKey(int key) {
 
   }
 
   @Override
-  public void notifyHivel(byte hivel) {
+  public void notifyHivel(int hivel) {
 
   }
 
   @Override
-  public void notifyLovel(byte lovel) {
+  public void notifyLovel(int lovel) {
 
   }
 

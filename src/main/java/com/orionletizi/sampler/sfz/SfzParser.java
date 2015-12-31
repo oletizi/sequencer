@@ -87,7 +87,7 @@ public class SfzParser {
         } else if (line.startsWith("key=")) {
           line = line.substring("key=".length());
           final String key = nextToken(line);
-          composite.notifyKey(Byte.valueOf(key));
+          composite.notifyKey(Integer.valueOf(key));
           line = shift(key, line);
         } else if (line.startsWith("lokey=")) {
           line = line.substring("lokey=".length());
@@ -107,12 +107,12 @@ public class SfzParser {
         } else if (line.startsWith("hivel=")) {
           line = line.substring("hivel=".length());
           final String hivel = nextToken(line);
-          composite.notifyHivel(Byte.valueOf(hivel));
+          composite.notifyHivel(Integer.valueOf(hivel));
           line = shift(hivel, line);
         } else if (line.startsWith("lovel=")) {
           line = line.substring("lovel=".length());
           final String lovel = nextToken(line);
-          composite.notifyLovel(Byte.valueOf(lovel));
+          composite.notifyLovel(Integer.valueOf(lovel));
           line = shift(lovel, line);
         } else if (line.startsWith("group=")) {
           line = line.substring("group=".length());
@@ -143,10 +143,10 @@ public class SfzParser {
 
   private Note getNoteFor(String noteString) {
     try {
-      final byte value = Byte.parseByte(noteString);
+      final int value = Integer.valueOf(noteString);
       return new Note(value);
     } catch (NumberFormatException e) {
-      // not a byte. We'll try it as a note symbol.
+      // not an int. We'll try it as a note symbol.
     }
     return new Note(noteString);
   }
@@ -248,21 +248,21 @@ public class SfzParser {
     }
 
     @Override
-    public void notifyKey(byte key) {
+    public void notifyKey(int key) {
       for (SfzParserObserver observer : observers) {
         observer.notifyKey(key);
       }
     }
 
     @Override
-    public void notifyHivel(byte hivel) {
+    public void notifyHivel(int hivel) {
       for (SfzParserObserver observer : observers) {
         observer.notifyHivel(hivel);
       }
     }
 
     @Override
-    public void notifyLovel(byte lovel) {
+    public void notifyLovel(int lovel) {
       for (SfzParserObserver observer : observers) {
         observer.notifyLovel(lovel);
       }

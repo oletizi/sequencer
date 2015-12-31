@@ -17,11 +17,11 @@ public interface SfzParserObserver {
 
   void notifyPitchKeytrack(int keytrack);
 
-  void notifyKey(byte key);
+  void notifyKey(int key);
 
-  void notifyHivel(byte hivel);
+  void notifyHivel(int hivel);
 
-  void notifyLovel(byte lovel);
+  void notifyLovel(int lovel);
 
   void notifyGroupId(String groupNumber);
 

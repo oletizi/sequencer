@@ -61,6 +61,11 @@ public class SfzSamplerProgramTest {
   }
 
   @Test
+  public void testBigMono() throws Exception {
+    before("sfz/bigmono", "sfz/bigmono/sfz/Big Mono ndk.sfz");
+  }
+
+  @Test
   @Ignore("The note off test doesn't seem to be working right.")
   public void testDrums() throws Exception {
     before("program/drums/", "program/drums/program.sfz");

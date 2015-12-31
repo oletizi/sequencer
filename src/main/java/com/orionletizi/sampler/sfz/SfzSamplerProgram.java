@@ -166,12 +166,12 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
             region.setHivel((byte) (nextRegion.getLovel() - 1));
           } else if (nextRegion.getLovel() == 0) {
             // the next region has the default lovel; set its lovel to this region's hivel + 1
-            nextRegion.setLovel((byte) (region.getHivel() + 1));
+            nextRegion.setLovel(Math.max(Byte.MAX_VALUE, region.getHivel() + 1));
           }
         } else if (i > 0 && i + 1 < regions.size()) {
           // handle the middle regions; the lovel of the first region should be set properly by the code above
           final Region nextRegion = regions.get(i + 1);
-          nextRegion.setLovel((byte) (region.getHivel() + 1));
+          nextRegion.setLovel(Math.max(Byte.MAX_VALUE, region.getHivel() + 1));
         } // nothing to do for the last region
       }
 
@@ -179,10 +179,12 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       for (Region region : regions) {
         for (Note note : region.getKeys()) {
           final byte key = note.getValue();
-          final byte minVelocity = region.getLovel();
-          final byte maxVelocity = region.getHivel();
+          final int minVelocity = region.getLovel();
+          final int maxVelocity = region.getHivel();
+
           for (int i = minVelocity; i <= maxVelocity; i++) {
-            this.regions[key][(byte) i] = region;
+            info("key: " + key + ", i: " + i);
+            this.regions[key][i] = region;
           }
         }
       }
@@ -306,7 +308,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @SuppressWarnings("unused")
   private void info(String s) {
-    //System.out.println(getClass().getSimpleName() + ": " + s);
+    System.out.println(getClass().getSimpleName() + ": " + s);
   }
 
   @Override
@@ -346,7 +348,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public void notifyKey(byte key) {
+  public void notifyKey(int key) {
     switch (scope) {
       case group:
         currentGroup.addKey(key);
@@ -358,12 +360,14 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public void notifyHivel(byte hivel) {
+  public void notifyHivel(int hivel) {
+    assert hivel >= 0 && hivel <= Byte.MAX_VALUE;
     currentRegion.setHivel(hivel);
   }
 
   @Override
-  public void notifyLovel(byte lovel) {
+  public void notifyLovel(int lovel) {
+    assert lovel >= 0 && lovel <= Byte.MAX_VALUE;
     currentRegion.setLovel(lovel);
   }
 

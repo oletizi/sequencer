@@ -9,8 +9,8 @@ public class Region extends Group {
 
   private final Group group;
   private Sample sample;
-  private byte hivel = 127;
-  private byte lovel = 0;
+  private int hivel = 127;
+  private int lovel = 0;
   // default keytrack is 100 which means 100 cents (one semitone) per key. Allowed values are -1200 - 1200
   private int pitchKeytrack = 100;
 
@@ -43,19 +43,21 @@ public class Region extends Group {
     this.sample = sample;
   }
 
-  public void setHivel(byte hivel) {
+  public void setHivel(int hivel) {
+    assert hivel >= 0 && hivel <= Byte.MAX_VALUE;
     this.hivel = hivel;
   }
 
-  public void setLovel(byte lovel) {
+  public void setLovel(int lovel) {
+    assert lovel >= 0 && hivel <= Byte.MAX_VALUE;
     this.lovel = lovel;
   }
 
-  public byte getHivel() {
+  public int getHivel() {
     return hivel;
   }
 
-  public byte getLovel() {
+  public int getLovel() {
     return lovel;
   }
 
