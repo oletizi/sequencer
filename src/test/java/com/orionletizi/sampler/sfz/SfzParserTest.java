@@ -41,7 +41,7 @@ public class SfzParserTest {
 
   @Test
   public void testDrums() throws Exception {
-    setup("program/drums/program.sfz");
+    setup("sfz/drums/program.sfz");
     parser.parse(sfzResource);
     // make sure the hh group was parsed three times
     verify(observer, times(3)).notifyGroupId("0");
