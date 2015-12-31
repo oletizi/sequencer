@@ -90,8 +90,8 @@ public class Sampler implements Receiver {
     }
 
     // find all players than need to be turned off by this note on
-    final Set<Byte> offNotes = program.getOffNotesForNoteOn(note.getValue());
-    for (Byte offNote : offNotes) {
+    final Set<Integer> offNotes = program.getOffNotesForNoteOn(note.getValue());
+    for (Integer offNote : offNotes) {
       final Set<SamplePlayer> offPlayers = this.notePlayerCache.get(offNote);
       if (offPlayers != null) {
         for (SamplePlayer offPlayer : offPlayers) {
@@ -114,8 +114,8 @@ public class Sampler implements Receiver {
   private void noteOff(Note note) {
     info("Note off: " + note);
     note = transform.transform(note);
-    final Set<Byte> notesForNoteOff = program.getOffNotesForNoteOff(note.getValue(), note.getOnVelocity());
-    for (Byte key : notesForNoteOff) {
+    final Set<Integer> notesForNoteOff = program.getOffNotesForNoteOff(note.getValue(), note.getOnVelocity());
+    for (Integer key : notesForNoteOff) {
       final Set<SamplePlayer> players = notePlayerCache.get(key);
       for (SamplePlayer player : players) {
         player.pause(true);

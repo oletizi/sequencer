@@ -47,7 +47,7 @@ public class MidiAdapter implements Receiver {
     final MidiAdapter adapter = new MidiAdapter(device);
     info("created midi adapter: " + adapter);
 
-    final URL programResource = ClassLoader.getSystemResource("program/drums/program.sfz");
+    final URL programResource = ClassLoader.getSystemResource("sfz/drums/program.sfz");
     info("Got program resource: " + programResource);
 
     final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), new File(programResource.getPath()));

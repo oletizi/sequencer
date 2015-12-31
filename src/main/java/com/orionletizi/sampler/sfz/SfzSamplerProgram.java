@@ -166,12 +166,14 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
             region.setHivel((byte) (nextRegion.getLovel() - 1));
           } else if (nextRegion.getLovel() == 0) {
             // the next region has the default lovel; set its lovel to this region's hivel + 1
-            nextRegion.setLovel(Math.max(Byte.MAX_VALUE, region.getHivel() + 1));
+            final int nextLovel = region.getHivel() + 1;
+            nextRegion.setLovel(nextLovel);
           }
         } else if (i > 0 && i + 1 < regions.size()) {
           // handle the middle regions; the lovel of the first region should be set properly by the code above
           final Region nextRegion = regions.get(i + 1);
-          nextRegion.setLovel(Math.max(Byte.MAX_VALUE, region.getHivel() + 1));
+          final int nextLovel = region.getHivel() + 1;
+          nextRegion.setLovel(nextLovel);
         } // nothing to do for the last region
       }
 
@@ -183,7 +185,6 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
           final int maxVelocity = region.getHivel();
 
           for (int i = minVelocity; i <= maxVelocity; i++) {
-            info("key: " + key + ", i: " + i);
             this.regions[key][i] = region;
           }
         }
@@ -194,15 +195,15 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public Sample getSampleForNote(byte i, byte velocity) {
-    final Region region = regions[i][velocity];
+  public Sample getSampleForNote(int note, int velocity) {
+    final Region region = regions[note][velocity];
     info("region for note on: velocity: " + velocity + ", region: " + region);
     return region == null ? null : region.getSample();
   }
 
   @Override
-  public Set<Byte> getOffNotesForNoteOn(byte note) {
-    final Set<Byte> rv = new HashSet<>();
+  public Set<Integer> getOffNotesForNoteOn(int note) {
+    final Set<Integer> rv = new HashSet<>();
     // Find all the groups that should be turned off by this on note
     // XXX: This is probably wrong. It's probably allowed to have more than one group per note
     final Group group = groupByNote.get(note);
@@ -211,7 +212,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       for (Group offGroup : offGroups) {
         // RoboVM gets freaked out by streams, so I'm not using them
         for (Note key : offGroup.getKeys()) {
-          rv.add(key.getValue());
+          rv.add((int) key.getValue());
         }
       }
     }
@@ -220,8 +221,8 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public Set<Byte> getOffNotesForNoteOff(byte note, byte onVelocity) {
-    final Set<Byte> rv = new HashSet<>();
+  public Set<Integer> getOffNotesForNoteOff(int note, int onVelocity) {
+    final Set<Integer> rv = new HashSet<>();
 
     final Region region = regions[note][onVelocity];
     //info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);

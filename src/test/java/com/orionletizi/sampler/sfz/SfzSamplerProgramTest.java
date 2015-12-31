@@ -70,21 +70,21 @@ public class SfzSamplerProgramTest {
   public void testDrums() throws Exception {
     before("program/drums/", "program/drums/program.sfz");
 
-    Set<Byte> offNotes = program.getOffNotesForNoteOn((byte) 42);
+    Set<Integer> offNotes = program.getOffNotesForNoteOn(42);
     info("off notes: " + offNotes);
     assertEquals(2, offNotes.size());
-    assertTrue(offNotes.contains((byte) 44));
-    assertTrue(offNotes.contains((byte) 46));
+    assertTrue(offNotes.contains(44));
+    assertTrue(offNotes.contains(46));
 
-    offNotes = program.getOffNotesForNoteOff((byte) 32, (byte) 100);
+    offNotes = program.getOffNotesForNoteOff(32, 100);
     // except for the hi hats, all note offs should be ignored
     assertTrue(offNotes.isEmpty());
 
     // hihats: 42, 44, 46
-    offNotes = program.getOffNotesForNoteOff((byte) 42, (byte) 100);
+    offNotes = program.getOffNotesForNoteOff(42, 100);
     info("off notes: " + offNotes);
     assertEquals(1, offNotes.size());
-    assertTrue(offNotes.contains((byte) 42));
+    assertTrue(offNotes.contains(42));
   }
 
   private void info(String s) {
@@ -98,18 +98,18 @@ public class SfzSamplerProgramTest {
     final File file = new File(ClassLoader.getSystemResource("sfz/mellotron/A2.wav").getFile());
 
     final byte note = new Note("A2").getValue();
-    assertEquals(file.getAbsolutePath(), program.getSampleForNote(note, (byte) 127).getFileName());
+    assertEquals(file.getAbsolutePath(), program.getSampleForNote(note, 127).getFileName());
     final Sample actual = program.getSampleForNote(note, (byte) 127);
     assertEquals(file.getAbsolutePath(), actual.getFileName());
 
-    final Set<Byte> offNotes = program.getOffNotesForNoteOff(note, (byte) 100);
+    final Set<Integer> offNotes = program.getOffNotesForNoteOff(note, 100);
     assertEquals(1, offNotes.size());
     assertTrue(offNotes.contains(note));
   }
 
   @Test
   public void testNoteAndVelocity() throws Exception {
-    before("sfz/ibanezbass/", "sfz/ibanezbass/ibanez-bass.sfz");
+    before("sfz/ibanezbass", "sfz/ibanezbass/ibanez-bass.sfz");
 
     File file = new File(programRoot, "E_1.wav");
     testSampleFile((byte) 52, file, 111, 127);
@@ -126,7 +126,10 @@ public class SfzSamplerProgramTest {
 
   private void testSampleFile(byte note, File file, int lovel, int hivel) {
     for (int b = (byte) lovel; b <= hivel; b++) {
-      assertEquals(file.getAbsolutePath(), program.getSampleForNote(note, (byte) b).getFileName());
+
+      final Sample sample = program.getSampleForNote(note, b);
+      assertNotNull("No sample found for note: " + note + ", lovel: " + lovel + ", hivel: " + hivel, sample);
+      assertEquals(file.getAbsolutePath(), sample.getFileName());
     }
   }
 }

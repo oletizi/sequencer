@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Set;
 
 public interface SamplerProgram {
-  Sample getSampleForNote(byte i, byte velocity);
+  Sample getSampleForNote(int note, int velocity);
 
   /**
    * Returns all of the notes that, if they are currently playing, should be turned off when the given note off
@@ -17,9 +17,9 @@ public interface SamplerProgram {
    * @param note the midi byte for the note in question
    * @return all midi bytes for notes that should be turned off by this note
    */
-  Set<Byte> getOffNotesForNoteOff(byte note, byte onVelocity);
+  Set<Integer> getOffNotesForNoteOff(int note, int onVelocity);
 
-  Set<Byte> getOffNotesForNoteOn(byte note);
+  Set<Integer> getOffNotesForNoteOn(int note);
 
   SamplerProgram copyTo(File destinationDirectory) throws IOException;
 }
