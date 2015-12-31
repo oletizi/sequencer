@@ -31,7 +31,7 @@ public class Sequencer extends MidiParser {
   private final SamplerProgram program;
   private final Transform transform;
 
-  private int tempo;
+  private int tempo = 120;
   private int resolution;
   private Sequence sequence;
 
@@ -95,13 +95,17 @@ public class Sequencer extends MidiParser {
     this.sequence = sequence;
     resolution = sequence.getResolution();
     super.parse(sequence);
+    if (tempo <= 0) {
+      tempo = 120;
+    }
   }
 
   @Override
   public long ticksToMs(long ticks) {
     // millis = tick * 60000 / ppqn / tempo
+    logger.info("ticksToMs: ticks: " + ticks + ", resolution: " + resolution + ", tempo: " + tempo);
     long millis = ticks * 60 * 1000 / resolution / tempo;
-    logger.info("ticksToMs: ticks: " + ticks + ", resolution: " + resolution + ", tempo: " + tempo + ", millis: " + millis);
+    logger.info("millis: " + millis);
     return millis;
   }
 
