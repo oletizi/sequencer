@@ -92,8 +92,7 @@ public class SequencerTest {
 
     final CountDownLatch latch = new CountDownLatch(1);
 
-    SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programFile);
-    new SfzParser().addObserver(program).parse(programFile);
+    final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programFile);
 
     final List<Receiver> instruments = new ArrayList<>();
     final Sampler sampler = new Sampler(ac, program);
