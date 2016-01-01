@@ -3,11 +3,12 @@ package com.orionletizi.sequencer;
 import com.orionletizi.com.orionletizi.midi.Transpose;
 import com.orionletizi.sampler.sfz.SfzParser;
 import com.orionletizi.sampler.sfz.SfzSamplerProgram;
+import com.orionletizi.util.logging.LoggerImpl;
 import com.sun.media.sound.StandardMidiFileReader;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 import net.beadsproject.beads.core.AudioContext;
-import net.beadsproject.beads.core.AudioIO;
-import net.beadsproject.beads.core.io.JavaSoundAudioIO;
+import net.beadsproject.beads.core.io.NonrealtimeIO;
+import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.ugens.RecordToFile;
 import org.junit.After;
 import org.junit.Before;
@@ -16,8 +17,12 @@ import org.junit.Test;
 import javax.sound.midi.Sequence;
 import java.io.File;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
 
-public class SequencerTestIT {
+import static com.orionletizi.util.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+public class SequencerTest {
 
   //private URL midiSource;
   private StandardMidiFileReader reader;
@@ -26,15 +31,17 @@ public class SequencerTestIT {
   //private File sampleDirectory;
   private AudioContext ac;
   private RecordToFile recorder;
+  private File outfile;
   //private File programFile;
   //private SfzSamplerProgram program;
 
   @Before
   public void before() throws Exception {
-    AudioIO io = new JavaSoundAudioIO();
-    ac = new AudioContext(io);
+    LoggerImpl.turnOff(SfzSamplerProgram.class);
+    LoggerImpl.turnOff(Sequencer.class);
+    ac = new AudioContext(new NonrealtimeIO());
 
-    final File outfile = new File("/tmp/sampler-" + System.currentTimeMillis() + ".wav");
+    outfile = new File("/tmp/sampler-" + System.currentTimeMillis() + ".wav");
     recorder = new RecordToFile(ac, 2, outfile);
     ac.out.addDependent(recorder);
     recorder.addInput(ac.out);
@@ -45,8 +52,15 @@ public class SequencerTestIT {
 
   @After
   public void after() throws Exception {
+    ac.stop();
     System.out.println("Stopping recorder.");
     recorder.kill();
+    System.out.println("Outfile: " + outfile);
+    assertTrue(outfile.isFile());
+    // test the output file
+    final Sample sample = new Sample(outfile.getAbsolutePath());
+    assert (sample.getLength() > 0);
+    assertEquals(2, sample.getNumChannels());
   }
 
   @Test
@@ -75,21 +89,35 @@ public class SequencerTestIT {
 
   private void testPlay(final URL midiSource, final File programFile, Transpose transpose) throws Exception {
 
+    final CountDownLatch endLatch = new CountDownLatch(1);
+
     SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), programFile);
     new SfzParser().addObserver(program).parse(programFile);
 
     Sequence sequence = reader.getSequence(midiSource);
     // the transposition here is because Logic Pro seems to export midi notes higher than expected.
-    Sequencer sequencer = new Sequencer(ac, program, transpose);
+    final SequencerObserver observer = new SequencerObserver() {
+
+      @Override
+      public void notifyEnd() {
+        endLatch.countDown();
+      }
+    };
+
+    Sequencer sequencer = new Sequencer(ac, program, observer, transpose);
 
     sequencer.startParser();
     sequencer.parse(sequence);
     sequencer.startParser();
-    sequencer.play();
+    System.out.println("============> Calling ac.start()...");
+    new Thread(() -> {
+      ac.start();
+    }).start();
 
-    synchronized (this) {
-      wait(30 * 1000);
-    }
+    System.out.println("============> Done calling ac.start(); calling sequencer.play()...");
+    sequencer.play();
+    System.out.println("============> Done calling sequencer.play()");
+    endLatch.await();
   }
 
 }

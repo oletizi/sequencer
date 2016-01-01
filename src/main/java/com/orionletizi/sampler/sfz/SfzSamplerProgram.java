@@ -1,6 +1,8 @@
 package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.sampler.SamplerProgram;
+import com.orionletizi.util.logging.Logger;
+import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.data.Sample;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -13,6 +15,7 @@ import java.util.*;
 
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
+  private static final Logger logger = LoggerImpl.forClass(SfzSamplerProgram.class);
 
   private File programFile;
 
@@ -25,10 +28,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   //  private final File sampleBase;
   private final Set<Group> allGroups = new HashSet<>();
-  private final Map<Byte, Group> groupByNote = new HashMap<>();
+  private final Map<Integer, Group> groupByNote = new HashMap<>();
   private final Map<String, Set<Group>> groupsById = new HashMap<>();
   private final Region[][] regions = new Region[128][128];
-  private final Map<Byte, Set<Region>> regionsByKey = new HashMap<>();
+  private final Map<Integer, Set<Region>> regionsByKey = new HashMap<>();
   private String globalLoopMode;
   private Group currentGroup;
   private Region currentRegion;
@@ -112,7 +115,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @SuppressWarnings("unused")
-  public Set<Region> getRegionsByKey(final byte key) {
+  public Set<Region> getRegionsByKey(final int key) {
     return regionsByKey.get(key);
   }
 
@@ -129,7 +132,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
       // put the group in groupByNote across its keyspan
       for (Note key : group.getKeys()) {
-        groupByNote.put(key.getValue(), group);
+        groupByNote.put((int) key.getValue(), group);
       }
 
       // setup the offBy stuff
@@ -145,7 +148,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   private void prepareRegions() throws SfzParserException {
-    for (Map.Entry<Byte, Set<Region>> entry : regionsByKey.entrySet()) {
+    for (Map.Entry<Integer, Set<Region>> entry : regionsByKey.entrySet()) {
       final ArrayList<Region> regions = new ArrayList<>(entry.getValue());
       // sort by hivel, ascending...
       // XXX: this doesn't account for only setting lovel
@@ -271,7 +274,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
         }
       }
       for (Note note : currentRegion.getKeys()) {
-        final byte key = note.getValue();
+        final int key = note.getValue();
         Set<Region> regions = regionsByKey.get(key);
         if (regions == null) {
           regions = new HashSet<>();
@@ -309,7 +312,8 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   @SuppressWarnings("unused")
   private void info(String s) {
-    System.out.println(getClass().getSimpleName() + ": " + s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
+    logger.info(s);
   }
 
   @Override

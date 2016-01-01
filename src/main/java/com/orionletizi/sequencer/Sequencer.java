@@ -33,29 +33,23 @@ public class Sequencer extends MidiParser {
 
   private int tempo = 120;
   private int resolution;
-  private Sequence sequence;
+  private final SequencerObserver observer;
 
-  public Sequencer(final AudioContext ac, final SamplerProgram program) {
-    this(ac, program, new PassthroughTransform());
-  }
-
-  public Sequencer(final AudioContext ac, final SamplerProgram program, final Transform transform) {
+  public Sequencer(final AudioContext ac, final SamplerProgram program, final SequencerObserver observer, final Transform transform) {
     this.ac = ac;
     this.program = program;
+    this.observer = observer;
     this.transform = transform;
   }
 
-  public double getMicrosecondLength() {
-    return sequence.getMicrosecondLength();
-  }
-
   public void play() {
-
+    NoteOffTrigger lastOffTrigger = null;
+    info("===> TICK EVENTS: " + tickEvents.size());
     for (Map.Entry<Long, TickEvents> entry : tickEvents.entrySet()) {
       final TickEvents events = entry.getValue();
       final Long tick = entry.getKey();
       final long tickMillisecond = ticksToMs(tick);
-      logger.info("tick: " + tick + ", ms: " + tickMillisecond + ", note on events: " + events.getNoteOnEvents().size()
+      info("tick: " + tick + ", ms: " + tickMillisecond + ", note on events: " + events.getNoteOnEvents().size()
           + ", note off events: " + events.getNoteOffEvents().size());
       // Add every note on to the playing set
       for (NoteOnEvent noteOn : events.getNoteOnEvents()) {
@@ -64,24 +58,31 @@ public class Sequencer extends MidiParser {
           playing = new HashSet<>();
           playingNotes.put(noteOn.note.getValue(), playing);
         }
-        logger.info("  adding note on: " + noteOn.note + ", file: " + noteOn.player.getSample().getFileName());
+        info("  adding note on: " + noteOn.note + ", file: " + noteOn.player.getSample().getFileName());
         playing.add(noteOn);
       }
 
       // Remove every playing note corresponding to the notes off
       // create a new note off trigger for every playing note
+      info("===> Iterating over note off events: " + events.getNoteOffEvents().size());
       for (NoteOffEvent noteOff : events.getNoteOffEvents()) {
         final Set<NoteOnEvent> playing = playingNotes.get(noteOff.note.getValue());
-        logger.info("  turning off currently playing notes: " + playing);
+        info("  turning off currently playing notes: " + playing);
         if (playing != null) {
           for (NoteOnEvent noteOn : playing) {
-            new NoteOffTrigger(ac, tickMillisecond, noteOn);
+            lastOffTrigger = new NoteOffTrigger(ac, tickMillisecond, noteOn);
           }
           playing.clear();
         }
       }
     }
-
+    if (lastOffTrigger != null) {
+      info("====> CONFIGURING LAST OFF TRIGGER: observer: " + observer);
+      lastOffTrigger.setIsLast();
+      lastOffTrigger.setSequencerObserver(observer);
+    } else {
+      info("====> LAST OFF TRIGGER IS NULL!!!");
+    }
     // TODO: Make metronome configurable
     // TODO: Make metronome sensitive to tempo change events
 
@@ -90,9 +91,13 @@ public class Sequencer extends MidiParser {
     ac.start();
   }
 
+  private void info(String s) {
+    logger.info(s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
+  }
+
   @Override
   public void parse(Sequence sequence) {
-    this.sequence = sequence;
     resolution = sequence.getResolution();
     super.parse(sequence);
     if (tempo <= 0) {
@@ -103,9 +108,9 @@ public class Sequencer extends MidiParser {
   @Override
   public long ticksToMs(long ticks) {
     // millis = tick * 60000 / ppqn / tempo
-    logger.info("ticksToMs: ticks: " + ticks + ", resolution: " + resolution + ", tempo: " + tempo);
+    info("ticksToMs: ticks: " + ticks + ", resolution: " + resolution + ", tempo: " + tempo);
     long millis = ticks * 60 * 1000 / resolution / tempo;
-    logger.info("millis: " + millis);
+    info("millis: " + millis);
     return millis;
   }
 
@@ -113,7 +118,7 @@ public class Sequencer extends MidiParser {
   public void fireTempoChanged(int tempoBPM) {
     super.fireTempoChanged(tempoBPM);
     // TODO: add tempo change events
-    logger.info("TEMPO: " + tempoBPM);
+    info("TEMPO: " + tempoBPM);
     this.tempo = tempoBPM;
   }
 
@@ -132,7 +137,7 @@ public class Sequencer extends MidiParser {
       final NoteOnEvent noteEvent = new NoteOnEvent(ac, (float) startTime, note, player);
       getTickEvents(event.getTick()).addNoteOn(noteEvent);
     } else {
-      logger.info("No sample for note: " + note);
+      info("No sample for note: " + note);
     }
   }
 
@@ -140,7 +145,7 @@ public class Sequencer extends MidiParser {
   public void fireNoteReleased(MidiEvent event, Note note) {
     note = transform.transform(note);
     super.fireNoteReleased(event, note);
-    getTickEvents(event.getTick()).addNoteOff(new NoteOffEvent(event, note));
+    getTickEvents(event.getTick()).addNoteOff(new NoteOffEvent(note));
   }
 
   private TickEvents getTickEvents(long tick) {
@@ -156,6 +161,8 @@ public class Sequencer extends MidiParser {
 
     private final NoteOnEvent onEvent;
     private boolean triggered = false;
+    private boolean isLast = false;
+    private SequencerObserver sequencerObserver;
 
     public NoteOffTrigger(AudioContext context, double delay, NoteOnEvent onEvent) {
       super(context, delay);
@@ -171,17 +178,29 @@ public class Sequencer extends MidiParser {
 
       onEvent.setEnvelope(gainEnvelope);
 
-      logger.info("  Note off trigger: note: " + onEvent.note + ", delay: " + delay);
+      info("  Note off trigger: note: " + onEvent.note + ", delay: " + delay);
     }
 
     @Override
     public void trigger() {
+      info("NOTE OFF TRIGGER CALLED!!!!!!!");
       if (!triggered) {
-        logger.info("Note off triggered: " + onEvent.note);
+        info("Note off triggered: " + onEvent.note);
         onEvent.player.pause(true);
         // TODO: Figure out how to remove the triggers that have already fired.
         triggered = true;
+        if (isLast && sequencerObserver != null) {
+          sequencerObserver.notifyEnd();
+        }
       }
+    }
+
+    public void setIsLast() {
+      this.isLast = true;
+    }
+
+    public void setSequencerObserver(SequencerObserver sequencerObserver) {
+      this.sequencerObserver = sequencerObserver;
     }
   }
 
@@ -208,11 +227,9 @@ public class Sequencer extends MidiParser {
   }
 
   private class NoteOffEvent {
-    private final MidiEvent event;
     private final Note note;
 
-    public NoteOffEvent(final MidiEvent event, final Note note) {
-      this.event = event;
+    public NoteOffEvent(final Note note) {
       this.note = note;
     }
   }
@@ -226,7 +243,7 @@ public class Sequencer extends MidiParser {
 
     public NoteOnEvent(AudioContext context, double tickStart, Note note, SamplePlayer player) {
       super(context, tickStart);
-      logger.info("  adding note on trigger: " + note);
+      info("  adding note on trigger: " + note);
       context.out.addDependent(this);
       this.tickStart = tickStart;
       this.note = note;
@@ -249,7 +266,7 @@ public class Sequencer extends MidiParser {
 
         ac.out.addInput(gain);
         player.start();
-        logger.info("Note on triggered: " + this.note + ", file: " + player.getSample().getFileName());
+        info("Note on triggered: " + this.note + ", file: " + player.getSample().getFileName());
         triggered = true;
       }
     }
@@ -260,11 +277,4 @@ public class Sequencer extends MidiParser {
     }
   }
 
-  // TODO: Figure out why Idea won't import this if it's in the midi package
-  public static class PassthroughTransform implements Transform {
-    @Override
-    public Note transform(Note note) {
-      return note;
-    }
-  }
 }
