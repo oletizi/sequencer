@@ -99,18 +99,23 @@ public class Sampler implements Receiver {
         }
       }
     }
-
   }
 
   private void handleNoteOff(ShortMessage message) {
     final byte noteValue = message.getMessage()[1];
     final byte noteOffVelocity = message.getMessage()[2];
-    final Note note = onNotes.remove(noteValue);
-    if (note != null) {
-      note.setOffVelocity(noteOffVelocity);
-      noteOff(note);
+
+
+    final Note onNote = onNotes.get(noteValue);
+    onNote.setOffVelocity(noteOffVelocity);
+    final Set<Integer> offNotes = program.getOffNotesForNoteOff(onNote.getValue(), onNote.getOnVelocity());
+    info("OFF NOTES: " + offNotes);
+    for (Integer offNote : offNotes) {
+      onNotes.remove(offNote);
+      noteOff(new Note(offNote));
     }
   }
+
   private void noteOff(Note note) {
     info("Note off: " + note);
     note = transform.transform(note);
@@ -125,7 +130,7 @@ public class Sampler implements Receiver {
   }
 
   private void info(String s) {
-    //System.out.println(getClass().getSimpleName() + ": " + s);
+    System.out.println(getClass().getSimpleName() + ": " + s);
   }
 
   @Override

@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+// TODO: Implement random sample selection
+// TODO: Figure out why loop mode isn't working
 public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   private static final Logger logger = LoggerImpl.forClass(SfzSamplerProgram.class);
@@ -229,22 +231,23 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     final Region region = regions[note][onVelocity];
     //info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);
-    if (region != null) {
-      final String loopMode = region.getLoopMode();
-      if (loopMode != null && !loopMode.startsWith("one_shot")) {
-        rv.add(note);
-      }
-    }
-    // XXX: This is wrong. The loop mode of the individual region should have priority over the
-    // loop mode of the group
+    String loopMode = null;
     final Group group = groupByNote.get(note);
-    //info("group for notes off: onVelocity: " + onVelocity + ", note: " + note + ", group: " + group);
     if (group != null) {
-      final String loopMode = group.getLoopMode();
-      if (!"one_shot".equals(loopMode)) {
-        rv.add(note);
+      loopMode = group.getLoopMode();
+    }
+
+    if (region != null) {
+      if (region.getLoopMode() != null) {
+        loopMode = region.getLoopMode();
       }
     }
+
+    info("LOOP MODE: " + loopMode);
+    if (!"one_shot".equals(loopMode)) {
+      rv.add(note);
+    }
+
     return rv;
   }
 
