@@ -2,6 +2,8 @@ package com.orionletizi.sequencer;
 
 import com.orionletizi.com.orionletizi.midi.MidiContext;
 import com.orionletizi.com.orionletizi.midi.message.MidiMetaMessage;
+import com.orionletizi.util.logging.Logger;
+import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.core.AudioContext;
 import net.beadsproject.beads.core.Bead;
 import net.beadsproject.beads.core.UGen;
@@ -12,20 +14,22 @@ import java.net.URL;
 import java.util.*;
 
 public class Sequencer extends UGen {
+  private static final Logger logger = LoggerImpl.forClass(Sequencer.class);
   private final AudioContext ac;
   private final List<InstrumentTrack> instrumentTracks = new ArrayList<>();
   private final long finalTick;
   private long currentFrame = 0;
   private Set<Bead> endListeners = new HashSet<>();
 
-  public Sequencer(AudioContext ac, List<Receiver> instruments, URL midiSource) throws InvalidMidiDataException, IOException {
+  public Sequencer(final AudioContext ac, final List<Receiver> instruments, final URL midiSource) throws InvalidMidiDataException, IOException {
+    this(ac, instruments, MidiSystem.getSequence(midiSource));
+  }
+
+  public Sequencer(final AudioContext ac, final List<Receiver> instruments, final Sequence sequence) {
     super(ac);
     this.ac = ac;
-    final Sequence sequence = MidiSystem.getSequence(midiSource);
     finalTick = sequence.getTickLength();
     final Track[] tracks = sequence.getTracks();
-    info("Tracks: " + tracks);
-    info("Instruments: " + instruments);
     for (int i = 0; i < tracks.length && i < instruments.size(); i++) {
       final InstrumentTrack instrumentTrack = new InstrumentTrack(ac.getSampleRate(), sequence.getResolution(), instruments.get(i), tracks[i]);
       this.instrumentTracks.add(instrumentTrack);
@@ -111,9 +115,6 @@ public class Sequencer extends UGen {
       final long thisTick = new MidiContext(sampleRate, ticksPerBeat, currentTempo).frameToTick(frame);
       if (thisTick != currentTick) {
         notifyTick(thisTick);
-        if (false && thisTick % 1000 == 0) {
-          info("ac time: " + (ac.getTime() / 1000) + "s, buffer size: " + bufferSize + ", buffer time: " + ac.samplesToMs(bufferSize) / 1000 + "s");
-        }
       }
       currentTick = thisTick;
       return currentTick;
@@ -122,8 +123,8 @@ public class Sequencer extends UGen {
     public void notifyTick(long tick) {
       final List<MidiEvent> midiEvents = eventsByTick.get(tick);
       if (midiEvents != null) {
-        for (int i = 0; i < midiEvents.size(); i++) {
-          final MidiEvent midiEvent = midiEvents.get(i);
+        info("midi events by tick: " + tick + ", events: " + midiEvents);
+        for (final MidiEvent midiEvent : midiEvents) {
           final boolean tempoWasSet = checkAndSetTempo(midiEvent);
           if (tempoWasSet) {
             info("tempo set: tempo: " + currentTempo + ", tick: " + tick + ", time: " + ac.getTime() + ", message: " + midiEvent.getMessage());
@@ -135,6 +136,7 @@ public class Sequencer extends UGen {
   }
 
   private void info(String s) {
-    System.out.println(getClass().getSimpleName() + ": " + s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
+    logger.info(s);
   }
 }

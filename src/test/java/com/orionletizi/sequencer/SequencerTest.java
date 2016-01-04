@@ -66,8 +66,8 @@ public class SequencerTest {
 
   @Test
   public void testPlayGuitar() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/michael-guitar.mid"), new File(ClassLoader.getSystemResource("sfz/guitar/guitar-fixed.sfz").getFile())
-    );
+    testPlay(ClassLoader.getSystemResource("midi/GT1.mid"),
+        new File(ClassLoader.getSystemResource("sfz/guitar/guitar-fixed.sfz").getFile()));
   }
 
   @Test

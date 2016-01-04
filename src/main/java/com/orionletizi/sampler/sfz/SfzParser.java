@@ -1,5 +1,7 @@
 package com.orionletizi.sampler.sfz;
 
+import com.orionletizi.util.logging.Logger;
+import com.orionletizi.util.logging.LoggerImpl;
 import org.jfugue.theory.Note;
 
 import java.io.*;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 public class SfzParser {
 
+  private static final Logger logger = LoggerImpl.forClass(SfzParser.class);
   public static final String SAMPLE_FILENAME_TERMINATOR = ".wav";
 
   private enum Scope {
@@ -41,7 +44,8 @@ public class SfzParser {
   }
 
   private void info(String s) {
-    System.out.println(getClass().getSimpleName() + ": " + s);
+    //System.out.println(getClass().getSimpleName() + ": " + s);
+    logger.info(s);
   }
 
   public void parse(final InputStream inputStream) throws IOException, SfzParserException {
