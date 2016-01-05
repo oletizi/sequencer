@@ -1,6 +1,7 @@
 package com.orionletizi.sequencer;
 
 import com.orionletizi.com.orionletizi.midi.MidiContext;
+import com.orionletizi.com.orionletizi.midi.MidiUtils;
 import com.orionletizi.com.orionletizi.midi.message.MidiMetaMessage;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
@@ -25,9 +26,14 @@ public class Sequencer extends UGen {
     this(ac, instruments, MidiSystem.getSequence(midiSource));
   }
 
-  public Sequencer(final AudioContext ac, final List<Receiver> instruments, final Sequence sequence) {
+  public Sequencer(final AudioContext ac, final List<Receiver> instruments, final Sequence sequence) throws InvalidMidiDataException {
+    this(ac, instruments, Arrays.asList(sequence));
+  }
+
+  public Sequencer(final AudioContext ac, final List<Receiver> instruments, final List<Sequence> sequences) throws InvalidMidiDataException {
     super(ac);
     this.ac = ac;
+    final Sequence sequence = MidiUtils.merge(sequences);
     finalTick = sequence.getTickLength();
     final Track[] tracks = sequence.getTracks();
     for (int i = 0; i < tracks.length && i < instruments.size(); i++) {
