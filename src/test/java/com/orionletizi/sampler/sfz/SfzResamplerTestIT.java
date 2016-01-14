@@ -1,6 +1,8 @@
 package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.com.orionletizi.midi.MidiContext;
+import com.orionletizi.music.theory.Tempo;
+import com.orionletizi.music.theory.TimeSignature;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +27,9 @@ public class SfzResamplerTestIT {
   public void before() throws Exception {
     final int sampleRate = 48 * 1000;
     final int ticksPerBeat = 96;
-    final int tempo = 120;
-    MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
+    final Tempo tempo = Tempo.newTempoFromBPM(120);
+    final TimeSignature timeSignature = new TimeSignature(4, 4);
+    MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo, timeSignature);
 
     final URL programResource = ClassLoader.getSystemResource("sfz/guitar/guitar-fixed.sfz");
     final File programFile = new File(programResource.getPath());

@@ -49,6 +49,12 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     prepareRegions();
   }
 
+  @Override
+  public File getProgramFile() {
+    return programFile;
+  }
+
+  @Override
   public SamplerProgram copyTo(final File destDir) throws IOException {
     FileUtils.forceMkdir(destDir);
     if (!destDir.isDirectory()) {

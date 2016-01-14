@@ -44,6 +44,10 @@ public class MidiUtils {
   }
 
   public static Sequence append(final Sequence s1, final Sequence s2) throws InvalidMidiDataException {
+    return append(new NullQuantizationContext(), s1, s2);
+  }
+
+  public static Sequence append(final QuantizationContext ctxt, final Sequence s1, final Sequence s2) throws InvalidMidiDataException {
     Sequence out = null;
     if (s1 != null) {
       out = copy(s1);
@@ -66,12 +70,12 @@ public class MidiUtils {
     return out;
   }
 
-  private static Track append(long tickOffset, Track start, Track end) {
+  private static Track append(long tickOffset, Track firstTrack, Track appendedTrack) {
     Track out = null;
-    if (start != null) {
-      out = start;
-      for (int i = 0; i < end.size(); i++) {
-        final MidiEvent midiEvent = end.get(i);
+    if (firstTrack != null) {
+      out = firstTrack;
+      for (int i = 0; i < appendedTrack.size(); i++) {
+        final MidiEvent midiEvent = appendedTrack.get(i);
         final MidiMessage newMessage = (MidiMessage) midiEvent.getMessage().clone();
         out.add(new MidiEvent(newMessage, midiEvent.getTick() + tickOffset));
       }

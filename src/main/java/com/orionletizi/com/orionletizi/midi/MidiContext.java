@@ -1,15 +1,20 @@
 package com.orionletizi.com.orionletizi.midi;
 
+import com.orionletizi.music.theory.Tempo;
+import com.orionletizi.music.theory.TimeSignature;
+
 public class MidiContext {
   private final double sampleRate;
   private final int ticksPerBeat;
+  private TimeSignature timeSignature;
   private final double tempo;
 
-  public MidiContext(final double sampleRate, final int ticksPerBeat, final double tempo) {
+  public MidiContext(final double sampleRate, final int ticksPerBeat, final Tempo tempo, final TimeSignature timeSignature) {
 
     this.sampleRate = sampleRate;
     this.ticksPerBeat = ticksPerBeat;
-    this.tempo = tempo;
+    this.timeSignature = timeSignature;
+    this.tempo = tempo.getBPM();
   }
 
   public long frameToTick(long frame) {
@@ -34,7 +39,7 @@ public class MidiContext {
   }
 
   public double ticksToBeats(long ticks) {
-    return ticks / ticksPerBeat;
+    return ((double) ticks) / ticksPerBeat;
   }
 
   public double ticksToMillisecond(long ticks) {
@@ -44,5 +49,9 @@ public class MidiContext {
   public long millisecondsToTicks(long millis) {
     final long frameCount = (long) sampleRate * millis / 1000;
     return frameToTick(frameCount);
+  }
+
+  public long beatsToTick(double beat) {
+    return (long) (beat * ticksPerBeat);
   }
 }

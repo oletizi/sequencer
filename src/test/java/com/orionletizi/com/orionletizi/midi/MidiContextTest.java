@@ -1,5 +1,7 @@
 package com.orionletizi.com.orionletizi.midi;
 
+import com.orionletizi.music.theory.Tempo;
+import com.orionletizi.music.theory.TimeSignature;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,8 +15,10 @@ public class MidiContextTest {
   public void before() throws Exception {
     double sampleRate = 1;
     int ticksPerBeat = 1;
-    double tempo = 1;
-    ctxt = new MidiContext(sampleRate, ticksPerBeat, tempo);
+    //double tempo = 1;
+    Tempo tempo = Tempo.newTempoFromBPM(1);
+    TimeSignature timeSignature = new TimeSignature(4, 4);
+    ctxt = new MidiContext(sampleRate, ticksPerBeat, tempo, timeSignature);
   }
 
   @Test

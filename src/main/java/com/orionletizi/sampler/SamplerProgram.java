@@ -22,4 +22,6 @@ public interface SamplerProgram {
   Set<Integer> getOffNotesForNoteOn(int note);
 
   SamplerProgram copyTo(File destinationDirectory) throws IOException;
+
+  File getProgramFile();
 }

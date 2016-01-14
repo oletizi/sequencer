@@ -1,6 +1,8 @@
 package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.com.orionletizi.midi.MidiContext;
+import com.orionletizi.music.theory.Tempo;
+import com.orionletizi.music.theory.TimeSignature;
 import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.data.audiofile.AudioFileType;
 import org.apache.commons.io.FileUtils;
@@ -157,7 +159,7 @@ public class SfzResampler {
     final int ticksPerBeat = 96;
     final int tempo = 120;
     final int samplesBetweenNotes = 0;
-    final MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
+    final MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, Tempo.newTempoFromBPM(tempo), new TimeSignature(4, 4));
     final File sourceProgramFile = new File(args[0]);
     final SfzSamplerProgram program = new SfzSamplerProgram(new SfzParser(), sourceProgramFile);
     final SfzResampler resampler = new SfzResampler(midiContext, program, samplesBetweenNotes);

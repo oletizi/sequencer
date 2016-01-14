@@ -3,6 +3,8 @@ package com.orionletizi.sequencer;
 import com.orionletizi.com.orionletizi.midi.MidiContext;
 import com.orionletizi.com.orionletizi.midi.MidiUtils;
 import com.orionletizi.com.orionletizi.midi.message.MidiMetaMessage;
+import com.orionletizi.music.theory.Tempo;
+import com.orionletizi.music.theory.TimeSignature;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.core.AudioContext;
@@ -21,6 +23,7 @@ public class Sequencer extends UGen {
   private final long finalTick;
   private long currentFrame = 0;
   private Set<Bead> endListeners = new HashSet<>();
+  private TimeSignature currentTimeSignature = new TimeSignature(4, 4);
 
   public Sequencer(final AudioContext ac, final List<Receiver> instruments, final URL midiSource) throws InvalidMidiDataException, IOException {
     this(ac, instruments, MidiSystem.getSequence(midiSource));
@@ -75,7 +78,7 @@ public class Sequencer extends UGen {
     private final Receiver instrument;
     private final Track track;
     private final Map<Long, List<MidiEvent>> eventsByTick = new HashMap<>();
-    private double currentTempo = 120d;
+    private Tempo currentTempo = Tempo.newTempoFromBPM(120);
     private long currentTick = -1;
     private boolean initialTempoIsSet = false;
 
@@ -110,7 +113,7 @@ public class Sequencer extends UGen {
       if (message instanceof MetaMessage) {
         final MidiMetaMessage meta = new MidiMetaMessage((MetaMessage) message);
         if (meta.isSetTempo()) {
-          currentTempo = meta.getTempo().getBPM();
+          currentTempo = Tempo.newTempoFromBPM(meta.getTempo().getBPM());
           rv = true;
         }
       }
@@ -118,7 +121,7 @@ public class Sequencer extends UGen {
     }
 
     public long notifyFrame(long frame) {
-      final long thisTick = new MidiContext(sampleRate, ticksPerBeat, currentTempo).frameToTick(frame);
+      final long thisTick = new MidiContext(sampleRate, ticksPerBeat, currentTempo, currentTimeSignature).frameToTick(frame);
       if (thisTick != currentTick) {
         notifyTick(thisTick);
       }
