@@ -54,4 +54,8 @@ public class MidiContext {
   public long beatsToTick(double beat) {
     return (long) (beat * ticksPerBeat);
   }
+
+  public double ticksToBars(long tick) {
+    return ticksToBeats(tick) / timeSignature.getBeatsPerBar();
+  }
 }
