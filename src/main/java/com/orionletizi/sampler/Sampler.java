@@ -117,7 +117,7 @@ public class Sampler implements Receiver {
     final int noteOffVelocity = message.getMessage()[2];
 
     info("=====>handle note off: getting on note for " + noteValue + "; on notes: " + onNotes);
-    final Note onNote = onNotes.get(new Integer(noteValue));
+    final Note onNote = onNotes.get(noteValue);
     info("found: " + onNote);
     if (onNote != null) {
       onNote.setOffVelocity((byte) noteOffVelocity);

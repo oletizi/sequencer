@@ -58,4 +58,12 @@ public class MidiContext {
   public double ticksToBars(long tick) {
     return ticksToBeats(tick) / timeSignature.getBeatsPerBar();
   }
+
+  public Tempo getTempo() {
+    return Tempo.newTempoFromBPM(tempo);
+  }
+
+  public TimeSignature getTimeSignature() {
+    return timeSignature;
+  }
 }
