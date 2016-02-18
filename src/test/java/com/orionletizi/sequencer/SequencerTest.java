@@ -84,7 +84,7 @@ public class SequencerTest {
 
   @Test
   public void testPlayProspector() throws Exception {
-    testPlay(ClassLoader.getSystemResource("midi/prospector1.mid"), new File("/Users/orion/audiogen-data/data/songs/prospector/prospector.sfz")
+    testPlay(ClassLoader.getSystemResource("midi/prospector1.mid"), new File(ClassLoader.getSystemResource("sfz/prospector/prospector.sfz").getFile())
     );
   }
 
