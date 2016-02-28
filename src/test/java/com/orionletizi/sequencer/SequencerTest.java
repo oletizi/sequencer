@@ -13,6 +13,7 @@ import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.ugens.RecordToFile;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sound.midi.Receiver;
@@ -59,6 +60,7 @@ public class SequencerTest {
   }
 
   @Test
+  @Ignore
   public void testPlayBigMono() throws Exception {
     testPlay(ClassLoader.getSystemResource("midi/drum_pattern.mid"),
         new File(ClassLoader.getSystemResource("sfz/bigmono/sfz/Big Mono ndk.sfz").toURI()));

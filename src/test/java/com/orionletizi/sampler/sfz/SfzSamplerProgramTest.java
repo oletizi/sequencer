@@ -61,6 +61,7 @@ public class SfzSamplerProgramTest {
   }
 
   @Test
+  @Ignore
   public void testBigMono() throws Exception {
     before("sfz/bigmono", "sfz/bigmono/sfz/Big Mono ndk.sfz");
   }

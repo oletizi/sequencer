@@ -54,7 +54,7 @@ public class SfzParserTest {
     setup("sfz/ibanezbass/ibanez-bass.sfz");
     parser.parse(sfzResource);
 
-    verify(observer, times(100)).notifyRegion();
+    verify(observer, times(96)).notifyRegion();
     verify(observer, times(4)).notifyKey((byte) 52);
     verify(observer, times(25)).notifyHivel((byte) 127);
     verify(observer, times(25)).notifyLovel((byte) 111);
