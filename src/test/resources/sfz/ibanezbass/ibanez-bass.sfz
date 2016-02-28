@@ -113,17 +113,6 @@ sample=GIS_2.wav
 key=56
 lovel=86 hivel=110
 
-<region>
-sample=GIS_3.wav
-key=56
-lovel=71 hivel=85
-
-<region>
-sample=GIS_4.wav
-key=56
-lovel=0 hivel=70
-
-
 ////////////////////////////////////////////////////////////////////////////
 // Region Name: NOTE A_ 
 
@@ -423,17 +412,6 @@ lovel=111 hivel=127
 sample=GIS1_2.wav 
 key=68
 lovel=86 hivel=110
-
-<region>
-sample=GIS1_3.wav
-key=68
-lovel=71 hivel=85
-
-<region>
-sample=GIS1_4.wav
-key=68
-lovel=0 hivel=70
-
 
 ////////////////////////////////////////////////////////////////////////////
 // Region Name: NOTE A_ 

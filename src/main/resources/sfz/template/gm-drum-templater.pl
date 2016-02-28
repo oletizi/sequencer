@@ -10,7 +10,7 @@ my %hh = (
 );
 
 print "<global>\n";
-print "loop_mode=one_shot";
+print "loop_mode=one_shot\n\n";
 
 while (<STDIN>) {
     my $line = $_;
@@ -25,7 +25,7 @@ while (<STDIN>) {
 
 print "<group> // hihat group\n";
 print "group=1\n";
-print "off_by=1\n";
+print "off_by=1\n\n";
 
 foreach (sort keys %hh) {
     my $key = $_;
@@ -37,5 +37,5 @@ sub printRegion {
     my ($key, $name) = @_;
     print "<region> // $name\n";
     print "key=$key\n";
-    print "sample=\n";
+    print "sample=\n\n";
 }

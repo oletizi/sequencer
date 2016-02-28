@@ -1,148 +1,199 @@
 <global>
-loop_mode=one_shot<region> // Acoustic Bass Drum
+loop_mode=one_shot
+
+<region> // Acoustic Bass Drum
 key=35
 sample=
+
 <region> // Bass Drum 1
 key=36
 sample=
+
 <region> // Side Stick
 key=37
 sample=
+
 <region> // Acoustic Snare
 key=38
 sample=
+
 <region> // Hand Clap
 key=39
 sample=
+
 <region> // Electric Snare
 key=40
 sample=
+
 <region> // Low Floor Tom
 key=41
 sample=
+
 <region> // High Floor Tom
 key=43
 sample=
+
 <region> // Low Tom
 key=45
 sample=
+
 <region> // Low-Mid Tom
 key=47
 sample=
+
 <region> // Hi-Mid Tom
 key=48
 sample=
+
 <region> // Crash Cymbal 1
 key=49
 sample=
+
 <region> // High Tom
 key=50
 sample=
+
 <region> // Ride Cymbal 1
 key=51
 sample=
+
 <region> // Chinese Cymbal
 key=52
 sample=
+
 <region> // Ride Bell
 key=53
 sample=
+
 <region> // Tambourine
 key=54
 sample=
+
 <region> // Splash Cymbal
 key=55
 sample=
+
 <region> // Cowbell
 key=56
 sample=
+
 <region> // Crash Symbol 2
 key=57
 sample=
+
 <region> // Vibraslap
 key=58
 sample=
+
 <region> // Ride Cymbal 2
 key=59
 sample=
+
 <region> // Hi Bongo
 key=60
 sample=
+
 <region> // Low Bongo
 key=61
 sample=
+
 <region> // Mute Hi Conga
 key=62
 sample=
+
 <region> // Open Hi Conga
 key=63
 sample=
+
 <region> // Low Conga
 key=64
 sample=
+
 <region> // High Timbale
 key=65
 sample=
+
 <region> // Low Timbale
 key=66
 sample=
+
 <region> // High Agogo
 key=67
 sample=
+
 <region> // Low Agogo
 key=68
 sample=
+
 <region> // Cabasa
 key=69
 sample=
+
 <region> // Maracas
 key=70
 sample=
+
 <region> // Short Whistle
 key=71
 sample=
+
 <region> // Long Whistle
 key=72
 sample=
+
 <region> // Short Guiro
 key=73
 sample=
+
 <region> // Long Guiro
 key=74
 sample=
+
 <region> // Claves
 key=75
 sample=
+
 <region> // Hi Wood Block
 key=76
 sample=
+
 <region> // Low Wood Block
 key=77
 sample=
+
 <region> // Mute Cuica
 key=78
 sample=
+
 <region> // Open Cuica
 key=79
 sample=
+
 <region> // Mute Triangle
 key=80
 sample=
+
 <region> // Open Triangle
 key=81
 sample=
+
 <region> // Shaker
 key=82
 sample=
+
 <group> // hihat group
 group=1
 off_by=1
+
 <region> // Closed Hi-Hat
 key=42
 sample=
+
 <region> // Pedal Hi-Hat
 key=44
 sample=
+
 <region> // Open Hi-Hat
 key=46
 sample=
+
