@@ -4,6 +4,7 @@ import net.beadsproject.beads.data.Sample;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Set;
 
 public interface SamplerProgram {
@@ -23,5 +24,5 @@ public interface SamplerProgram {
 
   SamplerProgram copyTo(File destinationDirectory) throws IOException;
 
-  File getProgramFile();
+  URL getProgramResource();
 }

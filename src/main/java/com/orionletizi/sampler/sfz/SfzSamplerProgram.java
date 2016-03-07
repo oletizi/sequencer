@@ -6,11 +6,15 @@ import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.data.Sample;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jfugue.theory.Note;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 // TODO: Implement random sample selection
@@ -19,7 +23,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
   private static final Logger logger = LoggerImpl.forClass(SfzSamplerProgram.class);
 
-  private File programFile;
+  private URL programResource;
 
 
   private enum Scope {
@@ -40,18 +44,24 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private Scope scope = Scope.global;
 
   public SfzSamplerProgram(final SfzParser parser, final File programFile) throws IOException, SfzParserException {
-    this.programFile = programFile;
+    this(parser, programFile.toURI().toURL());
+  }
+
+  public SfzSamplerProgram(final SfzParser parser, final URL programResource) throws IOException, SfzParserException {
+    if (!programResource.getProtocol().startsWith("file")) {
+      throw new IllegalArgumentException("I don't support non-file URLs yet: " + programResource);
+    }
+    this.programResource = programResource;
     parser.addObserver(this);
-    parser.parse(programFile);
+    parser.parse(programResource);
     commitGroup();
     commitRegion();
     prepareGroups();
     prepareRegions();
   }
 
-  @Override
-  public File getProgramFile() {
-    return programFile;
+  public URL getProgramResource() {
+    return programResource;
   }
 
   @Override
@@ -62,7 +72,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
 
     // load the program file
-    String programSource = FileUtils.readFileToString(programFile);
+    String programSource = IOUtils.toString(programResource.openStream());
 
     // copy the samples
     final File sampleDir = new File(destDir, "samples");
@@ -81,22 +91,25 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       }
     });
     try {
-      parser.parse(programFile);
+      parser.parse(programResource);
     } catch (SfzParserException e) {
       throw new IOException(e);
     }
 
     // copy all the source sample files to the samples directory
     for (String sourcePath : samplePaths) {
-      final File sourceFile = new File(programFile.getParentFile(), FilenameUtils.separatorsToSystem(sourcePath));
-      final String sampleName = FilenameUtils.getName(FilenameUtils.separatorsToSystem(sourceFile.getName()));
+      final URL sourceResource = new URL(programResource, URLEncoder.encode(FilenameUtils.separatorsToUnix(sourcePath), "UTF-8"));
+      final String sampleName = URLDecoder.decode(FilenameUtils.getName(sourceResource.getFile()), "UTF-8");
+      info("Source path: " + sourcePath + ", sample name: " + sampleName);
+
       final String destPath = FilenameUtils.separatorsToSystem(sampleDir.getName() + File.separatorChar + sampleName);
       final File dest = new File(sampleDir, sampleName);
       assert programSource.contains(sourcePath);
       programSource = programSource.replace(sourcePath, destPath);
+      final File sourceFile = new File(URLDecoder.decode(sourceResource.getFile(), "UTF-8"));
       FileUtils.copyFile(sourceFile, dest);
       if (!dest.isFile()) {
-        throw new IOException("Failed to copy sample file: source: " + sourceFile + ", dest: " + dest);
+        throw new IOException("Failed to copy sample file: source: " + sourceResource + ", dest: " + dest);
       }
     }
 
@@ -311,9 +324,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   @Override
   public void notifySample(String sample) {
     try {
-      final File sampleFile = new File(programFile.getParentFile(), FilenameUtils.separatorsToSystem(sample));
-      currentRegion.setSample(new Sample(sampleFile.getAbsolutePath()));
-      //info("Notify sample: " + sampleFile + ", currentRegion: " + currentRegion);
+      info("Notify sample: " + sample + ", currentRegion: " + currentRegion);
+      final String unixifiedSample = FilenameUtils.separatorsToUnix(sample);
+      info("Unixified: " + unixifiedSample);
+      final URL sampleResource = new URL(programResource, URLEncoder.encode(unixifiedSample, "UTF-8"));
+      currentRegion.setSample(new Sample(URLDecoder.decode(sampleResource.getFile(), "UTF-8")));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

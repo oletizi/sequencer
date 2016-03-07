@@ -30,7 +30,7 @@ public class SfzSamplerProgramTest {
 
     SfzParser parser = new SfzParser();
 
-    program = new SfzSamplerProgram(parser, new File(programResource.toURI()));
+    program = new SfzSamplerProgram(parser, programResource);
     parser.addObserver(program);
   }
 
