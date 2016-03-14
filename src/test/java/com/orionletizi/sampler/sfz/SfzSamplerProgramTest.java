@@ -43,7 +43,7 @@ public class SfzSamplerProgramTest {
   public void testCopyTo() throws Exception {
     before("sfz/guitar/", "sfz/guitar-nki/New guitar.sfz");
     final File destDir = tmp.newFolder();
-    final File destProgramFile = new File(destDir, "program.sfz");
+    final File destProgramFile = new File(destDir, destDir.getName() + ".sfz");
     assertFalse(destProgramFile.exists());
 
     final SamplerProgram copy = program.copyTo(destDir);

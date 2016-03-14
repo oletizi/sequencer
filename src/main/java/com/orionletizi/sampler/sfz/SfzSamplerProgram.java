@@ -114,7 +114,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
 
     // write the program source to the new location
-    final File destFile = new File(destDir, "program.sfz");
+    final File destFile = new File(destDir, destDir.getName() + ".sfz");
     FileUtils.writeStringToFile(destFile, programSource);
     if (!destFile.isFile()) {
       throw new IOException("Failed to write program file: " + destFile);
