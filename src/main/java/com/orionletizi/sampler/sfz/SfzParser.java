@@ -15,7 +15,9 @@ import java.util.Set;
 public class SfzParser {
 
   private static final Logger logger = LoggerImpl.forClass(SfzParser.class);
-  public static final String SAMPLE_FILENAME_TERMINATOR = ".wav";
+  private static final String[] SUPPORTED_EXTENSIONS = new String[]{
+      ".wav"
+  };
 
   private enum Scope {
     global,
@@ -86,9 +88,22 @@ public class SfzParser {
         previousLine = line;
         if (line.startsWith("sample=")) {
           line = shift("sample=", line);
-          final String sample = line.substring(0, line.indexOf(SAMPLE_FILENAME_TERMINATOR) + SAMPLE_FILENAME_TERMINATOR.length());
-          composite.notifySample(sample);
-          line = shift(sample, line);
+          info("parsing sample: " + line);
+          String samplePath = null;
+          for (String extension : SUPPORTED_EXTENSIONS) {
+            int index = line.toUpperCase().indexOf(extension.toUpperCase());
+            if (index > 0) {
+              samplePath = line.substring(0, index + extension.length());
+              break;
+            }
+          }
+
+          info("sample path: " + samplePath);
+          if (samplePath == null) {
+            throw new SamplerProgramParserException("Can't find sample path that matches supported filename extensions: " + line);
+          }
+          composite.notifySample(samplePath);
+          line = shift(samplePath, line);
         } else if (line.startsWith("key=")) {
           line = line.substring("key=".length());
           final String key = nextToken(line);

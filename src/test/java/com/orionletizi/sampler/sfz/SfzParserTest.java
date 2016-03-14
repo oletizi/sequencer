@@ -30,6 +30,13 @@ public class SfzParserTest {
   }
 
   @Test
+  public void test606() throws Exception {
+    setup("sfz/TR-606/tr606.sfz");
+    parser.parse(sfzResource);
+    verify(observer, times(1)).notifySample("samples/606BASS.WAV");
+  }
+
+  @Test
   public void testGuitar() throws Exception {
     setup("sfz/guitar/guitar-fixed.sfz");
     parser.parse(sfzResource);
