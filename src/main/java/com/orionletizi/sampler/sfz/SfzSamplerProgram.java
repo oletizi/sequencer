@@ -322,16 +322,12 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   @Override
-  public void notifySample(String sample) {
-    try {
-      info("Notify sample: " + sample + ", currentRegion: " + currentRegion);
-      final String unixifiedSample = FilenameUtils.separatorsToUnix(sample);
-      info("Unixified: " + unixifiedSample);
-      final URL sampleResource = new URL(programResource, URLEncoder.encode(unixifiedSample, "UTF-8"));
-      currentRegion.setSample(new Sample(URLDecoder.decode(sampleResource.getFile(), "UTF-8")));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+  public void notifySample(String sample) throws IOException {
+    info("Notify sample: " + sample + ", currentRegion: " + currentRegion);
+    final String unixifiedSample = FilenameUtils.separatorsToUnix(sample);
+    info("Unixified: " + unixifiedSample);
+    final URL sampleResource = new URL(programResource, URLEncoder.encode(unixifiedSample, "UTF-8"));
+    currentRegion.setSample(new Sample(URLDecoder.decode(sampleResource.getFile(), "UTF-8")));
   }
 
   @SuppressWarnings("unused")

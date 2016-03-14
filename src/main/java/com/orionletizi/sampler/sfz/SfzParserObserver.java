@@ -2,12 +2,14 @@ package com.orionletizi.sampler.sfz;
 
 import org.jfugue.theory.Note;
 
+import java.io.IOException;
+
 public interface SfzParserObserver {
   void notifyGroup();
 
   void notifyRegion();
 
-  void notifySample(String sample);
+  void notifySample(String sample) throws IOException;
 
   void notifyLokey(Note lokey);
 

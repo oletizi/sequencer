@@ -216,7 +216,7 @@ public class SfzParser {
     }
 
     @Override
-    public void notifySample(String sample) {
+    public void notifySample(String sample) throws IOException {
       for (SfzParserObserver observer : observers) {
         observer.notifySample(sample);
       }
