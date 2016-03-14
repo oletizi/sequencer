@@ -1,5 +1,6 @@
 package com.orionletizi.sampler.sfz;
 
+import com.orionletizi.sampler.SamplerProgramParserException;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import org.jfugue.theory.Note;
@@ -33,11 +34,11 @@ public class SfzParser {
     return this;
   }
 
-  public void parse(final File sfzFile) throws IOException, SfzParserException {
+  public void parse(final File sfzFile) throws IOException, SamplerProgramParserException {
     parse(new FileInputStream(sfzFile));
   }
 
-  public void parse(final URL sfzResource) throws IOException, SfzParserException {
+  public void parse(final URL sfzResource) throws IOException, SamplerProgramParserException {
     assert sfzResource != null;
     info("opening stream for url: " + sfzResource);
     parse(sfzResource.openStream());
@@ -48,7 +49,7 @@ public class SfzParser {
     logger.info(s);
   }
 
-  public void parse(final InputStream inputStream) throws IOException, SfzParserException {
+  public void parse(final InputStream inputStream) throws IOException, SamplerProgramParserException {
     info("parsing input stream...");
     final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
     String line;
@@ -80,7 +81,7 @@ public class SfzParser {
       String previousLine = null;
       while (!"".equals(line)) {
         if (line.equals(previousLine)) {
-          throw new SfzParserException("Error at line " + currentLine + ": " + line);
+          throw new SamplerProgramParserException("Error at line " + currentLine + ": " + line);
         }
         previousLine = line;
         if (line.startsWith("sample=")) {
@@ -156,26 +157,26 @@ public class SfzParser {
   }
 
 
-  private String nextToken(String line) throws SfzParserException {
+  private String nextToken(String line) throws SamplerProgramParserException {
     final int nextSpace = line.indexOf(' ');
     String rv = nextSpace != -1 ? line.substring(0, line.indexOf(' ')) : line;
     if (rv.startsWith("$") && !scope.equals(Scope.declaration)) {
       final String variable = rv;
       rv = variables.get(rv);
       if (rv == null) {
-        throw new SfzParserException("Undeclared variable: " + variable + " at line " + currentLine);
+        throw new SamplerProgramParserException("Undeclared variable: " + variable + " at line " + currentLine);
       }
     }
     return rv;
   }
 
   // removes everything from the beginning of the line through the next contiguous whitespace
-  private String shift(String line) throws SfzParserException {
+  private String shift(String line) throws SamplerProgramParserException {
     return shift(nextToken(line), line);
   }
 
   // removes the token (if it's at the beginning of the line) through the next contiguous whitespace
-  private String shift(String token, String line) throws SfzParserException {
+  private String shift(String token, String line) throws SamplerProgramParserException {
     if (line.startsWith(token)) {
       line = line.substring(line.indexOf(token) + token.length());
     } else if (line.startsWith("$")) {

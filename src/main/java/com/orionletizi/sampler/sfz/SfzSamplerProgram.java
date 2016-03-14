@@ -1,6 +1,7 @@
 package com.orionletizi.sampler.sfz;
 
 import com.orionletizi.sampler.SamplerProgram;
+import com.orionletizi.sampler.SamplerProgramParserException;
 import com.orionletizi.util.logging.Logger;
 import com.orionletizi.util.logging.LoggerImpl;
 import net.beadsproject.beads.data.Sample;
@@ -43,11 +44,11 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   private Region currentRegion;
   private Scope scope = Scope.global;
 
-  public SfzSamplerProgram(final SfzParser parser, final File programFile) throws IOException, SfzParserException {
+  public SfzSamplerProgram(final SfzParser parser, final File programFile) throws IOException, SamplerProgramParserException {
     this(parser, programFile.toURI().toURL());
   }
 
-  public SfzSamplerProgram(final SfzParser parser, final URL programResource) throws IOException, SfzParserException {
+  public SfzSamplerProgram(final SfzParser parser, final URL programResource) throws IOException, SamplerProgramParserException {
     if (!programResource.getProtocol().startsWith("file")) {
       throw new IllegalArgumentException("I don't support non-file URLs yet: " + programResource);
     }
@@ -92,7 +93,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     });
     try {
       parser.parse(programResource);
-    } catch (SfzParserException e) {
+    } catch (SamplerProgramParserException e) {
       throw new IOException(e);
     }
 
@@ -122,7 +123,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
     try {
       return new SfzSamplerProgram(new SfzParser(), destFile);
-    } catch (SfzParserException e) {
+    } catch (SamplerProgramParserException e) {
       throw new IOException(e);
     }
   }
@@ -168,7 +169,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
   }
 
-  private void prepareRegions() throws SfzParserException {
+  private void prepareRegions() throws SamplerProgramParserException {
     for (Map.Entry<Integer, Set<Region>> entry : regionsByKey.entrySet()) {
       final ArrayList<Region> regions = new ArrayList<>(entry.getValue());
       // sort by hivel, ascending...
@@ -185,7 +186,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
             // the first region has the max hivel; set its hivel to the lovel - 1 of the next region
             if (nextRegion.getLovel() == 0) {
               // the velocities aren't set right
-              throw new SfzParserException("Region velocity ranges overlap: " + region + ", " + nextRegion);
+              throw new SamplerProgramParserException("Region velocity ranges overlap: " + region + ", " + nextRegion);
             }
             region.setHivel((byte) (nextRegion.getLovel() - 1));
           } else if (nextRegion.getLovel() == 0) {
