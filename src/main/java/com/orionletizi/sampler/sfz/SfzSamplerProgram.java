@@ -140,7 +140,9 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   public Set<Region> getRegionsByKey(final int key) {
-    return new HashSet<>(regionsByKey.get(key));
+
+    final Set<SfzRegion> regions = regionsByKey.get(key);
+    return regions == null ? new HashSet<>() : new HashSet<>(regions);
   }
 
   private void prepareGroups() {
