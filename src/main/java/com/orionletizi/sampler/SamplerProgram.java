@@ -24,5 +24,7 @@ public interface SamplerProgram {
 
   SamplerProgram copyTo(File destinationDirectory) throws IOException;
 
+  Set<Region> getRegionsByKey(int key);
+
   URL getProgramResource();
 }

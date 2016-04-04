@@ -1,5 +1,7 @@
 package com.orionletizi.sampler.sfz;
 
+import com.orionletizi.sampler.Group;
+import com.orionletizi.sampler.Region;
 import com.orionletizi.sampler.SamplerProgram;
 import com.orionletizi.sampler.SamplerProgramParserException;
 import com.orionletizi.util.logging.Logger;
@@ -34,14 +36,14 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   //  private final File sampleBase;
-  private final Set<Group> allGroups = new HashSet<>();
-  private final Map<Integer, Group> groupByNote = new HashMap<>();
-  private final Map<String, Set<Group>> groupsById = new HashMap<>();
-  private final Region[][] regions = new Region[128][128];
-  private final Map<Integer, Set<Region>> regionsByKey = new HashMap<>();
+  private final Set<SfzGroup> allGroups = new HashSet<>();
+  private final Map<Integer, SfzGroup> groupByNote = new HashMap<>();
+  private final Map<String, Set<SfzGroup>> groupsById = new HashMap<>();
+  private final SfzRegion[][] regions = new SfzRegion[128][128];
+  private final Map<Integer, Set<SfzRegion>> regionsByKey = new HashMap<>();
   private String globalLoopMode;
-  private Group currentGroup;
-  private Region currentRegion;
+  private SfzGroup currentGroup;
+  private SfzRegion currentRegion;
   private Scope scope = Scope.global;
 
   public SfzSamplerProgram(final SfzParser parser, final File programFile) throws IOException, SamplerProgramParserException {
@@ -128,21 +130,21 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     }
   }
 
-  public Region[][] getRegions() {
-    final Region[][] rv = new Region[regions.length][];
+  @SuppressWarnings("unused")
+  public SfzRegion[][] getRegions() {
+    final SfzRegion[][] rv = new SfzRegion[regions.length][];
     for (int i = 0; i < regions.length; i++) {
       rv[i] = ArrayUtils.clone(regions[i]);
     }
     return rv;
   }
 
-  @SuppressWarnings("unused")
   public Set<Region> getRegionsByKey(final int key) {
-    return regionsByKey.get(key);
+    return new HashSet<>(regionsByKey.get(key));
   }
 
   private void prepareGroups() {
-    for (Group group : allGroups) {
+    for (SfzGroup group : allGroups) {
       // set the low and high keys range to keys, if they aren't set yet.
       if (group.getHikey() != null & group.getLokey() != null) {
         final byte min = group.getLokey().getValue();
@@ -159,9 +161,9 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
 
       // setup the offBy stuff
       for (String groupId : group.getOffByGroups()) {
-        final Set<Group> offByGroups = groupsById.get(groupId);
+        final Set<SfzGroup> offByGroups = groupsById.get(groupId);
         if (offByGroups != null) {
-          for (Group offByGroup : offByGroups) {
+          for (SfzGroup offByGroup : offByGroups) {
             offByGroup.addOffGroup(group);
           }
         }
@@ -170,8 +172,8 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   }
 
   private void prepareRegions() throws SamplerProgramParserException {
-    for (Map.Entry<Integer, Set<Region>> entry : regionsByKey.entrySet()) {
-      final ArrayList<Region> regions = new ArrayList<>(entry.getValue());
+    for (Map.Entry<Integer, Set<SfzRegion>> entry : regionsByKey.entrySet()) {
+      final ArrayList<SfzRegion> regions = new ArrayList<>(entry.getValue());
       // sort by hivel, ascending...
       // XXX: this doesn't account for only setting lovel
       Collections.sort(regions, (r1, r2) -> r1.getHivel() - r2.getHivel());
@@ -186,7 +188,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
             // the first region has the max hivel; set its hivel to the lovel - 1 of the next region
             if (nextRegion.getLovel() == 0) {
               // the velocities aren't set right
-              throw new SamplerProgramParserException("Region velocity ranges overlap: " + region + ", " + nextRegion);
+              throw new SamplerProgramParserException("SfzRegion velocity ranges overlap: " + region + ", " + nextRegion);
             }
             region.setHivel((byte) (nextRegion.getLovel() - 1));
           } else if (nextRegion.getLovel() == 0) {
@@ -203,7 +205,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       }
 
       // now fill in the regions matrix
-      for (Region region : regions) {
+      for (SfzRegion region : regions) {
         for (Note note : region.getKeys()) {
           final byte key = note.getValue();
           final int minVelocity = region.getLovel();
@@ -231,7 +233,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
     final Set<Integer> rv = new HashSet<>();
     // Find all the groups that should be turned off by this on note
     // XXX: This is probably wrong. It's probably allowed to have more than one group per note
-    final Group group = groupByNote.get(note);
+    final SfzGroup group = groupByNote.get(note);
     if (group != null) {
       final Set<Group> offGroups = group.getOffGroups();
       for (Group offGroup : offGroups) {
@@ -249,10 +251,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   public Set<Integer> getOffNotesForNoteOff(int note, int onVelocity) {
     final Set<Integer> rv = new HashSet<>();
 
-    final Region region = regions[note][onVelocity];
+    final SfzRegion region = regions[note][onVelocity];
     //info("region for notes off: onVelocity: " + onVelocity + ", region: " + region);
     String loopMode = null;
-    final Group group = groupByNote.get(note);
+    final SfzGroup group = groupByNote.get(note);
     if (group != null) {
       loopMode = group.getLoopMode();
     }
@@ -275,7 +277,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   public void notifyGroup() {
     changeScope(Scope.group);
     commitGroup();
-    currentGroup = new Group();
+    currentGroup = new SfzGroup();
     if (globalLoopMode != null) {
       currentGroup.setLoopMode(globalLoopMode);
     }
@@ -298,7 +300,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
       }
       for (Note note : currentRegion.getKeys()) {
         final int key = note.getValue();
-        Set<Region> regions = regionsByKey.get(key);
+        Set<SfzRegion> regions = regionsByKey.get(key);
         if (regions == null) {
           regions = new HashSet<>();
           regionsByKey.put(key, regions);
@@ -312,10 +314,10 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   public void notifyRegion() {
     changeScope(Scope.region);
     if (currentGroup == null) {
-      currentGroup = new Group();
+      currentGroup = new SfzGroup();
     }
     commitRegion();
-    currentRegion = new Region(currentGroup);
+    currentRegion = new SfzRegion(currentGroup);
   }
 
   private void changeScope(final Scope scope) {
@@ -401,7 +403,7 @@ public class SfzSamplerProgram implements SamplerProgram, SfzParserObserver {
   public void notifyGroupId(String groupId) {
     currentGroup.setGroupId(groupId);
 
-    Set<Group> groups = groupsById.get(groupId);
+    Set<SfzGroup> groups = groupsById.get(groupId);
     if (groups == null) {
       groups = new HashSet<>();
       groupsById.put(groupId, groups);

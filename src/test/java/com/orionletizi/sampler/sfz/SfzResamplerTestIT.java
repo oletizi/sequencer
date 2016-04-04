@@ -53,7 +53,7 @@ public class SfzResamplerTestIT {
     assertNotNull(sequence);
 
 
-    final Region[][] regions = program.getRegions();
+    final SfzRegion[][] regions = program.getRegions();
     final File outfile = new File(System.getProperty("user.home") + "/tmp/midi-" + System.currentTimeMillis() + ".mid");
     MidiSystem.write(sequence, MidiSystem.getMidiFileTypes(sequence)[0], outfile);
     info("Wrote sequence to :" + outfile);
@@ -74,14 +74,14 @@ public class SfzResamplerTestIT {
         new SfzParser(),
         destProgramFile);
 
-    final Region[][] newRegions = newProgram.getRegions();
+    final SfzRegion[][] newRegions = newProgram.getRegions();
     assertEquals(regions.length, newRegions.length);
 
     for (int i = 0; i < regions.length; i++) {
       assertEquals(regions[i].length, newRegions[i].length);
       for (int j = 0; j < regions[i].length; j++) {
-        final Region sourceRegion = regions[i][j];
-        final Region destRegion = newRegions[i][j];
+        final SfzRegion sourceRegion = regions[i][j];
+        final SfzRegion destRegion = newRegions[i][j];
         if (sourceRegion != null) {
           assertEquals(sourceRegion.getLovel(), destRegion.getLovel());
           assertEquals(sourceRegion.getHivel(), destRegion.getHivel());

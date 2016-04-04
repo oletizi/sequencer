@@ -3,6 +3,8 @@ package com.orionletizi.sampler.sfz;
 import com.orionletizi.com.orionletizi.midi.MidiContext;
 import com.orionletizi.music.theory.Tempo;
 import com.orionletizi.music.theory.TimeSignature;
+import com.orionletizi.sampler.Group;
+import com.orionletizi.sampler.Region;
 import net.beadsproject.beads.data.Sample;
 import net.beadsproject.beads.data.audiofile.AudioFileType;
 import org.apache.commons.io.FileUtils;
@@ -31,13 +33,13 @@ public class SfzResampler {
     final Track track = sequence.createTrack();
 
     //final MidiContext midiContext = new MidiContext(sampleRate, ticksPerBeat, tempo);
-    final Region[][] regions = program.getRegions();
+    final SfzRegion[][] regions = program.getRegions();
 
     long currentTick = 0;
     for (int i = 0; i < regions.length; i++) {
-      final Region[] regionsForKey = regions[i];
+      final SfzRegion[] regionsForKey = regions[i];
       Region previousRegion = null;
-      for (Region region : regionsForKey) {
+      for (SfzRegion region : regionsForKey) {
         if (region == null || region == previousRegion) {
           continue;
         }
@@ -92,10 +94,10 @@ public class SfzResampler {
     int currentFrame = 0;
 
 
-    for (Region[] regionsForKey : program.getRegions()) {
+    for (SfzRegion[] regionsForKey : program.getRegions()) {
       Region previousRegion = null;
       Group previousGroup = null;
-      for (Region region : regionsForKey) {
+      for (SfzRegion region : regionsForKey) {
         if (region == null || region == previousRegion) {
           continue;
         }

@@ -1,11 +1,13 @@
 package com.orionletizi.sampler.sfz;
 
+import com.orionletizi.sampler.Group;
+import com.orionletizi.sampler.Region;
 import org.jfugue.theory.Note;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Group {
+public class SfzGroup implements com.orionletizi.sampler.Group {
   private Note hikey;
   private Note lokey;
   private Set<Note> keys = new HashSet<>();
@@ -15,30 +17,37 @@ public class Group {
   private Set<Group> offGroups = new HashSet<>();
   private Set<Region> regions = new HashSet<>();
 
+  @Override
   public Note getHikey() {
     return hikey;
   }
 
+  @Override
   public void setHikey(Note hikey) {
     this.hikey = hikey;
   }
 
+  @Override
   public Note getLokey() {
     return lokey;
   }
 
+  @Override
   public void setLokey(Note lokey) {
     this.lokey = lokey;
   }
 
+  @Override
   public void addKey(int key) {
     addKey(new Note(key));
   }
 
+  @Override
   public void addKey(Note key) {
     keys.add(key);
   }
 
+  @Override
   public Set<Note> getKeys() {
     return new HashSet<>(keys);
   }
