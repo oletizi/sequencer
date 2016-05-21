@@ -11,6 +11,14 @@ public interface Region extends Group {
 
   void setLovel(int lovel);
 
+  double getStart();
+
+  void setStart(double start);
+
+  double getEnd();
+
+  void setEnd(double end);
+
   int getHivel();
 
   int getLovel();

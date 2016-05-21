@@ -15,6 +15,8 @@ public class SfzRegion extends SfzGroup implements Region {
   private int lovel = 0;
   // default keytrack is 100 which means 100 cents (one semitone) per key. Allowed values are -1200 - 1200
   private int pitchKeytrack = 100;
+  private double start = 0;
+  private double end;
 
   public SfzRegion(SfzGroup group) {
     super();
@@ -45,6 +47,9 @@ public class SfzRegion extends SfzGroup implements Region {
   @Override
   public void setSample(Sample sample) {
     this.sample = sample;
+    if (end == 0) {
+      end = sample.getNumFrames();
+    }
   }
 
   @Override
@@ -57,6 +62,26 @@ public class SfzRegion extends SfzGroup implements Region {
   public void setLovel(int lovel) {
     assert lovel >= 0 && hivel <= Byte.MAX_VALUE;
     this.lovel = lovel;
+  }
+
+  @Override
+  public double getStart() {
+    return start;
+  }
+
+  @Override
+  public void setStart(double start) {
+    this.start = start;
+  }
+
+  @Override
+  public double getEnd() {
+    return end;
+  }
+
+  @Override
+  public void setEnd(double end) {
+    this.end = end;
   }
 
   @Override
@@ -89,7 +114,9 @@ public class SfzRegion extends SfzGroup implements Region {
         + "lovel=" + getLovel() + "\n"
         + "hivel=" + getHivel() + "\n"
         + "pitch_keytrack=" + getPitchKeytrack() + "\n"
-        + "sample=" + samplePath;
+        + "sample=" + samplePath
+        + "offset=" + getStart()
+        + "end=" + getEnd();
   }
 
   @Override
