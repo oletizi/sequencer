@@ -22,4 +22,8 @@ public interface Region extends Group {
   int getHivel();
 
   int getLovel();
+
+  int getPitchKeytrack();
+
+  void setPitchKeytrack(int keytrack);
 }

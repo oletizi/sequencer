@@ -115,8 +115,8 @@ public class SfzRegion extends SfzGroup implements Region {
         + "hivel=" + getHivel() + "\n"
         + "pitch_keytrack=" + getPitchKeytrack() + "\n"
         + "sample=" + samplePath + "\n"
-        + "offset=" + getStart() + "\n"
-        + "end=" + getEnd() + "\n";
+        + (getStart() > 0 ? "offset=" + getStart() + "\n" : "")
+        + (getEnd() > 0 ? "end=" + getEnd() + "\n" : "");
   }
 
   @Override

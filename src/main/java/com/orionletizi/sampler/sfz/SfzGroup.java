@@ -114,7 +114,7 @@ public class SfzGroup implements com.orionletizi.sampler.Group {
         + ((groupId != null) ? "id=" + groupId + "\n" : "")
         + ((getLoopMode() != null) ? "loop_mode=" + getLoopMode() + "\n" : "")
         + (offByGroups.isEmpty() ? "" : offBy + "\n")
-        + (getLokey() != null ? "lokey=" + getLokey() + "\n" : "")
-        + (getHikey() != null ? "hikey=" + getHikey() + "\n" : "");
+        + (getLokey() != null ? "lokey=" + getLokey().getValue() + "\n" : "")
+        + (getHikey() != null ? "hikey=" + getHikey().getValue() + "\n" : "");
   }
 }
