@@ -89,7 +89,7 @@ public class SfzGroup implements com.orionletizi.sampler.Group {
   }
 
   public String getLoopMode() {
-    return loopMode;
+    return loopMode == null ? "no_loop" : loopMode;
   }
 
 
@@ -111,7 +111,7 @@ public class SfzGroup implements com.orionletizi.sampler.Group {
     }
 
     return "<group>\n"
-        + ((groupId != null) ? "id=" + groupId + "\n" : "")
+        + ((groupId != null) ? "group=" + groupId + "\n" : "")
         + ((getLoopMode() != null) ? "loop_mode=" + getLoopMode() + "\n" : "")
         + (offByGroups.isEmpty() ? "" : offBy + "\n")
         + (getLokey() != null ? "lokey=" + getLokey().getValue() + "\n" : "")

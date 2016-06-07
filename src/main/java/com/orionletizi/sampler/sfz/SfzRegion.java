@@ -18,6 +18,9 @@ public class SfzRegion extends SfzGroup implements Region {
   private double start = 0;
   private double end;
 
+  private double loopStart = -1;
+  private double loopEnd = -1;
+
   public SfzRegion(SfzGroup group) {
     super();
     this.group = group;
@@ -114,6 +117,9 @@ public class SfzRegion extends SfzGroup implements Region {
         + "lovel=" + getLovel() + "\n"
         + "hivel=" + getHivel() + "\n"
         + "pitch_keytrack=" + getPitchKeytrack() + "\n"
+        + "loop_mode=" + getLoopMode() + "\n"
+        + (loopStart >= 0 ? "loop_start=" + getLoopStart() + "\n" : "")
+        + (loopEnd >= 0 ? "loop_end=" + getLoopEnd() + "\n" : "")
         + "sample=" + samplePath + "\n"
         + (getStart() > 0 ? "offset=" + getStart() + "\n" : "")
         + (getEnd() > 0 ? "end=" + getEnd() + "\n" : "");
@@ -135,4 +141,19 @@ public class SfzRegion extends SfzGroup implements Region {
     return group;
   }
 
+  public double getLoopStart() {
+    return loopStart;
+  }
+
+  public void setLoopStart(double loopStart) {
+    this.loopStart = loopStart;
+  }
+
+  public double getLoopEnd() {
+    return loopEnd;
+  }
+
+  public void setLoopEnd(double loopEnd) {
+    this.loopEnd = loopEnd;
+  }
 }
